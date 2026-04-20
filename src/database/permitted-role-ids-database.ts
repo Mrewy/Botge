@@ -2,7 +2,7 @@
 
 import type { SqlJsStatic } from 'sql.js';
 
-import { BaseDatabase } from './base.ts';
+import { BaseDatabase } from './base-database.ts';
 
 const TABLE_NAME = 'settingsPermittedRoleIds' as const;
 

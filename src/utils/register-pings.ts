@@ -6,7 +6,7 @@ import type { Client, TextChannel } from 'discord.js';
 
 import { getContent, ContentType } from '../message-builders/ping-for-ping-me-message-builder.ts';
 import { daysAndHoursAndMinutesToMilliseconds } from '../command-handlers/ping-me.ts';
-import type { PingsDatabase } from '../api/ping-database.ts';
+import type { PingsDatabase } from '../database/pings-database.ts';
 import { logError } from './log-error.ts';
 
 function millisecondsToHoursAndMinutes(milliseconds: number): string {

@@ -12,13 +12,16 @@ import {
 
 import { getPingableUserId } from '../utils/message-builders/get-pingable-user-id.ts';
 import { logError } from '../utils/log-error.ts';
-import type { PingsDatabase } from '../api/ping-database.ts';
+
+import type { PingsDatabase } from '../database/pings-database.ts';
+
 import type {
   Ping,
   ReadonlyActionRowBuilderMessageActionRowComponentBuilder,
   PingForPingMeMessageBuilderTransformFunctionReturnType,
   PingForPingMeMessageBuilderReplies
 } from '../types.ts';
+
 import { getCustomId } from './base.ts';
 
 export const enum ContentType {

@@ -15,7 +15,7 @@ export class Guild {
   readonly #id: string;
   #broadcasterName: string | null;
   #emoteMatcher: Readonly<EmoteMatcher>;
-  readonly #twitchClipsMeiliSearchIndex: Index | undefined;
+  readonly #twitchClipsMeilisearchIndex: Index | undefined;
   readonly #personalEmoteMatcherConstructor: Readonly<PersonalEmoteMatcherConstructor>;
   #uniqueCreatorNames: readonly string[] | undefined;
   #uniqueGameIds: readonly string[] | undefined;
@@ -26,7 +26,7 @@ export class Guild {
   public constructor(
     id: string,
     broadcasterName: string | null,
-    twitchClipsMeiliSearchIndex: Index | undefined,
+    twitchClipsMeilisearchIndex: Index | undefined,
     emoteMatcher: Readonly<EmoteMatcher>,
     emoteMatcherConstructor: Readonly<PersonalEmoteMatcherConstructor>,
     settingsPermittedRoleIds: readonly string[] | null,
@@ -35,7 +35,7 @@ export class Guild {
   ) {
     this.#id = id;
     this.#broadcasterName = broadcasterName;
-    this.#twitchClipsMeiliSearchIndex = twitchClipsMeiliSearchIndex;
+    this.#twitchClipsMeilisearchIndex = twitchClipsMeilisearchIndex;
     this.#emoteMatcher = emoteMatcher;
     this.#personalEmoteMatcherConstructor = emoteMatcherConstructor;
     this.#uniqueCreatorNames = [];
@@ -54,8 +54,8 @@ export class Guild {
   public get emoteMatcher(): Readonly<EmoteMatcher> {
     return this.#emoteMatcher;
   }
-  public get twitchClipsMeiliSearchIndex(): Index | undefined {
-    return this.#twitchClipsMeiliSearchIndex;
+  public get twitchClipsMeilisearchIndex(): Index | undefined {
+    return this.#twitchClipsMeilisearchIndex;
   }
   public get personalEmoteMatcherConstructor(): Readonly<PersonalEmoteMatcherConstructor> {
     return this.#personalEmoteMatcherConstructor;
@@ -113,7 +113,7 @@ export class Guild {
   }
 
   public async refreshClips(twitchApi: Readonly<TwitchApi> | undefined, deleteOld?: boolean): Promise<void> {
-    if (this.#twitchClipsMeiliSearchIndex === undefined || twitchApi === undefined) return;
+    if (this.#twitchClipsMeilisearchIndex === undefined || twitchApi === undefined) return;
     if (this.#broadcasterName === null) return;
 
     this.#uniqueCreatorNames = [];
@@ -122,7 +122,7 @@ export class Guild {
     const updateDocumentsQueue: Readonly<EnqueuedTaskPromise>[] = [];
     let updated = 0;
 
-    if (deleteOld !== undefined && deleteOld) await this.#twitchClipsMeiliSearchIndex.deleteAllDocuments().waitTask();
+    if (deleteOld !== undefined && deleteOld) await this.#twitchClipsMeilisearchIndex.deleteAllDocuments().waitTask();
 
     if (this.#id === GUILD_ID_CUTEDOG) {
       // custom clips
@@ -135,7 +135,7 @@ export class Guild {
           else return clip;
         });
 
-        updateDocumentsQueue.push(this.#twitchClipsMeiliSearchIndex.updateDocuments(clips));
+        updateDocumentsQueue.push(this.#twitchClipsMeilisearchIndex.updateDocuments(clips));
         updated += clips.length;
       }
     } else {
@@ -151,7 +151,7 @@ export class Guild {
         else return clip;
       });
 
-      updateDocumentsQueue.push(this.#twitchClipsMeiliSearchIndex.updateDocuments(clips));
+      updateDocumentsQueue.push(this.#twitchClipsMeilisearchIndex.updateDocuments(clips));
       updated += clips.length;
 
       for (let i = 0; i < 9 && cursor !== undefined; i++) {
@@ -167,7 +167,7 @@ export class Guild {
           else return clip;
         });
 
-        updateDocumentsQueue.push(this.#twitchClipsMeiliSearchIndex.updateDocuments(clips));
+        updateDocumentsQueue.push(this.#twitchClipsMeilisearchIndex.updateDocuments(clips));
         updated += clips.length;
       }
     }
@@ -178,13 +178,13 @@ export class Guild {
   }
 
   public async refreshUniqueCreatorNamesAndGameIds(): Promise<void> {
-    if (this.#twitchClipsMeiliSearchIndex === undefined) return;
+    if (this.#twitchClipsMeilisearchIndex === undefined) return;
 
-    const { maxTotalHits } = await this.#twitchClipsMeiliSearchIndex.getPagination();
+    const { maxTotalHits } = await this.#twitchClipsMeilisearchIndex.getPagination();
     if (maxTotalHits === null || maxTotalHits === undefined) throw new Error('pagination max total hits not set');
 
     const clipsge: readonly TwitchClip[] = (
-      await this.#twitchClipsMeiliSearchIndex.getDocuments({ limit: maxTotalHits })
+      await this.#twitchClipsMeilisearchIndex.getDocuments({ limit: maxTotalHits })
     ).results
       .map((record: ReadonlyRecordAny) => record as TwitchClip)
       .sort((a, b) => b.created_at.localeCompare(a.created_at));

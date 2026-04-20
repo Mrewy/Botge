@@ -14,7 +14,7 @@ import type {
 import { GLOBAL_EMOTE_ENDPOINTS } from './paths-and-endpoints.ts';
 import type { PersonalEmoteSets } from './personal-emote-sets.ts';
 import type { TwitchApi } from './api/twitch-api.ts';
-import type { AddedEmotesDatabase } from './api/added-emotes-database.ts';
+import type { AddedEmotesDatabase } from './database/added-emotes-database.ts';
 import { fetchAndJson } from './utils/fetch-and-json.ts';
 
 export class GlobalEmoteMatcherConstructor {

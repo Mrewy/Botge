@@ -3,7 +3,7 @@
 import type { SqlJsStatic } from 'sql.js';
 
 import type { Quote } from '../types.ts';
-import { BaseDatabase } from './base.ts';
+import { BaseDatabase } from './base-database.ts';
 
 const TABLE_NAME = 'quote' as const;
 
@@ -14,7 +14,7 @@ function getTableName(userId: string): string {
 type QuoteOnlyNameAndContent = Omit<Quote, 'dateAdded'>;
 type DatabaseQuote = QuoteOnlyNameAndContent & { readonly dateAdded: number };
 
-export class QuoteDatabase extends BaseDatabase {
+export class QuotesDatabase extends BaseDatabase {
   public constructor(filepath: string, sqlJsStatic: SqlJsStatic) {
     super(filepath, sqlJsStatic);
   }

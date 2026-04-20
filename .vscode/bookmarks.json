@@ -4,49 +4,39 @@
 			"path": "src/index.ts",
 			"bookmarks": [
 				{
-					"line": 84,
+					"line": 90,
 					"column": 0,
 					"label": "bot"
 				},
 				{
-					"line": 201,
+					"line": 214,
 					"column": 0,
 					"label": "functions"
 				},
 				{
-					"line": 259,
+					"line": 267,
 					"column": 0,
 					"label": "schedules"
 				},
 				{
-					"line": 290,
+					"line": 298,
 					"column": 0,
 					"label": "registerHandlers"
 				}
 			]
 		},
 		{
-			"path": "src/bot.ts",
+			"path": "src/bot/bot.ts",
 			"bookmarks": [
 				{
-					"line": 58,
+					"line": 38,
 					"column": 0,
 					"label": "bot"
 				},
 				{
-					"line": 119,
+					"line": 95,
 					"column": 0,
-					"label": "commandHandlers"
-				},
-				{
-					"line": 180,
-					"column": 0,
-					"label": "registerHandlers"
-				},
-				{
-					"line": 371,
-					"column": 0,
-					"label": "functions"
+					"label": "registerListeners"
 				}
 			]
 		},
@@ -99,32 +89,32 @@
 			"path": "src/interaction-handlers/autocomplete.ts",
 			"bookmarks": [
 				{
-					"line": 60,
+					"line": 62,
 					"column": 0,
 					"label": "emote"
 				},
 				{
-					"line": 95,
+					"line": 97,
 					"column": 0,
 					"label": "emoteList"
 				},
 				{
-					"line": 172,
+					"line": 174,
 					"column": 0,
 					"label": "clip"
 				},
 				{
-					"line": 253,
+					"line": 255,
 					"column": 0,
 					"label": "shortestUniqueSubstrings"
 				},
 				{
-					"line": 293,
+					"line": 295,
 					"column": 0,
 					"label": "pingList"
 				},
 				{
-					"line": 312,
+					"line": 314,
 					"column": 0,
 					"label": "media"
 				}
@@ -134,52 +124,52 @@
 			"path": "src/interaction-handlers/button.ts",
 			"bookmarks": [
 				{
-					"line": 121,
+					"line": 116,
 					"column": 0,
 					"label": "CONFIGURATION_USER"
 				},
 				{
-					"line": 144,
+					"line": 139,
 					"column": 0,
 					"label": "PERMITTED_ROLES"
 				},
 				{
-					"line": 175,
+					"line": 170,
 					"column": 0,
 					"label": "ALLOW_EVERYONE_TO_ADD_EMOTE"
 				},
 				{
-					"line": 187,
+					"line": 182,
 					"column": 0,
 					"label": "ADDED_EMOTE_DELETION_MENU"
 				},
 				{
-					"line": 211,
+					"line": 206,
 					"column": 0,
 					"label": "CONFIGURATION_GUILD"
 				},
 				{
-					"line": 247,
+					"line": 242,
 					"column": 0,
 					"label": "messageBuilderType"
 				},
 				{
-					"line": 323,
+					"line": 321,
 					"column": 0,
 					"label": "messageBuilders"
 				},
 				{
-					"line": 358,
+					"line": 360,
 					"column": 0,
 					"label": "messageBuilder"
 				},
 				{
-					"line": 365,
+					"line": 367,
 					"column": 0,
 					"label": "reply"
 				},
 				{
-					"line": 558,
+					"line": 564,
 					"column": 0,
 					"label": "editReply"
 				}
@@ -189,34 +179,34 @@
 			"path": "src/interaction-handlers/modal-submit.ts",
 			"bookmarks": [
 				{
-					"line": 51,
+					"line": 53,
 					"column": 0,
 					"label": "deferReply"
 				},
 				{
-					"line": 57,
-					"column": 0,
-					"label": "ASSIGN_GUILD_MODAL"
-				},
-				{
-					"line": 91,
+					"line": 94,
 					"column": 0,
 					"label": "ASSIGN_EMOTE_SETS"
 				},
 				{
-					"line": 198,
+					"line": 204,
 					"column": 0,
 					"label": "messageBuilderType"
 				},
 				{
-					"line": 199,
+					"line": 205,
 					"column": 0,
 					"label": "messageBuilders"
 				},
 				{
-					"line": 226,
+					"line": 235,
 					"column": 0,
 					"label": "messageBuilder"
+				},
+				{
+					"line": 60,
+					"column": 1,
+					"label": ""
 				}
 			]
 		},
@@ -294,14 +284,14 @@
 					"label": "messageContextMenuCommandHandler"
 				},
 				{
-					"line": 177,
-					"column": 0,
-					"label": "addMedia"
-				},
-				{
-					"line": 241,
+					"line": 242,
 					"column": 0,
 					"label": "removeMedia"
+				},
+				{
+					"line": 178,
+					"column": 1,
+					"label": ""
 				}
 			]
 		},
@@ -344,37 +334,37 @@
 			"path": "src/message-builders/ping-for-ping-me-message-builder.ts",
 			"bookmarks": [
 				{
-					"line": 23,
+					"line": 26,
 					"column": 0,
 					"label": "enum"
 				},
 				{
-					"line": 28,
+					"line": 31,
 					"column": 0,
 					"label": "exportFunctions"
 				},
 				{
-					"line": 73,
+					"line": 76,
 					"column": 0,
 					"label": "BASE_CUSTOM_IDS"
 				},
 				{
-					"line": 78,
+					"line": 81,
 					"column": 0,
 					"label": "PingForPingMeMessageBuilder"
 				},
 				{
-					"line": 128,
+					"line": 131,
 					"column": 0,
 					"label": "row"
 				},
 				{
-					"line": 162,
+					"line": 165,
 					"column": 0,
 					"label": "functions"
 				},
 				{
-					"line": 292,
+					"line": 295,
 					"column": 0,
 					"label": "privateFunctions"
 				}

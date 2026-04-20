@@ -9,11 +9,13 @@ import {
 } from 'discord.js';
 
 import { getPingableUserId } from '../utils/message-builders/get-pingable-user-id.ts';
+
 import type {
   TwitchClip,
   TwitchClipMessageBuilderTransformFunctionReturnType,
   ReadonlyActionRowBuilderMessageActionRowComponentBuilder
 } from '../types.ts';
+
 import { BaseMessageBuilder, getCustomId } from './base.ts';
 
 export const SEND_CLIP_BUTTON_BASE_CUSTOM_ID = 'sendClipButton' as const;
@@ -31,6 +33,7 @@ export class TwitchClipMessageBuilder extends BaseMessageBuilder<
   public constructor(interaction: ChatInputCommandInteraction, twitchClips: readonly TwitchClip[], ephemeral: boolean) {
     // if (EMBED_SERVER_TWITCH === undefined) throw new Error('EMBED_SERVER_TWITCH undefined');
     // ! no env file in test
+    // there is now env file regardless if its test. rework needed.
 
     const transformFunction = (twitchClip: TwitchClip): TwitchClipMessageBuilderTransformFunctionReturnType => {
       const { id } = twitchClip;

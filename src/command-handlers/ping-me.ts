@@ -5,7 +5,7 @@ import type { PermissionsBitField, Client, ChatInputCommandInteraction, TextChan
 import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import { PingForPingMeMessageBuilder } from '../message-builders/ping-for-ping-me-message-builder.ts';
-import type { PingsDatabase } from '../api/ping-database.ts';
+import type { PingsDatabase } from '../database/pings-database.ts';
 import type { Guild } from '../guild.ts';
 import type { Ping } from '../types.ts';
 import type { Job } from 'node-schedule';

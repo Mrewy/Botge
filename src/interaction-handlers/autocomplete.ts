@@ -9,25 +9,27 @@ import { platformStrings, platformToString, stringToPlatform } from '../utils/pl
 import { booleanToString, stringToBoolean } from '../utils/boolean-to-string.ts';
 import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
+
 import { getShortestUniqueSubstrings } from '../command-handlers/shortest-unique-substrings.ts';
-import type { MediaDatabase } from '../api/media-database.ts';
-import type { QuoteDatabase } from '../api/quote-database.ts';
+
+import type { DatabaseManager } from '../bot/database-manager.ts';
+
 import type { TwitchClip, ReadonlyHit, ReadonlyApplicationCommandOptionChoiceDataString, AssetInfo } from '../types.ts';
 import type { EmoteMatcher } from '../emote-matcher.ts';
-import { Platform } from '../enums.ts';
 import { SLASH_COMMAND_NAMES } from '../commands.ts';
+import { Platform } from '../enums.ts';
 
 const MAX_OPTIONS_LENGTH = 25 as const; //THE MAXIMUM YOU CAN SET HERE IS 25
 
 async function getHitsFromTwitchClipsMeilisearchIndex(
-  twitchClipsMeiliSearchIndex: Index,
+  twitchClipsMeilisearchIndex: Index,
   query: string
 ): Promise<readonly TwitchClip[]> {
-  const { maxTotalHits } = await twitchClipsMeiliSearchIndex.getPagination();
+  const { maxTotalHits } = await twitchClipsMeilisearchIndex.getPagination();
   if (maxTotalHits === null || maxTotalHits === undefined) throw new Error('pagination max total hits not set');
 
   const hits: readonly TwitchClip[] = (
-    await twitchClipsMeiliSearchIndex.search(query.trim(), {
+    await twitchClipsMeilisearchIndex.search(query.trim(), {
       sort: ['created_at:desc'],
       limit: maxTotalHits,
       matchingStrategy: 'all'
@@ -45,11 +47,10 @@ function applicableSizes(platform: Platform | undefined): readonly number[] {
 
 export function autocompleteHandler(
   emoteMatcher: Readonly<EmoteMatcher>,
-  twitchClipsMeiliSearchIndex: Index | undefined,
+  twitchClipsMeilisearchIndex: Index | undefined,
   uniqueCreatorNames: readonly string[] | undefined,
   uniqueGameIds: readonly string[] | undefined,
-  mediaDataBase: Readonly<MediaDatabase>,
-  quoteDataBase: Readonly<QuoteDatabase>
+  databaseManager: Readonly<DatabaseManager>
 ) {
   return async (interaction: AutocompleteInteraction): Promise<void> => {
     try {
@@ -172,7 +173,7 @@ export function autocompleteHandler(
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.clip) {
         if (
-          twitchClipsMeiliSearchIndex === undefined ||
+          twitchClipsMeilisearchIndex === undefined ||
           uniqueCreatorNames === undefined ||
           uniqueGameIds === undefined
         )
@@ -183,7 +184,7 @@ export function autocompleteHandler(
 
           const hits = await (async (): Promise<readonly TwitchClip[]> => {
             let hits_ = await getHitsFromTwitchClipsMeilisearchIndex(
-              twitchClipsMeiliSearchIndex,
+              twitchClipsMeilisearchIndex,
               focusedOptionValue.trim()
             );
 
@@ -207,7 +208,7 @@ export function autocompleteHandler(
           const currentUniqueCreatorNames = await (async (): Promise<readonly string[]> => {
             if (title === '' && category === undefined) return uniqueCreatorNames;
 
-            const hits = await getHitsFromTwitchClipsMeilisearchIndex(twitchClipsMeiliSearchIndex, title);
+            const hits = await getHitsFromTwitchClipsMeilisearchIndex(twitchClipsMeilisearchIndex, title);
             const hitsFiltered = category !== undefined ? hits.filter((hit) => hit.game_id === category) : hits;
             const currentUniqueCreatorNames_ = new Set(hitsFiltered.map((hit) => hit.creator_name)).keys().toArray();
             return currentUniqueCreatorNames_;
@@ -232,7 +233,7 @@ export function autocompleteHandler(
           const currentUniqueGameIds = await (async (): Promise<readonly string[]> => {
             if (title === '' && clipper === undefined) return uniqueGameIds;
 
-            const hits = await getHitsFromTwitchClipsMeilisearchIndex(twitchClipsMeiliSearchIndex, title);
+            const hits = await getHitsFromTwitchClipsMeilisearchIndex(twitchClipsMeilisearchIndex, title);
             const hitsFiltered = clipper !== undefined ? hits.filter((hit) => hit.creator_name === clipper) : hits;
             const currentUniqueGameIds_ = new Set(hitsFiltered.map((hit) => hit.game_id)).keys().toArray();
             return currentUniqueGameIds_;
@@ -312,7 +313,7 @@ export function autocompleteHandler(
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.media) {
         if (focusedOptionName === 'name') {
-          const mediaNames: readonly string[] = mediaDataBase
+          const mediaNames: readonly string[] = databaseManager.mediaDatabase
             .getAllMedia(interaction.user.id)
             .map((media) => media.name)
             .filter((mediaName) => mediaName.includes(focusedOptionValue.trim().toLocaleLowerCase()));
@@ -329,7 +330,7 @@ export function autocompleteHandler(
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.quote) {
         if (focusedOptionName === 'name') {
-          const quoteNames: readonly string[] = quoteDataBase
+          const quoteNames: readonly string[] = databaseManager.quoteDatabase
             .getAllQuote(interaction.user.id)
             .map((quote) => quote.name)
             .filter((quoteName) => quoteName.includes(focusedOptionValue.trim().toLocaleLowerCase()));

@@ -16,14 +16,17 @@ import {
 } from '../utils/message-builders/emote-cdn-url-to-emote-url.ts';
 import { platformToString } from '../utils/platform-to-string.ts';
 import { booleanToString } from '../utils/boolean-to-string.ts';
+
 import type {
   AddedEmote,
   AssetInfo,
   EmoteMessageBuilderTransformFunctionReturnType,
   ReadonlyActionRowBuilderMessageActionRowComponentBuilder
 } from '../types.ts';
-import { BaseMessageBuilder, getCustomId } from './base.ts';
+
 import { Platform } from '../enums.ts';
+
+import { BaseMessageBuilder, getCustomId } from './base.ts';
 
 export const DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID = 'deleteEmoteButton' as const;
 

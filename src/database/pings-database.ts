@@ -3,7 +3,7 @@
 import type { SqlJsStatic } from 'sql.js';
 
 import type { Ping } from '../types.ts';
-import { BaseDatabase } from './base.ts';
+import { BaseDatabase } from './base-database.ts';
 
 type DatabasePing = {
   readonly time: number;

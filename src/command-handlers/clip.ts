@@ -30,8 +30,8 @@ export function clipHandler(twitchClipMessageBuilders: TwitchClipMessageBuilder[
       return;
     }
 
-    const { twitchClipsMeiliSearchIndex } = guild;
-    if (twitchClipsMeiliSearchIndex === undefined) {
+    const { twitchClipsMeilisearchIndex } = guild;
+    if (twitchClipsMeilisearchIndex === undefined) {
       void interaction.reply('clip command is not available in this server.');
       return;
     }
@@ -67,10 +67,10 @@ export function clipHandler(twitchClipMessageBuilders: TwitchClipMessageBuilder[
         return '';
       })();
 
-      const { maxTotalHits } = await twitchClipsMeiliSearchIndex.getPagination();
+      const { maxTotalHits } = await twitchClipsMeilisearchIndex.getPagination();
       if (maxTotalHits === null || maxTotalHits === undefined) throw new Error('pagination max total hits not set');
 
-      const search = await twitchClipsMeiliSearchIndex.search(title ?? null, {
+      const search = await twitchClipsMeilisearchIndex.search(title ?? null, {
         filter: filter,
         matchingStrategy: 'all',
         sort: sortByField !== 'shuffle' ? [sortByField] : [],

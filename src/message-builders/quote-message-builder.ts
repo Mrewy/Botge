@@ -14,7 +14,9 @@ import type {
   QuoteMessageBuilderTransformFunctionReturnType,
   ReadonlyActionRowBuilderMessageActionRowComponentBuilder
 } from '../types.ts';
+
 import { MEDIA_LIST_AND_QUOTE_LIST } from '../commands.ts';
+
 import { BaseMessageBuilder, getCustomId } from './base.ts';
 
 export const DELETE_QUOTE_BUTTON_BASE_CUSTOM_ID = 'deleteQuoteButton' as const;

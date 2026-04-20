@@ -3,7 +3,7 @@
 import type { SqlJsStatic } from 'sql.js';
 
 import { PersonalEmoteSets } from '../personal-emote-sets.ts';
-import { BaseDatabase } from './base.ts';
+import { BaseDatabase } from './base-database.ts';
 
 type DatabaseBroadcasterNamesAndPersonalEmoteSets = {
   readonly guildId: string;

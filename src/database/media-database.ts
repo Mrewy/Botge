@@ -3,7 +3,7 @@
 import type { SqlJsStatic } from 'sql.js';
 
 import type { Media } from '../types.ts';
-import { BaseDatabase } from './base.ts';
+import { BaseDatabase } from './base-database.ts';
 
 const TABLE_NAME = 'media' as const;
 

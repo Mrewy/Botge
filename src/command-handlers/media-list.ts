@@ -7,7 +7,7 @@ import { MessageFlags, type ChatInputCommandInteraction } from 'discord.js';
 import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import { MediaMessageBuilder } from '../message-builders/media-message-builder.ts';
-import type { MediaDatabase } from '../api/media-database.ts';
+import type { MediaDatabase } from '../database/media-database.ts';
 import type { Guild } from '../guild.ts';
 import type { Media } from '../types.ts';
 

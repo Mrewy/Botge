@@ -3,30 +3,29 @@
 import type { Meilisearch, Index } from 'meilisearch';
 
 const INDEX_NAME = 'twitchClips' as const;
+const MAX_TOTAL_HITS = 3000 as const;
 
 function getIndexName(guildId: string): string {
   return `${INDEX_NAME}_${guildId}`;
 }
 
-const MAX_TOTAL_HITS = 3000;
+export class TwitchClipsMeilisearch {
+  readonly #meilisearch: Readonly<Meilisearch>;
 
-export class TwitchClipsMeiliSearch {
-  readonly #meiliSearch: Readonly<Meilisearch>;
-
-  public constructor(meiliSearch: Meilisearch) {
-    this.#meiliSearch = meiliSearch;
+  public constructor(meilisearch: Meilisearch) {
+    this.#meilisearch = meilisearch;
   }
 
   public async getOrCreateIndex(guildId: string): Promise<Index | undefined> {
     const indexName = getIndexName(guildId);
 
-    await this.#meiliSearch
+    await this.#meilisearch
       .createIndex(indexName, {
         primaryKey: 'id'
       })
       .waitTask();
 
-    const index = await this.#meiliSearch.getIndex(indexName);
+    const index = await this.#meilisearch.getIndex(indexName);
     await index.updatePagination({ maxTotalHits: MAX_TOTAL_HITS }).waitTask();
 
     await index.updateSearchableAttributes(['title']).waitTask();

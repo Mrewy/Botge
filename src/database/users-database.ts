@@ -2,7 +2,7 @@
 
 import type { SqlJsStatic } from 'sql.js';
 
-import { BaseDatabase } from './base.ts';
+import { BaseDatabase } from './base-database.ts';
 
 type DatabaseUser = {
   readonly userId: string;

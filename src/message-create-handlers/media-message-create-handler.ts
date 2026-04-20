@@ -2,7 +2,7 @@
 
 import type { OmitPartialGroupDMChannel, Message } from 'discord.js';
 
-import type { MediaDatabase } from '../api/media-database.ts';
+import type { MediaDatabase } from '../database/media-database.ts';
 import { GUILD_ID_CUTEDOG } from '../guilds.ts';
 import type { Guild } from '../guild.ts';
 

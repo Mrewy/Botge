@@ -15,17 +15,17 @@ import {
 import type {
   Media,
   Quote,
-  ReadonlyOpenAI,
   ReadonlyEmbed,
-  ReadonlyTranslator,
   ReadonlyAttachment,
   OpenAIResponseInput,
   OpenAIResponseInputImage
 } from '../types.ts';
-import type { MediaDatabase } from '../api/media-database.ts';
-import type { QuoteDatabase } from '../api/quote-database.ts';
+
 import { logError } from '../utils/log-error.ts';
+
 import { CONTEXT_MENU_COMMAND_NAMES } from '../commands.ts';
+import type { DatabaseManager } from '../bot/database-manager.ts';
+import type { ApiManager } from '../bot/api-manager.ts';
 
 const MAX_DISCORD_MESSAGE_LENGTH = 2000 as const;
 
@@ -95,10 +95,8 @@ function getMediaUrlFromMessage(message: Message): getMediaUrlFromMessageReturnT
 }
 
 export function messageContextMenuCommandHandler(
-  openai: ReadonlyOpenAI | undefined,
-  mediaDatabase: Readonly<MediaDatabase>,
-  quoteDatabase: Readonly<QuoteDatabase>,
-  translator: ReadonlyTranslator | undefined
+  databaseManager: Readonly<DatabaseManager>,
+  apiManager: Readonly<ApiManager>
 ) {
   return async (interaction: MessageContextMenuCommandInteraction): Promise<void> => {
     const defer =
@@ -111,6 +109,8 @@ export function messageContextMenuCommandHandler(
 
     try {
       if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.chatGptExplain) {
+        const { openai } = apiManager;
+
         if (openai === undefined) {
           await defer;
           await interaction.editReply('ChatGPT command is not available right now.');
@@ -176,6 +176,8 @@ export function messageContextMenuCommandHandler(
         await defer;
         await interaction.editReply(reply);
       } else if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.addMedia) {
+        const { mediaDatabase } = databaseManager;
+
         const getMediaUrlFromMessage_ = getMediaUrlFromMessage(interaction.targetMessage);
 
         if (getMediaUrlFromMessage_.type === 'feedback') {
@@ -240,6 +242,8 @@ export function messageContextMenuCommandHandler(
           flags: MessageFlags.Ephemeral
         });
       } else if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.removeMedia) {
+        const { mediaDatabase } = databaseManager;
+
         const getMediaUrlFromMessage_ = getMediaUrlFromMessage(interaction.targetMessage);
 
         if (getMediaUrlFromMessage_.type === 'feedback') {
@@ -280,6 +284,8 @@ export function messageContextMenuCommandHandler(
         mediaDatabase.delete(userId, { name: mediaName, url: mediaUrl });
         await modalSubmitInteraction.reply({ content: `Removed media ${mediaName}.`, flags: MessageFlags.Ephemeral });
       } else if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.translate) {
+        const { translator } = apiManager;
+
         if (translator === undefined) {
           await defer;
           await interaction.editReply('Translate is not available right now.');
@@ -296,8 +302,11 @@ export function messageContextMenuCommandHandler(
         await defer;
         await interaction.editReply(textResult.text);
       } else if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.addQuote) {
+        const { quoteDatabase } = databaseManager;
+
         const userId = interaction.user.id;
         const { content } = interaction.targetMessage;
+
         if (quoteDatabase.quoteContentExists(userId, content)) {
           await interaction.reply({
             content: 'There already is a quote added with this content.',
@@ -350,9 +359,12 @@ export function messageContextMenuCommandHandler(
           flags: MessageFlags.Ephemeral
         });
       } else if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.removeQuote) {
+        const { quoteDatabase } = databaseManager;
+
         const userId = interaction.user.id;
         const { content } = interaction.targetMessage;
         const quoteName = quoteDatabase.getQuoteName(userId, content);
+
         if (quoteName === undefined) {
           await interaction.reply({
             content: 'You do not have a quote added with this link.',

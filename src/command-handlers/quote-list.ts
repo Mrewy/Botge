@@ -5,12 +5,12 @@ import { MessageFlags, type ChatInputCommandInteraction } from 'discord.js';
 import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import { QuoteMessageBuilder } from '../message-builders/quote-message-builder.ts';
-import type { QuoteDatabase } from '../api/quote-database.ts';
+import type { QuotesDatabase } from '../database/quotes-database.ts';
 import type { Guild } from '../guild.ts';
 import type { Quote } from '../types.ts';
 
 export function quoteListHandler(
-  quoteDataBase: Readonly<QuoteDatabase>,
+  quoteDataBase: Readonly<QuotesDatabase>,
   quoteMessageBuilders: Readonly<QuoteMessageBuilder>[]
 ) {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {

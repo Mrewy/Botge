@@ -2,7 +2,7 @@
 
 import type { OmitPartialGroupDMChannel, Message } from 'discord.js';
 
-import type { MediaDatabase } from '../api/media-database.ts';
+import type { MediaDatabase } from '../database/media-database.ts';
 import type { CachedUrl } from '../api/cached-url.ts';
 import { EMOTE_COMMAND_IDENTIFIER, emotesHandler } from '../command-handlers/emote.ts';
 import { logError } from '../utils/log-error.ts';

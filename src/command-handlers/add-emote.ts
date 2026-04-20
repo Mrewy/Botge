@@ -7,7 +7,7 @@ import { permitted, owner, globalAdministrator } from '../utils/command-handlers
 import { getOptionValue, getOptionValueWithoutUndefined } from '../utils/get-option-value.ts';
 import { fetchAndJson } from '../utils/fetch-and-json.ts';
 import { logError } from '../utils/log-error.ts';
-import type { AddedEmotesDatabase } from '../api/added-emotes-database.ts';
+import type { AddedEmotesDatabase } from '../database/added-emotes-database.ts';
 import type { AddedEmote, SevenTVEmoteNotInSet } from '../types.ts';
 import { CDN_ENDPOINTS } from '../paths-and-endpoints.ts';
 import type { Guild } from '../guild.ts';

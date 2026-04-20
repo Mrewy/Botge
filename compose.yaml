@@ -27,6 +27,7 @@ services:
 
   chromadb:
     image: chromadb/chroma:latest
+    mem_limit: 1g
     restart: unless-stopped
     volumes:
       - ./chroma-data:/chroma/chroma # persists your vectors to disk
@@ -61,5 +62,5 @@ services:
       - LOCAL_CACHE_BASE=http://nginx:80
 
       # Miscellaneous
-      - UPDATE_CLIPS_ON_STARTUP=false
+      - UPDATE_CLIPS_ON_STARTUP=true
       - JOIN_VOICE_CHANNEL=false

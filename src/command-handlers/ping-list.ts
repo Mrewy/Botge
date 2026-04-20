@@ -6,7 +6,7 @@ import type { ChatInputCommandInteraction, Client, TextChannel } from 'discord.j
 import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import { PingForPingListMessageBuilder } from '../message-builders/ping-for-ping-list-message-builder.ts';
-import type { PingsDatabase } from '../api/ping-database.ts';
+import type { PingsDatabase } from '../database/pings-database.ts';
 import { PING_LIST } from '../commands.ts';
 import type { Guild } from '../guild.ts';
 import { PingForPingMeMessageBuilder } from '../message-builders/ping-for-ping-me-message-builder.ts';

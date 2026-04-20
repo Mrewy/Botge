@@ -124,7 +124,7 @@
     "FrankerFaceZ",
     "BetterTTV",
     "GitBook",
-    "MeiliSearch",
+    "Meilisearch",
     "getmeili",
     "Meili",
     "DeepL",
@@ -133,6 +133,7 @@
     "Ollama",
     "ARPG",
     "chromadb",
+    "CNTREC",
 
     // Names
     "Botge",

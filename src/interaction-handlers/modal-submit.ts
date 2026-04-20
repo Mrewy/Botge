@@ -15,15 +15,18 @@ import {
   JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID,
   JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID
 } from '../message-builders/base.ts';
-import type { BroadcasterNameAndPersonalEmoteSetsDatabase } from '../api/broadcaster-name-and-personal-emote-sets-database.ts';
-import type { TwitchApi } from '../api/twitch-api.ts';
-import type { UsersDatabase } from '../api/user.ts';
+
+import type { MessageBuilderManager } from '../bot/message-builder-manager.ts';
+import type { DatabaseManager } from '../bot/database-manager.ts';
+import type { ApiManager } from '../bot/api-manager.ts';
+
 import {
   getSevenTvApiUrlFromSevenTvEmoteSetLink,
   getBttvApiUrlFromBroadcasterName,
   getFfzApiUrlFromBroadcasterName
 } from '../utils/interaction-handlers/get-api-url.ts';
 import { logError } from '../utils/log-error.ts';
+
 import {
   ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID,
   BROADCASTER_NAME_TEXT_INPUT_CUSTOM_ID,
@@ -31,21 +34,20 @@ import {
   ASSIGN_GUILD_MODAL_CUSTOM_ID,
   GUILD_ID_TEXT_INPUT_CUSTOM_ID
 } from './button.ts';
+
 import { PersonalEmoteSets } from '../personal-emote-sets.ts';
+
 import type { Guild } from '../guild.ts';
+
 import { User } from '../user.ts';
 
 export function modalSubmitHandler(
-  twitchClipMessageBuilders: readonly Readonly<TwitchClipMessageBuilder>[],
-  emoteMessageBuilders: readonly Readonly<EmoteMessageBuilder>[],
-  pingForPingListMessageBuilders: readonly Readonly<PingForPingListMessageBuilder>[],
-  mediaMessageBuilders: readonly Readonly<MediaMessageBuilder>[],
-  guild: Readonly<Guild> | undefined,
-  broadcasterNameAndPersonalEmoteSetsDatabase: Readonly<BroadcasterNameAndPersonalEmoteSetsDatabase>,
-  usersDatabase: Readonly<UsersDatabase>,
-  twitchApi: Readonly<TwitchApi> | undefined,
   guilds: readonly Readonly<Guild>[],
-  users: Readonly<User>[]
+  users: Readonly<User>[],
+  guild: Readonly<Guild> | undefined,
+  messageBuilderManager: Readonly<MessageBuilderManager>,
+  databaseManager: Readonly<DatabaseManager>,
+  apiManager: Readonly<ApiManager>
 ) {
   return async (interaction: ModalSubmitInteraction): Promise<void> => {
     const { customId } = interaction;
@@ -56,6 +58,8 @@ export function modalSubmitHandler(
 
     try {
       if (customId === ASSIGN_GUILD_MODAL_CUSTOM_ID) {
+        const { usersDatabase } = databaseManager;
+
         const guildId = interaction.fields.getTextInputValue(GUILD_ID_TEXT_INPUT_CUSTOM_ID).trim();
         const userId = interaction.user.id;
 
@@ -90,6 +94,9 @@ export function modalSubmitHandler(
       if (guild === undefined) return;
 
       if (customId === ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID) {
+        const { broadcasterNameAndPersonalEmoteSetsDatabase } = databaseManager;
+        const { twitchApi } = apiManager;
+
         const { id } = guild;
 
         let broadcasterName: string | null = interaction.fields
@@ -198,16 +205,19 @@ export function modalSubmitHandler(
 
       const messageBuilderType = getMessageBuilderTypeFromCustomId(customId);
       const messageBuilders = (():
+        | readonly Readonly<PingForPingListMessageBuilder>[]
         | readonly Readonly<TwitchClipMessageBuilder>[]
         | readonly Readonly<EmoteMessageBuilder>[]
-        | readonly Readonly<PingForPingListMessageBuilder>[]
         | readonly Readonly<MediaMessageBuilder>[]
         | undefined => {
-        if (messageBuilderType === TwitchClipMessageBuilder.messageBuilderType) return twitchClipMessageBuilders;
-        else if (messageBuilderType === EmoteMessageBuilder.messageBuilderType) return emoteMessageBuilders;
-        else if (messageBuilderType === PingForPingListMessageBuilder.messageBuilderType)
-          return pingForPingListMessageBuilders;
-        else if (messageBuilderType === MediaMessageBuilder.messageBuilderType) return mediaMessageBuilders;
+        if (messageBuilderType === PingForPingListMessageBuilder.messageBuilderType)
+          return messageBuilderManager.pingForPingListMessageBuilders;
+        else if (messageBuilderType === TwitchClipMessageBuilder.messageBuilderType)
+          return messageBuilderManager.twitchClipMessageBuilders;
+        else if (messageBuilderType === EmoteMessageBuilder.messageBuilderType)
+          return messageBuilderManager.emoteMessageBuilders;
+        else if (messageBuilderType === MediaMessageBuilder.messageBuilderType)
+          return messageBuilderManager.mediaMessageBuilders;
         return undefined;
       })();
       if (messageBuilders === undefined) return;

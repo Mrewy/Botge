@@ -16,23 +16,13 @@ import {
   type PermissionsBitField
 } from 'discord.js';
 
+import { PingForPingListMessageBuilder } from '../message-builders/ping-for-ping-list-message-builder.ts';
 import {
   PingForPingMeMessageBuilder,
   PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID,
   REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID,
   DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID
 } from '../message-builders/ping-for-ping-me-message-builder.ts';
-import { PingForPingListMessageBuilder } from '../message-builders/ping-for-ping-list-message-builder.ts';
-import {
-  getBaseCustomIdFromCustomId,
-  getMessageBuilderTypeFromCustomId,
-  getCounterFromCustomId,
-  FIRST_BUTTON_BASE_CUSTOM_ID,
-  LAST_BUTTON_BASE_CUSTOM_ID,
-  PREVIOUS_BUTTON_BASE_CUSTOM_ID,
-  NEXT_BUTTON_BASE_CUSTOM_ID,
-  JUMP_TO_BUTTON_BASE_CUSTOM_ID
-} from '../message-builders/base.ts';
 import {
   TwitchClipMessageBuilder,
   SEND_CLIP_BUTTON_BASE_CUSTOM_ID
@@ -48,14 +38,24 @@ import {
   DELETE_QUOTE_BUTTON_BASE_CUSTOM_ID,
   RENAME_QUOTE_BUTTON_BASE_CUSTOM_ID
 } from '../message-builders/quote-message-builder.ts';
+import {
+  getBaseCustomIdFromCustomId,
+  getMessageBuilderTypeFromCustomId,
+  getCounterFromCustomId,
+  FIRST_BUTTON_BASE_CUSTOM_ID,
+  LAST_BUTTON_BASE_CUSTOM_ID,
+  PREVIOUS_BUTTON_BASE_CUSTOM_ID,
+  NEXT_BUTTON_BASE_CUSTOM_ID,
+  JUMP_TO_BUTTON_BASE_CUSTOM_ID
+} from '../message-builders/base.ts';
+
 import { getSevenTvEmoteSetLinkFromSevenTvApiUlr } from '../utils/interaction-handlers/get-api-url.ts';
 import { booleanToAllowed } from '../utils/boolean-to-string.ts';
 import { logError } from '../utils/log-error.ts';
-import type { PermittedRoleIdsDatabase } from '../api/permitted-role-ids-database.ts';
-import type { AddedEmotesDatabase } from '../api/added-emotes-database.ts';
-import type { MediaDatabase } from '../api/media-database.ts';
-import type { QuoteDatabase } from '../api/quote-database.ts';
-import type { PingsDatabase } from '../api/ping-database.ts';
+
+import type { MessageBuilderManager } from '../bot/message-builder-manager.ts';
+import type { DatabaseManager } from '../bot/database-manager.ts';
+
 import {
   SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID,
   ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID,
@@ -64,6 +64,7 @@ import {
   CONFIGURATION_GUILD_BUTTON_CUSTOM_ID,
   CONFIGURATION_USER_BUTTON_CUSTOM_ID
 } from '../command-handlers/settings.ts';
+
 import type {
   TwitchClipMessageBuilderTransformFunctionReturnType,
   EmoteMessageBuilderTransformFunctionReturnType,
@@ -72,9 +73,12 @@ import type {
   PingForPingMeMessageBuilderReplies,
   PingForPingListMessageBuilderTransformFunctionReturnType
 } from '../types.ts';
-import { Platform } from '../enums.ts';
+
 import type { Guild } from '../guild.ts';
+
 import type { User } from '../user.ts';
+
+import { Platform } from '../enums.ts';
 
 export const SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID = 'selectSettingsPermittedRolesRoleSelectMenu';
 export const SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID =
@@ -100,20 +104,11 @@ let RENAME_MEDIA_MODAL_COUNTER = 0;
 let RENAME_QUOTE_MODAL_COUNTER = 0;
 
 export function buttonHandler(
-  twitchClipMessageBuilders: readonly Readonly<TwitchClipMessageBuilder>[],
-  emoteMessageBuilders: readonly Readonly<EmoteMessageBuilder>[],
-  mediaMessageBuilders: readonly Readonly<MediaMessageBuilder>[],
-  quoteMessageBuilders: readonly Readonly<QuoteMessageBuilder>[],
-  pingForPingMeMessageBuilders: Readonly<PingForPingMeMessageBuilder>[],
-  pingForPingListMessageBuilders: Readonly<PingForPingListMessageBuilder>[],
+  client: Client,
   guild: Readonly<Guild> | undefined,
   user: Readonly<User> | undefined,
-  addedEmotesDatabase: Readonly<AddedEmotesDatabase>,
-  permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase>,
-  pingsDataBase: Readonly<PingsDatabase>,
-  mediaDatabase: Readonly<MediaDatabase>,
-  quoteDatabase: Readonly<QuoteDatabase>,
-  client: Client
+  messageBuilderManager: Readonly<MessageBuilderManager>,
+  databaseManager: Readonly<DatabaseManager>
 ) {
   return async (interaction: ButtonInteraction): Promise<EmoteMessageBuilder | undefined> => {
     try {
@@ -178,7 +173,7 @@ export function buttonHandler(
 
         guild.toggleAllowEveryoneToAddEmote();
         const { allowEveryoneToAddEmote } = guild;
-        permittedRoleIdsDatabase.changeAllowEveryoneToAddEmote(guild.id, allowEveryoneToAddEmote);
+        databaseManager.permittedRoleIdsDatabase.changeAllowEveryoneToAddEmote(guild.id, allowEveryoneToAddEmote);
 
         await defer;
         await interaction.editReply(
@@ -251,12 +246,14 @@ export function buttonHandler(
       const interactionUserId = interaction.user.id;
 
       if (
-        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe ||
-        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingList
+        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingList ||
+        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe
       ) {
+        const { pingForPingListMessageBuilders, pingForPingMeMessageBuilders } = messageBuilderManager;
+
         const messageBuilders = (():
-          | readonly Readonly<PingForPingMeMessageBuilder>[]
           | readonly Readonly<PingForPingListMessageBuilder>[]
+          | readonly Readonly<PingForPingMeMessageBuilder>[]
           | undefined => {
           if (messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe)
             return pingForPingMeMessageBuilders;
@@ -285,18 +282,19 @@ export function buttonHandler(
         }
         const pingMessageBuilderInteraction = pingMessageBuilder.interaction;
 
+        const { pingsDatabase } = databaseManager;
         let pingMessageBuilderReplies: PingForPingMeMessageBuilderReplies | undefined = undefined;
         if (baseCustomId === PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID) {
-          pingMessageBuilderReplies = pingMessageBuilder.addUserId(pingsDataBase, interactionUserId);
+          pingMessageBuilderReplies = pingMessageBuilder.addUserId(pingsDatabase, interactionUserId);
         } else if (baseCustomId === REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID) {
-          pingMessageBuilderReplies = pingMessageBuilder.removeUserId(pingsDataBase, interactionUserId);
+          pingMessageBuilderReplies = pingMessageBuilder.removeUserId(pingsDatabase, interactionUserId);
         } else if (baseCustomId === DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID) {
           if (pingMessageBuilderInteraction.user.id !== interactionUserId) {
             await interaction.deferUpdate();
             return undefined;
           }
 
-          pingMessageBuilderReplies = pingMessageBuilder.deletePing(pingsDataBase);
+          pingMessageBuilderReplies = pingMessageBuilder.deletePing(pingsDatabase);
         } else {
           throw new Error('unknown button baseCustomId.');
         }
@@ -322,19 +320,23 @@ export function buttonHandler(
       }
 
       const messageBuilders = (():
+        | readonly Readonly<PingForPingListMessageBuilder>[]
         | readonly Readonly<TwitchClipMessageBuilder>[]
         | readonly Readonly<EmoteMessageBuilder>[]
         | readonly Readonly<MediaMessageBuilder>[]
         | readonly Readonly<QuoteMessageBuilder>[]
-        | readonly Readonly<PingForPingListMessageBuilder>[]
         | undefined => {
-        if (messageBuilderType === TwitchClipMessageBuilder.messageBuilderType) return twitchClipMessageBuilders;
-        else if (messageBuilderType === EmoteMessageBuilder.messageBuilderType) return emoteMessageBuilders;
-        else if (messageBuilderType === MediaMessageBuilder.messageBuilderType) return mediaMessageBuilders;
-        else if (messageBuilderType === QuoteMessageBuilder.messageBuilderType) return quoteMessageBuilders;
-        else if (messageBuilderType === PingForPingListMessageBuilder.messageBuilderType)
-          return pingForPingListMessageBuilders;
-        return undefined;
+        if (messageBuilderType === PingForPingListMessageBuilder.messageBuilderType)
+          return messageBuilderManager.pingForPingListMessageBuilders;
+        if (messageBuilderType === TwitchClipMessageBuilder.messageBuilderType)
+          return messageBuilderManager.twitchClipMessageBuilders;
+        else if (messageBuilderType === EmoteMessageBuilder.messageBuilderType)
+          return messageBuilderManager.emoteMessageBuilders;
+        else if (messageBuilderType === MediaMessageBuilder.messageBuilderType)
+          return messageBuilderManager.mediaMessageBuilders;
+        else if (messageBuilderType === QuoteMessageBuilder.messageBuilderType)
+          return messageBuilderManager.quoteMessageBuilders;
+        else return undefined;
       })();
       if (messageBuilders === undefined) {
         await interaction.deferUpdate();
@@ -425,7 +427,7 @@ export function buttonHandler(
         const { currentAddedEmote } = messageBuilder_;
 
         if (currentAddedEmote !== undefined) {
-          addedEmotesDatabase.delete(currentAddedEmote, guild.id);
+          databaseManager.addedEmotesDatabase.delete(currentAddedEmote, guild.id);
           guild.personalEmoteMatcherConstructor.removeSevenTVEmoteNotInSet(currentAddedEmote);
           await guild.refreshEmoteMatcher();
           reply = messageBuilder_.markCurrentAsDeleted();
@@ -437,7 +439,7 @@ export function buttonHandler(
         const { currentMedia } = messageBuilder_;
 
         if (currentMedia !== undefined) {
-          mediaDatabase.delete(interaction.user.id, currentMedia);
+          databaseManager.mediaDatabase.delete(interaction.user.id, currentMedia);
           reply = messageBuilder_.markCurrentAsDeleted();
         } else {
           reply = undefined;
@@ -447,12 +449,14 @@ export function buttonHandler(
         const { currentQuote } = messageBuilder_;
 
         if (currentQuote !== undefined) {
-          quoteDatabase.delete(interaction.user.id, currentQuote);
+          databaseManager.quoteDatabase.delete(interaction.user.id, currentQuote);
           reply = messageBuilder_.markCurrentAsDeleted();
         } else {
           reply = undefined;
         }
       } else if (baseCustomId === RENAME_MEDIA_BUTTON_BASE_CUSTOM_ID) {
+        const { mediaDatabase } = databaseManager;
+
         const messageBuilder_ = messageBuilder as Readonly<MediaMessageBuilder>;
         const { currentMedia } = messageBuilder_;
 
@@ -502,6 +506,8 @@ export function buttonHandler(
         });
         return undefined;
       } else if (baseCustomId === RENAME_QUOTE_BUTTON_BASE_CUSTOM_ID) {
+        const { quoteDatabase } = databaseManager;
+
         const messageBuilder_ = messageBuilder as Readonly<QuoteMessageBuilder>;
         const { currentQuote } = messageBuilder_;
 

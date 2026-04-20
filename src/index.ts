@@ -24,28 +24,34 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import { getVoiceConnections } from '@discordjs/voice';
 import initSqlJs from 'sql.js';
 
-import { BroadcasterNameAndPersonalEmoteSetsDatabase } from './api/broadcaster-name-and-personal-emote-sets-database.ts';
-import { PermittedRoleIdsDatabase } from './api/permitted-role-ids-database.ts';
-import { AddedEmotesDatabase } from './api/added-emotes-database.ts';
-import { MediaDatabase } from './api/media-database.ts';
-import { QuoteDatabase } from './api/quote-database.ts';
-import { PingsDatabase } from './api/ping-database.ts';
-import { CachedUrl } from './api/cached-url.ts';
-import { UsersDatabase } from './api/user.ts';
-import { newTwitchApi } from './utils/constructors/new-twitch-api.ts';
+import { BroadcasterNameAndPersonalEmoteSetsDatabase } from './database/broadcaster-name-and-personal-emote-sets-database.ts';
+import { PermittedRoleIdsDatabase } from './database/permitted-role-ids-database.ts';
+import { AddedEmotesDatabase } from './database/added-emotes-database.ts';
+import { MediaDatabase } from './database/media-database.ts';
+import { PingsDatabase } from './database/pings-database.ts';
+import { QuotesDatabase } from './database/quotes-database.ts';
+import { UsersDatabase } from './database/users-database.ts';
+
 import { newRedditApi } from './utils/constructors/new-reddit-api.ts';
+import { newTwitchApi } from './utils/constructors/new-twitch-api.ts';
 import { newGuild } from './utils/constructors/new-guild.ts';
 import { registerPings } from './utils/register-pings.ts';
 import { logError } from './utils/log-error.ts';
+
+import { TwitchClipsMeilisearch } from './api/twitch-clips-meilisearch.ts';
+import { CachedUrl } from './api/cached-url.ts';
+
+import { DatabaseManager } from './bot/database-manager.ts';
+import { ApiManager } from './bot/api-manager.ts';
+import { Bot } from './bot/bot.ts';
+
 import { DATABASE_DIR, DATABASE_ENDPOINTS, TMP_DIR } from './paths-and-endpoints.ts';
 import { GlobalEmoteMatcherConstructor } from './emote-matcher-constructor.ts';
-import { TwitchClipsMeiliSearch } from './twitch-clips-meili-search.ts';
 import type { ReadonlyOpenAI, ReadonlyTranslator } from './types.ts';
 import type { PersonalEmoteSets } from './personal-emote-sets.ts';
 import { updateCommands } from './update-commands-docker.ts';
 import type { Guild } from './guild.ts';
 import { User } from './user.ts';
-import { Bot } from './bot.ts';
 
 /**
  * Ensures that directories exist.
@@ -95,52 +101,76 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     LOCAL_CACHE_BASE
   } = process.env;
 
+  //client
   const client: Client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
   });
 
-  const openai: ReadonlyOpenAI | undefined =
-    OPENAI_API_KEY !== undefined ? new OpenAI({ apiKey: OPENAI_API_KEY }) : undefined;
-
-  const translator: ReadonlyTranslator | undefined =
-    DEEPL_API_KEY !== undefined ? new Translator(DEEPL_API_KEY) : undefined;
-
-  const twitchApi =
-    TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined
-      ? newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
+  //apiManager
+  const twitchClipsMeiliSearch: Readonly<TwitchClipsMeilisearch> | undefined =
+    MEILISEARCH_HOST !== undefined && MEILI_MASTER_KEY !== undefined
+      ? new TwitchClipsMeilisearch(new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY }))
       : undefined;
 
   const redditApi =
     REDDIT_CLIENT_ID !== undefined && REDDIT_SECRET !== undefined
       ? newRedditApi(REDDIT_CLIENT_ID, REDDIT_SECRET)
       : undefined;
-
-  const twitchClipsMeiliSearch: Readonly<TwitchClipsMeiliSearch> | undefined =
-    MEILISEARCH_HOST !== undefined && MEILI_MASTER_KEY !== undefined
-      ? new TwitchClipsMeiliSearch(new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY }))
+  const twitchApi =
+    TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined
+      ? newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
       : undefined;
 
+  const cachedUrl: Readonly<CachedUrl> = new CachedUrl(LOCAL_CACHE_BASE);
+
+  const translator: ReadonlyTranslator | undefined =
+    DEEPL_API_KEY !== undefined ? new Translator(DEEPL_API_KEY) : undefined;
+  const openai: ReadonlyOpenAI | undefined =
+    OPENAI_API_KEY !== undefined ? new OpenAI({ apiKey: OPENAI_API_KEY }) : undefined;
+
+  const apiManager: Readonly<ApiManager> = new ApiManager(
+    twitchClipsMeiliSearch,
+    await redditApi,
+    await twitchApi,
+    cachedUrl,
+    translator,
+    openai
+  );
+
+  //dataBaseManager
   const sqlJsStatic = await initSqlJs();
-  const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(
-    DATABASE_ENDPOINTS.addedEmotes,
-    sqlJsStatic
-  );
-  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_ENDPOINTS.pings, sqlJsStatic);
-  const permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase> = new PermittedRoleIdsDatabase(
-    DATABASE_ENDPOINTS.permitRoleIds,
-    sqlJsStatic
-  );
+
   const broadcasterNameAndPersonalEmoteSetsDatabase: Readonly<BroadcasterNameAndPersonalEmoteSetsDatabase> =
     new BroadcasterNameAndPersonalEmoteSetsDatabase(
       DATABASE_ENDPOINTS.broadcasterNameAndPersonalEmoteSets,
       sqlJsStatic
     );
-  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_ENDPOINTS.users, sqlJsStatic);
+  const permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase> = new PermittedRoleIdsDatabase(
+    DATABASE_ENDPOINTS.permitRoleIds,
+    sqlJsStatic
+  );
+  const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(
+    DATABASE_ENDPOINTS.addedEmotes,
+    sqlJsStatic
+  );
+
   const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_ENDPOINTS.media, sqlJsStatic);
-  const quoteDatabase: Readonly<QuoteDatabase> = new QuoteDatabase(DATABASE_ENDPOINTS.quote, sqlJsStatic);
+  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_ENDPOINTS.users, sqlJsStatic);
+  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_ENDPOINTS.pings, sqlJsStatic);
+  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_ENDPOINTS.quote, sqlJsStatic);
 
-  const cachedUrl: Readonly<CachedUrl> = new CachedUrl(LOCAL_CACHE_BASE);
+  const databaseManager: Readonly<DatabaseManager> = new DatabaseManager(
+    broadcasterNameAndPersonalEmoteSetsDatabase,
+    permittedRoleIdsDatabase,
+    addedEmotesDatabase,
+    mediaDatabase,
+    quoteDatabase,
+    pingsDatabase,
+    usersDatabase
+  );
 
+  //guilds
+  // ! needed for newGuild
   await GlobalEmoteMatcherConstructor.createInstance(await twitchApi, addedEmotesDatabase);
 
   const guilds: readonly Readonly<Guild>[] = await Promise.all(
@@ -153,18 +183,12 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
           string,
           readonly [string | null, PersonalEmoteSets]
         ]) => {
-          return newGuild(
-            guildId,
-            twitchClipsMeiliSearch,
-            addedEmotesDatabase,
-            permittedRoleIdsDatabase,
-            broadcasterName,
-            personalEmoteSets
-          );
+          return newGuild(guildId, broadcasterName, personalEmoteSets, databaseManager, apiManager);
         }
       )
   );
 
+  //users
   const users: readonly Readonly<User>[] = usersDatabase
     .getAllUsers()
     .entries()
@@ -176,24 +200,7 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
       return new User(userId, guild);
     });
 
-  return new Bot(
-    client,
-    openai,
-    translator,
-    await twitchApi,
-    await redditApi,
-    addedEmotesDatabase,
-    pingsDatabase,
-    permittedRoleIdsDatabase,
-    broadcasterNameAndPersonalEmoteSetsDatabase,
-    usersDatabase,
-    mediaDatabase,
-    quoteDatabase,
-    cachedUrl,
-    guilds,
-    users,
-    twitchClipsMeiliSearch
-  );
+  return new Bot(client, apiManager, databaseManager, guilds, users);
 })();
 
 /**
@@ -201,12 +208,7 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
  */
 function closeFunction(): void {
   try {
-    bot.addedEmotesDatabase.close();
-    bot.pingsDatabase.close();
-    bot.permittedRoleIdsDatabase.close();
-    bot.broadcasterNameAndPersonalEmoteSetsDatabase.close();
-    bot.usersDatabase.close();
-    bot.mediaDatabase.close();
+    bot.dataBaseManager.closeDatabases();
   } catch (error) {
     logError(error, 'Error at closeFunction - closing databases');
   }
@@ -254,11 +256,11 @@ process.on('unhandledRejection', (error): void => {
 
 const refreshClipsOrRefreshUniqueCreatorNamesAndGameIds: readonly Promise<void>[] =
   process.env['UPDATE_CLIPS_ON_STARTUP'] === 'true'
-    ? bot.guilds.map(async (guild) => guild.refreshClips(bot.twitchApi))
+    ? bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi))
     : bot.guilds.map(async (guild) => guild.refreshUniqueCreatorNamesAndGameIds());
 
 scheduleJob('0 */4 * * * *', () => {
-  bot.cleanupMessageBuilders();
+  bot.messageBuilderManager.cleanupMessageBuilders();
 });
 
 scheduleJob('0 */20 * * * *', async () => {
@@ -268,14 +270,14 @@ scheduleJob('0 */20 * * * *', async () => {
 // update every hour, in the 54th minute 0th second
 // this is because of the 300 second timeout of fetch + 1 minute, so twitch api is validated before use
 scheduleJob('0 54 * * * *', async () => {
-  await bot.twitchApi?.validateAndGetNewAccessTokenIfInvalid();
+  await bot.apiManager.twitchApi?.validateAndGetNewAccessTokenIfInvalid();
 });
 scheduleJob('0 54 * * * *', async () => {
-  await bot.redditApi?.validateAndGetNewAccessTokenIfInvalid();
+  await bot.apiManager.redditApi?.validateAndGetNewAccessTokenIfInvalid();
 });
 
 scheduleJob('0 */2 * * *', async () => {
-  await Promise.all(bot.guilds.map(async (guild) => guild.refreshClips(bot.twitchApi)));
+  await Promise.all(bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi)));
 });
 
 scheduleJob('6 */6 * * *', async () => {
@@ -288,9 +290,9 @@ scheduleJob('12 */12 * * *', async () => {
   await GlobalEmoteMatcherConstructor.instance.refreshGlobalEmotes();
 });
 
-bot.registerHandlers();
+bot.registerListeners();
 await ensureDirs;
 await updateCommands_;
 await Promise.all(refreshClipsOrRefreshUniqueCreatorNamesAndGameIds);
-await bot.start(process.env['DISCORD_TOKEN']);
-await registerPings(bot.client, bot.pingsDatabase, bot.scheduledJobs);
+await bot.client.login(process.env['DISCORD_TOKEN']);
+await registerPings(bot.client, bot.dataBaseManager.pingsDatabase, bot.scheduledJobs);

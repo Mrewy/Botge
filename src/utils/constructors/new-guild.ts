@@ -1,22 +1,26 @@
 /** @format */
 
-import { Guild } from '../../guild.ts';
-import type { PersonalEmoteSets } from '../../personal-emote-sets.ts';
+import type { DatabaseManager } from '../../bot/database-manager.ts';
+import type { ApiManager } from '../../bot/api-manager.ts';
+
 import { PersonalEmoteMatcherConstructor } from '../../emote-matcher-constructor.ts';
-import type { TwitchClipsMeiliSearch } from '../../twitch-clips-meili-search.ts';
-import type { AddedEmotesDatabase } from '../../api/added-emotes-database.ts';
-import type { PermittedRoleIdsDatabase } from '../../api/permitted-role-ids-database.ts';
+
+import type { PersonalEmoteSets } from '../../personal-emote-sets.ts';
+
+import { Guild } from '../../guild.ts';
 
 export async function newGuild(
   guildId: string,
-  twitchClipsMeiliSearch: Readonly<TwitchClipsMeiliSearch> | undefined,
-  addedEmotesDatabase: Readonly<AddedEmotesDatabase>,
-  permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase>,
   broadcasterName: string | null,
-  personalEmoteSets: PersonalEmoteSets | undefined
+  personalEmoteSets: PersonalEmoteSets | undefined,
+  databaseManager: Readonly<DatabaseManager>,
+  apiManager: Readonly<ApiManager>
 ): Promise<Readonly<Guild>> {
-  addedEmotesDatabase.createTable(guildId);
+  const { permittedRoleIdsDatabase, addedEmotesDatabase } = databaseManager;
+  const { twitchClipsMeilisearch } = apiManager;
+
   permittedRoleIdsDatabase.createTable(guildId);
+  addedEmotesDatabase.createTable(guildId);
 
   const settingsPermittedRoleIds = permittedRoleIdsDatabase.getSettingsPermittedRoleIds(guildId);
   const addEmotePermittedRoleIds = permittedRoleIdsDatabase.getAddEmotePermittedRoleIds(guildId);
@@ -24,12 +28,12 @@ export async function newGuild(
 
   const personalEmoteMatcherConstructor = PersonalEmoteMatcherConstructor.create(guildId, personalEmoteSets);
   const emoteMatcher = (await personalEmoteMatcherConstructor).constructEmoteMatcher();
-  const twitchClipsMeiliSearchIndex = twitchClipsMeiliSearch?.getOrCreateIndex(guildId);
+  const twitchClipsMeilisearchIndex = twitchClipsMeilisearch?.getOrCreateIndex(guildId);
 
   return new Guild(
     guildId,
     broadcasterName,
-    await twitchClipsMeiliSearchIndex,
+    await twitchClipsMeilisearchIndex,
     await emoteMatcher,
     await personalEmoteMatcherConstructor,
     settingsPermittedRoleIds,

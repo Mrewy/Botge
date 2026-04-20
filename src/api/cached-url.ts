@@ -4,11 +4,13 @@
 const rules: readonly (readonly [Readonly<RegExp>, string])[] = [
   [new RegExp(/https:\/\/cdn.7tv.app(.*)/), '/7tv'],
   [new RegExp(/https:\/\/cdn.betterttv.net(.*)/), '/bttv'],
-  [new RegExp(/https:\/\/cdn.frankerfacez.com(.*)/), '/ffz']
+  [new RegExp(/https:\/\/cdn.frankerfacez.com(.*)/), '/ffz'],
+  [new RegExp(/https:\/\/static-cdn.jtvnw.net(.*)/), '/twitch']
 ];
 
 export class CachedUrl {
   readonly #base: string | undefined;
+
   public constructor(base: string | undefined) {
     this.#base = base;
   }
@@ -20,8 +22,8 @@ export class CachedUrl {
 
     for (const [regex, prefix] of rules) {
       const match = remoteUrl.match(regex);
-      if (match === null) continue;
 
+      if (match === null) continue;
       return [this.#base + prefix + match[1], true];
     }
 

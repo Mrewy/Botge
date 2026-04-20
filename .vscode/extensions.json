@@ -2,7 +2,6 @@
   "recommendations": [
     // Project
     "ms-vscode-remote.remote-containers",
-    "GitHub.copilot",
     "GitHub.copilot-chat",
     "docker.docker",
     "eamodio.gitlens",
@@ -13,6 +12,7 @@
     "streetsidesoftware.code-spell-checker",
     "DavidAnson.vscode-markdownlint",
     "redhat.vscode-yaml",
+    "ahmadalli.vscode-nginx-conf",
 
     // Extras
     "vscode-icons-team.vscode-icons",

@@ -27,7 +27,6 @@
     "vscode": {
       "extensions": [
         // Project
-        "GitHub.copilot",
         "GitHub.copilot-chat",
         "eamodio.gitlens",
         "dbaeumer.vscode-eslint",
@@ -37,6 +36,7 @@
         "streetsidesoftware.code-spell-checker",
         "DavidAnson.vscode-markdownlint",
         "redhat.vscode-yaml",
+        "ahmadalli.vscode-nginx-conf",
 
         // Extras
         "vscode-icons-team.vscode-icons",

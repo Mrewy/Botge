@@ -1,6 +1,6 @@
 <!-- @format -->
 
-# ![Botge Website Logo](assets/peepoCute2x.png) Botge
+# ![Botge Website Logo](assets/catSmile.png) Botge
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Mrewy/Botge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Mrewy/Botge)

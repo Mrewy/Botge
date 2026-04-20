@@ -62,5 +62,5 @@ services:
       - LOCAL_CACHE_BASE=http://nginx:80
 
       # Miscellaneous
-      - UPDATE_CLIPS_ON_STARTUP=true
+      - UPDATE_CLIPS_ON_STARTUP=false
       - JOIN_VOICE_CHANNEL=false

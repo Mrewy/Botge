@@ -1,6 +1,6 @@
 /** @format */
 
-import { CDN_ENDPOINTS } from '../../paths-and-endpoints.ts';
+import { SEVEN_TV_NOT_IN_SET_CDN } from '../../command-handlers/add-emote.ts';
 import type { SevenTVEmoteNotInSet } from '../../types.ts';
 import { fetchAndJson } from '../fetch-and-json.ts';
 
@@ -16,7 +16,7 @@ export async function sevenTVUrlToSevenTVNotInSet(url: string): Promise<SevenTVE
 
   // TODO: USE REGEX CAPTURE
   const sevenEmoteNotInSetId = urlSplit.at(-1);
-  const sevenEmoteNotInSetUrl = `${CDN_ENDPOINTS.sevenTVNotInSet}${SPLITTER}${sevenEmoteNotInSetId}`;
+  const sevenEmoteNotInSetUrl = `${SEVEN_TV_NOT_IN_SET_CDN}${SPLITTER}${sevenEmoteNotInSetId}`;
 
   const sevenEmoteNotInSet = (await fetchAndJson(sevenEmoteNotInSetUrl)) as SevenTVEmoteNotInSet;
   return sevenEmoteNotInSet;

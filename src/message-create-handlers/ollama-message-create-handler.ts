@@ -5,7 +5,7 @@ import type { OmitPartialGroupDMChannel, Message } from 'discord.js';
 import { storeMessage, findSimilarWithContext } from '../api/vector-store.ts';
 import { scoreReplyOpportunity, generateReply } from '../api/ollama.ts';
 import { logError } from '../utils/log-error.ts';
-import { config } from '../config.ts';
+import { config } from '../api/config/ollama-config.ts';
 
 type BufferEntry = { readonly author: string; readonly content: string; readonly timestamp: string };
 

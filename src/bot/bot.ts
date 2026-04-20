@@ -20,10 +20,10 @@ import { emotesHandler } from '../command-handlers/emote.ts';
 
 import { messageCreateHandler } from '../message-create-handlers/message-create-handler.ts';
 
-import { GENERAL_CHANNEL_ID_CUTEDOG } from '../guilds.ts';
-import { SLASH_COMMAND_NAMES } from '../commands.ts';
-import type { Guild } from '../guild.ts';
-import type { User } from '../user.ts';
+import { GENERAL_CHANNEL_ID_CUTEDOG } from '../discord/guilds.ts';
+import { SLASH_COMMAND_NAMES } from '../discord/commands.ts';
+import type { Guild } from '../discord/guild.ts';
+import type { User } from '../discord/user.ts';
 
 import { MessageBuilderManager } from './message-builder-manager.ts';
 import type { DatabaseManager } from './database-manager.ts';

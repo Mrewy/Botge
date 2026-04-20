@@ -5,8 +5,8 @@ import { MessageFlags, type ChatInputCommandInteraction } from 'discord.js';
 import { getOptionValueWithoutUndefined } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import type { QuotesDatabase } from '../database/quotes-database.ts';
-import type { Guild } from '../guild.ts';
-import { GUILD_ID_CUTEDOG } from '../guilds.ts';
+import type { Guild } from '../discord/guild.ts';
+import { GUILD_ID_CUTEDOG } from '../discord/guilds.ts';
 
 export function quoteHandler(quoteDataBase: Readonly<QuotesDatabase>) {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {

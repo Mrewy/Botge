@@ -14,7 +14,7 @@ import {
 import { permitted, administrator, owner, globalAdministrator } from '../utils/command-handlers/permitted.ts';
 import { booleanToAllowed } from '../utils/boolean-to-string.ts';
 import { logError } from '../utils/log-error.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 
 export const SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID = 'settingsPermittedRolesButton' as const;
 export const ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID = 'addEmotePermittedRolesButton' as const;

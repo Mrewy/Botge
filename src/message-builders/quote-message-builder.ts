@@ -15,7 +15,7 @@ import type {
   ReadonlyActionRowBuilderMessageActionRowComponentBuilder
 } from '../types.ts';
 
-import { MEDIA_LIST_AND_QUOTE_LIST } from '../commands.ts';
+import { MEDIA_LIST_AND_QUOTE_LIST } from '../discord/commands.ts';
 
 import { BaseMessageBuilder, getCustomId } from './base.ts';
 

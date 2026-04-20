@@ -4,9 +4,11 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 import { ChromaClient, type Collection, type GetResult } from 'chromadb';
 
-import { DATABASE_ENDPOINTS } from '../paths-and-endpoints.ts';
+import { DATABASE_DIR } from '../directory-paths.ts';
+
 import type { ReadonlyMetaData } from '../types.ts';
-import { config } from '../config.ts';
+
+import { config } from './config/ollama-config.ts';
 
 type StoreMessageParams = {
   readonly id: string;
@@ -23,7 +25,7 @@ type OllamaEmbeddingsResponse = {
 
 type SeqNums = Record<string, number>;
 
-const { seqFile } = DATABASE_ENDPOINTS;
+const SEQ_FILE_PATH: 'data/seqNums.json' = `${DATABASE_DIR}/seqNums.json`;
 const chromaUrl = new URL(config.chroma.url);
 const client: ChromaClient = new ChromaClient({
   ssl: chromaUrl.protocol === 'https:',
@@ -99,17 +101,17 @@ async function getCollection(): Promise<Collection> {
 // consistent with what's already stored in ChromaDB.
 
 function loadSeqNums(): SeqNums {
-  if (!existsSync(seqFile)) return {};
+  if (!existsSync(SEQ_FILE_PATH)) return {};
 
   try {
-    return JSON.parse(readFileSync(seqFile, 'utf8')) as SeqNums;
+    return JSON.parse(readFileSync(SEQ_FILE_PATH, 'utf8')) as SeqNums;
   } catch {
     return {};
   }
 }
 
 function saveSeqNums(seqNums: Readonly<SeqNums>): void {
-  writeFileSync(seqFile, JSON.stringify(seqNums, null, 2));
+  writeFileSync(SEQ_FILE_PATH, JSON.stringify(seqNums, null, 2));
 }
 
 // In-memory cache, synced to disk on every write

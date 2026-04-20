@@ -3,8 +3,8 @@
 import type { OmitPartialGroupDMChannel, Message } from 'discord.js';
 
 import type { MediaDatabase } from '../database/media-database.ts';
-import { GUILD_ID_CUTEDOG } from '../guilds.ts';
-import type { Guild } from '../guild.ts';
+import { GUILD_ID_CUTEDOG } from '../discord/guilds.ts';
+import type { Guild } from '../discord/guild.ts';
 
 export const MEDIA_COMMAND_IDENTIFIER = '.' as const;
 

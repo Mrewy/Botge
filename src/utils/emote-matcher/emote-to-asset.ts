@@ -1,6 +1,6 @@
 /** @format */
 
-import { Platform } from '../enums.ts';
+import { Platform } from '../../enums.ts';
 import type {
   SevenTVEmoteFile,
   SevenTVEmoteInSet,
@@ -9,8 +9,10 @@ import type {
   FFZEmote,
   TwitchEmote,
   AssetInfo
-} from '../types.ts';
-import { CDN_ENDPOINTS } from '../paths-and-endpoints.ts';
+} from '../../types.ts';
+
+const BTTV_CDN = 'cdn.betterttv.net/emote' as const;
+const TWITCH_CDN = 'static-cdn.jtvnw.net/emoticons/v2' as const;
 
 const EMOTE_SIZE = 2 as const;
 
@@ -55,7 +57,7 @@ export function bttvToAsset(emote: BTTVEmote): AssetInfo {
   return {
     id: id,
     name: code,
-    url: `https://${CDN_ENDPOINTS.bttv}/${id}/${filename}`,
+    url: `https://${BTTV_CDN}/${id}/${filename}`,
     zeroWidth: false,
     animated: animated,
     width: undefined,
@@ -88,7 +90,7 @@ export function twitchToAsset(emote: TwitchEmote): AssetInfo {
   return {
     id: id,
     name: name,
-    url: `https://${CDN_ENDPOINTS.twitch}/${id}/${chosenFormat}/${chosenThemeMode}/${EMOTE_SIZE}.0`,
+    url: `https://${TWITCH_CDN}/${id}/${chosenFormat}/${chosenThemeMode}/${EMOTE_SIZE}.0`,
     zeroWidth: false,
     animated: animated,
     width: undefined,

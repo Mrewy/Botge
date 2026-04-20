@@ -9,8 +9,9 @@ import { fetchAndJson } from '../utils/fetch-and-json.ts';
 import { logError } from '../utils/log-error.ts';
 import type { AddedEmotesDatabase } from '../database/added-emotes-database.ts';
 import type { AddedEmote, SevenTVEmoteNotInSet } from '../types.ts';
-import { CDN_ENDPOINTS } from '../paths-and-endpoints.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
+
+export const SEVEN_TV_NOT_IN_SET_CDN = 'https://7tv.io/v3/emotes' as const;
 
 export function addEmoteHandlerSevenTVNotInSet(addedEmotesDatabase: Readonly<AddedEmotesDatabase>) {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
@@ -52,7 +53,7 @@ export function addEmoteHandlerSevenTVNotInSet(addedEmotesDatabase: Readonly<Add
       }
 
       const emoteId = url.split(SPLITTER).at(-1);
-      const addedEmote: AddedEmote = { url: `${CDN_ENDPOINTS.sevenTVNotInSet}${SPLITTER}${emoteId}`, alias: name };
+      const addedEmote: AddedEmote = { url: `${SEVEN_TV_NOT_IN_SET_CDN}${SPLITTER}${emoteId}`, alias: name };
       const addedEmotes = addedEmotesDatabase.getAll(guild.id);
       if (addedEmotes.some((addedEmote_) => addedEmote_.url === addedEmote.url)) {
         await defer;

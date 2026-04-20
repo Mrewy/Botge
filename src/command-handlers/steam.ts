@@ -4,8 +4,8 @@ import fetch, { type Response } from 'node-fetch';
 import type { ChatInputCommandInteraction } from 'discord.js';
 
 import { logError } from '../utils/log-error.ts';
-import { GUILD_ID_CUTEDOG } from '../guilds.ts';
-import type { Guild } from '../guild.ts';
+import { GUILD_ID_CUTEDOG } from '../discord/guilds.ts';
+import type { Guild } from '../discord/guild.ts';
 
 type NumberOfCurrentPlayers = {
   readonly response: {

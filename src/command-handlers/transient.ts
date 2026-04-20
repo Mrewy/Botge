@@ -6,7 +6,7 @@ import { MessageFlags, type ChatInputCommandInteraction } from 'discord.js';
 
 import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 
 const MAXIMUM_DURATION_SECONDS = 600 as const;
 

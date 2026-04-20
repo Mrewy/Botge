@@ -15,8 +15,8 @@ import { getShortestUniqueSubstrings } from '../command-handlers/shortest-unique
 import type { DatabaseManager } from '../bot/database-manager.ts';
 
 import type { TwitchClip, ReadonlyHit, ReadonlyApplicationCommandOptionChoiceDataString, AssetInfo } from '../types.ts';
-import type { EmoteMatcher } from '../emote-matcher.ts';
-import { SLASH_COMMAND_NAMES } from '../commands.ts';
+import type { EmoteMatcher } from '../emote-matcher/emote-matcher.ts';
+import { SLASH_COMMAND_NAMES } from '../discord/commands.ts';
 import { Platform } from '../enums.ts';
 
 const MAX_OPTIONS_LENGTH = 25 as const; //THE MAXIMUM YOU CAN SET HERE IS 25

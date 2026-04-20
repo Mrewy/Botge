@@ -2,9 +2,8 @@
 
 import fetch from 'node-fetch';
 
-import type { TwitchApi } from '../../api/twitch-api.ts';
+import { TWITCH_API_ENDPOINTS, type TwitchApi } from '../../api/twitch-api.ts';
 import type { TwitchClip, TwitchClips } from '../../types.ts';
-import { TWITCH_API_ENDPOINTS } from '../../paths-and-endpoints.ts';
 
 type TwitchClientCredentialsGrantFlow = {
   readonly access_token: string;

@@ -8,7 +8,7 @@ const twemoji = await (async (): Promise<Twemoji> => {
 
 import type { AssetInfo } from '../../../types.ts';
 import { Platform } from '../../../enums.ts';
-import { sevenTVNotInSetToAsset } from '../../emote-to-asset.ts';
+import { sevenTVNotInSetToAsset } from '../../emote-matcher/emote-to-asset.ts';
 import { sevenTVUrlToSevenTVNotInSet } from '../platform-url-to-api-url.ts';
 import { maxPlatformSize } from './size-change.ts';
 

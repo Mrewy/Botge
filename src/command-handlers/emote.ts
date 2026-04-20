@@ -17,9 +17,9 @@ import { logError } from '../utils/log-error.ts';
 import type { CachedUrl } from '../api/cached-url.ts';
 import { EmoteMessageBuilder } from '../message-builders/emote-message-builder.ts';
 import type { AssetInfo, DownloadedAsset } from '../types.ts';
-import { TMP_DIR } from '../paths-and-endpoints.ts';
-import { GUILD_ID_CUTEDOG } from '../guilds.ts';
-import type { Guild } from '../guild.ts';
+import { TMP_DIR } from '../directory-paths.ts';
+import { GUILD_ID_CUTEDOG } from '../discord/guilds.ts';
+import type { Guild } from '../discord/guild.ts';
 
 export const EMOTE_COMMAND_IDENTIFIER = '+' as const;
 export const EMOTE_SIZE_IDENTIFIER = ':' as const;

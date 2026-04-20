@@ -1,6 +1,6 @@
 /** @format */
 
-import { config } from '../config.ts';
+import { config } from './config/ollama-config.ts';
 
 type OllamaChatResponse = {
   readonly message?: { readonly content?: string };

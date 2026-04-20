@@ -1,6 +1,5 @@
 /** @format */
 
-import { EmoteMatcher } from './emote-matcher.ts';
 import type {
   SevenTVEmoteNotInSet,
   BTTVEmote,
@@ -10,12 +9,18 @@ import type {
   SevenTVEmotes,
   TwitchGlobalEmotes,
   AddedEmote
-} from './types.ts';
-import { GLOBAL_EMOTE_ENDPOINTS } from './paths-and-endpoints.ts';
+} from '../types.ts';
 import type { PersonalEmoteSets } from './personal-emote-sets.ts';
-import type { TwitchApi } from './api/twitch-api.ts';
-import type { AddedEmotesDatabase } from './database/added-emotes-database.ts';
-import { fetchAndJson } from './utils/fetch-and-json.ts';
+import type { TwitchApi } from '../api/twitch-api.ts';
+import type { AddedEmotesDatabase } from '../database/added-emotes-database.ts';
+import { fetchAndJson } from '../utils/fetch-and-json.ts';
+import { EmoteMatcher } from './emote-matcher.ts';
+
+const GLOBAL_EMOTE_ENDPOINTS = {
+  sevenTV: 'https://7tv.io/v3/emote-sets/global',
+  bttv: 'https://api.betterttv.net/3/cached/emotes/global',
+  ffz: 'https://api.frankerfacez.com/v1/set/global'
+} as const;
 
 export class GlobalEmoteMatcherConstructor {
   static #instance: Readonly<GlobalEmoteMatcherConstructor> | undefined = undefined;

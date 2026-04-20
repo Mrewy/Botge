@@ -6,7 +6,7 @@ import type { DatabaseManager } from '../bot/database-manager.ts';
 
 import { logError } from '../utils/log-error.ts';
 
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 import {
   SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID,
   SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID

@@ -5,7 +5,7 @@ import type { ChatInputCommandInteraction } from 'discord.js';
 import { getOptionValue, getOptionValueWithoutUndefined } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import type { ReadonlyOpenAI, OpenAIResponseInput } from '../types.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 
 const MAX_DISCORD_MESSAGE_LENGTH = 2000 as const;
 

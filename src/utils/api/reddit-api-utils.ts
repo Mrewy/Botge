@@ -2,7 +2,7 @@
 
 import fetch from 'node-fetch';
 
-import { REDDIT_API_ENDPOINTS } from '../../paths-and-endpoints.ts';
+import { REDDIT_API_ENDPOINTS } from '../../api/reddit-api.ts';
 
 type RedditClientCredentialsGrantFlow = {
   readonly access_token: string;

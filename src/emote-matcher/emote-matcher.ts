@@ -1,6 +1,12 @@
 /** @format */
 
-import type { Platform } from './enums.ts';
+import {
+  sevenTVInSetToAsset,
+  sevenTVNotInSetToAsset,
+  bttvToAsset,
+  ffzToAsset,
+  twitchToAsset
+} from '../utils/emote-matcher/emote-to-asset.ts';
 import type {
   SevenTVEmoteNotInSet,
   BTTVEmote,
@@ -10,14 +16,8 @@ import type {
   FFZGlobalEmotes,
   TwitchGlobalEmotes,
   AssetInfo
-} from './types.ts';
-import {
-  sevenTVInSetToAsset,
-  sevenTVNotInSetToAsset,
-  bttvToAsset,
-  ffzToAsset,
-  twitchToAsset
-} from './utils/emote-to-asset.ts';
+} from '../types.ts';
+import type { Platform } from '../enums.ts';
 
 const FFZ_GLOBAL_SETS_KEY = 3 as const;
 

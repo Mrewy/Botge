@@ -2,8 +2,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-import { RedditApi } from '../../api/reddit-api.ts';
-import { REDDIT_ACCESS_TOKEN_PATH } from '../../paths-and-endpoints.ts';
+import { REDDIT_ACCESS_TOKEN_PATH, RedditApi } from '../../api/reddit-api.ts';
 import { getRedditAccessToken } from '../api/reddit-api-utils.ts';
 
 export async function newRedditApi(redditClientId: string, redditSecret: string): Promise<Readonly<RedditApi>> {

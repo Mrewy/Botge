@@ -4,24 +4,19 @@
 			"path": "src/index.ts",
 			"bookmarks": [
 				{
-					"line": 90,
+					"line": 96,
 					"column": 0,
 					"label": "bot"
 				},
 				{
-					"line": 214,
+					"line": 211,
 					"column": 0,
 					"label": "functions"
 				},
 				{
-					"line": 267,
+					"line": 264,
 					"column": 0,
 					"label": "schedules"
-				},
-				{
-					"line": 298,
-					"column": 0,
-					"label": "registerHandlers"
 				}
 			]
 		},
@@ -41,7 +36,7 @@
 			]
 		},
 		{
-			"path": "src/emote-matcher.ts",
+			"path": "src/emote-matcher/emote-matcher.ts",
 			"bookmarks": [
 				{
 					"line": 23,
@@ -371,7 +366,7 @@
 			]
 		},
 		{
-			"path": "src/commands.ts",
+			"path": "src/discord/commands.ts",
 			"bookmarks": [
 				{
 					"line": 20,
@@ -379,39 +374,39 @@
 					"label": "COMMAND_NAMES"
 				},
 				{
-					"line": 60,
+					"line": 64,
 					"column": 0,
 					"label": "slashCommands"
 				},
 				{
-					"line": 270,
+					"line": 291,
 					"column": 0,
 					"label": "contextMenuCommands"
 				},
 				{
-					"line": 280,
+					"line": 321,
 					"column": 0,
 					"label": "commands"
 				}
 			]
 		},
 		{
-			"path": "src/emote-matcher-constructor.ts",
+			"path": "src/emote-matcher/emote-matcher-constructor.ts",
 			"bookmarks": [
 				{
-					"line": 19,
+					"line": 24,
 					"column": 0,
 					"label": "GlobalEmoteMatcherConstructor"
 				},
 				{
-					"line": 80,
+					"line": 85,
 					"column": 0,
 					"label": "PersonalEmoteMatcherConstructor"
 				}
 			]
 		},
 		{
-			"path": "src/guild.ts",
+			"path": "src/discord/guild.ts",
 			"bookmarks": [
 				{
 					"line": 13,

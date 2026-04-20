@@ -2,13 +2,13 @@
 
 import type { EnqueuedTaskPromise, Index } from 'meilisearch';
 
-import { getClipsWithGameNameFromBroadcasterName, getClipsWithGameNameFromIds } from './utils/api/twitch-api-utils.ts';
-import { listCutedogClipIds } from './utils/list-cutedog-clip-ids.ts';
-import type { TwitchApi } from './api/twitch-api.ts';
-import type { PersonalEmoteMatcherConstructor } from './emote-matcher-constructor.ts';
-import type { PersonalEmoteSets } from './personal-emote-sets.ts';
-import type { ReadonlyRecordAny, TwitchClip } from './types.ts';
-import type { EmoteMatcher } from './emote-matcher.ts';
+import { getClipsWithGameNameFromBroadcasterName, getClipsWithGameNameFromIds } from '../utils/api/twitch-api-utils.ts';
+import { listCutedogClipIds } from '../utils/discord/list-cutedog-clip-ids.ts';
+import type { TwitchApi } from '../api/twitch-api.ts';
+import type { PersonalEmoteMatcherConstructor } from '../emote-matcher/emote-matcher-constructor.ts';
+import type { PersonalEmoteSets } from '../emote-matcher/personal-emote-sets.ts';
+import type { ReadonlyRecordAny, TwitchClip } from '../types.ts';
+import type { EmoteMatcher } from '../emote-matcher/emote-matcher.ts';
 import { GUILD_ID_CUTEDOG } from './guilds.ts';
 
 export class Guild {

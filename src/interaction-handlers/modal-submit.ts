@@ -35,11 +35,11 @@ import {
   GUILD_ID_TEXT_INPUT_CUSTOM_ID
 } from './button.ts';
 
-import { PersonalEmoteSets } from '../personal-emote-sets.ts';
+import { PersonalEmoteSets } from '../emote-matcher/personal-emote-sets.ts';
 
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 
-import { User } from '../user.ts';
+import { User } from '../discord/user.ts';
 
 export function modalSubmitHandler(
   guilds: readonly Readonly<Guild>[],

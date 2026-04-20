@@ -6,7 +6,7 @@ import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import { QuoteMessageBuilder } from '../message-builders/quote-message-builder.ts';
 import type { QuotesDatabase } from '../database/quotes-database.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 import type { Quote } from '../types.ts';
 
 export function quoteListHandler(

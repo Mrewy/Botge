@@ -3,11 +3,11 @@
 import type { DatabaseManager } from '../../bot/database-manager.ts';
 import type { ApiManager } from '../../bot/api-manager.ts';
 
-import { PersonalEmoteMatcherConstructor } from '../../emote-matcher-constructor.ts';
+import { PersonalEmoteMatcherConstructor } from '../../emote-matcher/emote-matcher-constructor.ts';
 
-import type { PersonalEmoteSets } from '../../personal-emote-sets.ts';
+import type { PersonalEmoteSets } from '../../emote-matcher/personal-emote-sets.ts';
 
-import { Guild } from '../../guild.ts';
+import { Guild } from '../../discord/guild.ts';
 
 export async function newGuild(
   guildId: string,

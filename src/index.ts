@@ -7,7 +7,7 @@
  * Search emotes, clips, use zero-width emotes and other such commands.
  *
  * @remarks
- * Initializes the {@link Bot} object, registers its handlers, and starts it.
+ * Initializes the {@link Bot} object, registers its listeners and starts it.
  *
  * @packageDocumentation
  */
@@ -45,13 +45,28 @@ import { DatabaseManager } from './bot/database-manager.ts';
 import { ApiManager } from './bot/api-manager.ts';
 import { Bot } from './bot/bot.ts';
 
-import { DATABASE_DIR, DATABASE_ENDPOINTS, TMP_DIR } from './paths-and-endpoints.ts';
-import { GlobalEmoteMatcherConstructor } from './emote-matcher-constructor.ts';
+import { GlobalEmoteMatcherConstructor } from './emote-matcher/emote-matcher-constructor.ts';
+import type { PersonalEmoteSets } from './emote-matcher/personal-emote-sets.ts';
+
+import type { Guild } from './discord/guild.ts';
+import { User } from './discord/user.ts';
+
+import { updateCommands } from './utils/discord/update-commands.ts';
+
 import type { ReadonlyOpenAI, ReadonlyTranslator } from './types.ts';
-import type { PersonalEmoteSets } from './personal-emote-sets.ts';
-import { updateCommands } from './update-commands-docker.ts';
-import type { Guild } from './guild.ts';
-import { User } from './user.ts';
+
+import { DATABASE_DIR, TMP_DIR } from './directory-paths.ts';
+
+const DATABASE_PATHS = {
+  addedEmotes: `${DATABASE_DIR}/addedEmotes.sqlite`,
+  pings: `${DATABASE_DIR}/pings.sqlite`,
+  permitRoleIds: `${DATABASE_DIR}/permitRoleIds.sqlite`,
+  broadcasterNameAndPersonalEmoteSets: `${DATABASE_DIR}/broadcasterNameAndPersonalEmoteSets.sqlite`,
+  users: `${DATABASE_DIR}/users.sqlite`,
+  media: `${DATABASE_DIR}/media.sqlite`,
+  quote: `${DATABASE_DIR}/quote.sqlite`
+} as const;
+const COMMANDS_PATH = `${DATABASE_DIR}/commands.txt` as const;
 
 /**
  * Ensures that directories exist.
@@ -70,15 +85,6 @@ const ensureDirs = (async (): Promise<void> => {
       .map((dirent: Readonly<Dirent>) => dirent.name)
       .map(async (dir) => rm(join(TMP_DIR, dir), { recursive: true }))
   );
-})();
-
-const updateCommands_ = (async (): Promise<void> => {
-  if (process.argv.length < 3) {
-    console.log('No commands lock file provided, skipping commands update.');
-    return;
-  }
-
-  await updateCommands(process.argv[2]);
 })();
 
 /**
@@ -137,27 +143,24 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     openai
   );
 
-  //dataBaseManager
+  //databaseManager
   const sqlJsStatic = await initSqlJs();
 
   const broadcasterNameAndPersonalEmoteSetsDatabase: Readonly<BroadcasterNameAndPersonalEmoteSetsDatabase> =
-    new BroadcasterNameAndPersonalEmoteSetsDatabase(
-      DATABASE_ENDPOINTS.broadcasterNameAndPersonalEmoteSets,
-      sqlJsStatic
-    );
+    new BroadcasterNameAndPersonalEmoteSetsDatabase(DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets, sqlJsStatic);
   const permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase> = new PermittedRoleIdsDatabase(
-    DATABASE_ENDPOINTS.permitRoleIds,
+    DATABASE_PATHS.permitRoleIds,
     sqlJsStatic
   );
   const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(
-    DATABASE_ENDPOINTS.addedEmotes,
+    DATABASE_PATHS.addedEmotes,
     sqlJsStatic
   );
 
-  const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_ENDPOINTS.media, sqlJsStatic);
-  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_ENDPOINTS.users, sqlJsStatic);
-  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_ENDPOINTS.pings, sqlJsStatic);
-  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_ENDPOINTS.quote, sqlJsStatic);
+  const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_PATHS.media, sqlJsStatic);
+  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_PATHS.users, sqlJsStatic);
+  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_PATHS.pings, sqlJsStatic);
+  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_PATHS.quote, sqlJsStatic);
 
   const databaseManager: Readonly<DatabaseManager> = new DatabaseManager(
     broadcasterNameAndPersonalEmoteSetsDatabase,
@@ -292,7 +295,7 @@ scheduleJob('12 */12 * * *', async () => {
 
 bot.registerListeners();
 await ensureDirs;
-await updateCommands_;
+await updateCommands(COMMANDS_PATH);
 await Promise.all(refreshClipsOrRefreshUniqueCreatorNamesAndGameIds);
 await bot.client.login(process.env['DISCORD_TOKEN']);
 await registerPings(bot.client, bot.dataBaseManager.pingsDatabase, bot.scheduledJobs);

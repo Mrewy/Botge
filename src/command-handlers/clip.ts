@@ -6,7 +6,7 @@ import { getOptionValue } from '../utils/get-option-value.ts';
 import { logError } from '../utils/log-error.ts';
 import { TwitchClipMessageBuilder } from '../message-builders/twitch-clip-message-builder.ts';
 import type { TwitchClip, ReadonlyHit } from '../types.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 
 function shuffle(array: unknown[]): void {
   let currentIndex = array.length;

@@ -24,8 +24,8 @@ import type { MessageBuilderManager } from '../../bot/message-builder-manager.ts
 import type { DatabaseManager } from '../../bot/database-manager.ts';
 import type { ApiManager } from '../../bot/api-manager.ts';
 
-import { SLASH_COMMAND_NAMES } from '../../commands.ts';
-import type { Guild } from '../../guild.ts';
+import { SLASH_COMMAND_NAMES } from '../../discord/commands.ts';
+import type { Guild } from '../../discord/guild.ts';
 
 export type CommandHandler = (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>) => Promise<void>;
 

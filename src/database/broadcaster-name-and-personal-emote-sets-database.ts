@@ -2,7 +2,7 @@
 
 import type { SqlJsStatic } from 'sql.js';
 
-import { PersonalEmoteSets } from '../personal-emote-sets.ts';
+import { PersonalEmoteSets } from '../emote-matcher/personal-emote-sets.ts';
 import { BaseDatabase } from './base-database.ts';
 
 type DatabaseBroadcasterNamesAndPersonalEmoteSets = {

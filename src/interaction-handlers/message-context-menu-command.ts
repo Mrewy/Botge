@@ -23,7 +23,7 @@ import type {
 
 import { logError } from '../utils/log-error.ts';
 
-import { CONTEXT_MENU_COMMAND_NAMES } from '../commands.ts';
+import { CONTEXT_MENU_COMMAND_NAMES } from '../discord/commands.ts';
 import type { DatabaseManager } from '../bot/database-manager.ts';
 import type { ApiManager } from '../bot/api-manager.ts';
 

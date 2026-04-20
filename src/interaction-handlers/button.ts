@@ -74,9 +74,9 @@ import type {
   PingForPingListMessageBuilderTransformFunctionReturnType
 } from '../types.ts';
 
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 
-import type { User } from '../user.ts';
+import type { User } from '../discord/user.ts';
 
 import { Platform } from '../enums.ts';
 

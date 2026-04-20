@@ -1,8 +1,15 @@
 /** @format */
 
-import { EMOTE_ENDPOINTS, CDN_ENDPOINTS } from '../../paths-and-endpoints.ts';
+import { SEVEN_TV_NOT_IN_SET_CDN } from '../../command-handlers/add-emote.ts';
 import type { AssetInfo } from '../../types.ts';
 import { Platform } from '../../enums.ts';
+
+const EMOTE_ENDPOINTS: Readonly<Map<Platform, string>> = new Map<Platform, string>([
+  [Platform.sevenInSet, 'https://7tv.app/emotes/'],
+  [Platform.sevenNotInSet, 'https://7tv.app/emotes/'],
+  [Platform.bttv, 'https://betterttv.com/emotes/'],
+  [Platform.ffz, 'https://www.frankerfacez.com/emoticon/']
+]);
 
 export function emoteCdnUrlToEmoteUrl(asset: AssetInfo): string {
   const { id, name, platform, url } = asset;
@@ -19,5 +26,5 @@ export function emoteCdnUrlToEmoteApiCdnUrl(asset: AssetInfo): string | undefine
   const { id, platform } = asset;
   if (platform !== Platform.sevenNotInSet) return undefined;
 
-  return `${CDN_ENDPOINTS.sevenTVNotInSet}/${id}`;
+  return `${SEVEN_TV_NOT_IN_SET_CDN}/${id}`;
 }

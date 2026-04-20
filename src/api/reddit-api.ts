@@ -5,7 +5,8 @@ import { writeFileSync } from 'node:fs';
 
 import { getRedditAccessToken } from '../utils/api/reddit-api-utils.ts';
 import { fetchAndJson } from '../utils/fetch-and-json.ts';
-import { REDDIT_API_ENDPOINTS, REDDIT_ACCESS_TOKEN_PATH } from '../paths-and-endpoints.ts';
+
+import { DATABASE_DIR } from '../directory-paths.ts';
 
 type RedditGlobalOptions = {
   readonly method: string;
@@ -24,6 +25,13 @@ type RedditLivestreamFails = {
     }[];
   };
 };
+
+export const REDDIT_API_ENDPOINTS = {
+  accessToken: 'https://www.reddit.com/api/v1/access_token',
+  accessTokenValidate: 'https://oauth.reddit.com/api/v1/scopes', // there is no real validation path.
+  livestreamFail: 'https://oauth.reddit.com/r/LivestreamFail'
+} as const;
+export const REDDIT_ACCESS_TOKEN_PATH: 'data/redditAccessToken.txt' = `${DATABASE_DIR}/redditAccessToken.txt` as const;
 
 export class RedditApi {
   readonly #clientId: string;

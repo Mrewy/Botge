@@ -16,7 +16,7 @@ import type {
   ReadonlySlashCommandBooleanOption,
   ReadonlySlashCommandAttachmentOption,
   ReadonlySlashCommandIntegerOption
-} from './types.ts';
+} from '../types.ts';
 
 export const SLASH_COMMAND_NAMES = {
   emote: 'emote',

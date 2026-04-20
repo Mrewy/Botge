@@ -6,7 +6,7 @@ import type { MediaDatabase } from '../database/media-database.ts';
 import type { CachedUrl } from '../api/cached-url.ts';
 import { EMOTE_COMMAND_IDENTIFIER, emotesHandler } from '../command-handlers/emote.ts';
 import { logError } from '../utils/log-error.ts';
-import type { Guild } from '../guild.ts';
+import type { Guild } from '../discord/guild.ts';
 import { MEDIA_COMMAND_IDENTIFIER, mediaMessageCreateHandler } from './media-message-create-handler.ts';
 import { ollamaMessageCreateHandler } from './ollama-message-create-handler.ts';
 

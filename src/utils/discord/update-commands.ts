@@ -6,7 +6,7 @@ import { createHash } from 'crypto';
 
 import { REST, Routes } from 'discord.js';
 
-import { commands } from './commands.ts';
+import { commands } from '../../discord/commands.ts';
 
 const { APP_ID, DISCORD_TOKEN } = process.env;
 

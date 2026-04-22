@@ -23,6 +23,8 @@ export const ADDED_EMOTE_DELETION_MENU_BUTTON_CUSTOM_ID = 'addedEmoteDeletionMen
 export const CONFIGURATION_GUILD_BUTTON_CUSTOM_ID = 'configurationGuildButton' as const;
 export const CONFIGURATION_USER_BUTTON_CUSTOM_ID = 'configurationUserButton' as const;
 
+export const EMOTE_BORDER_CONFIGURATION_BUTTON_CUSTOM_ID = 'borderOnEmotesConfigurationButton' as const;
+
 export function settingsHandler() {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild> | undefined): Promise<void> => {
     const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
@@ -44,47 +46,58 @@ export function settingsHandler() {
         return;
       }
 
+      let guildSettingsRow: ActionRowBuilder<MessageActionRowComponentBuilder> | undefined = undefined;
+
       const member_ = member as GuildMember;
       const memberRolesCache: readonly (readonly [string, Role])[] = [...member_.roles.cache];
       const owner_ = owner(member_, interactionGuild);
       const globalAdministrator_ = globalAdministrator(member_);
-      if (!permitted(memberRolesCache, guild.settingsPermittedRoleIds) && !owner_ && !globalAdministrator_) {
-        await defer;
-        await interaction.editReply('You do not have the necessary permissions to use this command.');
-        return;
-      }
 
-      const row = new ActionRowBuilder<MessageActionRowComponentBuilder>();
-      if (administrator(memberRolesCache) || owner_ || globalAdministrator_) {
-        row.addComponents(
+      if (permitted(memberRolesCache, guild.settingsPermittedRoleIds) || owner_ || globalAdministrator_) {
+        guildSettingsRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
+
+        if (administrator(memberRolesCache) || owner_ || globalAdministrator_) {
+          guildSettingsRow.addComponents(
+            new ButtonBuilder()
+              .setCustomId(CONFIGURATION_GUILD_BUTTON_CUSTOM_ID)
+              .setLabel('Configuration')
+              .setStyle(ButtonStyle.Primary),
+            new ButtonBuilder()
+              .setCustomId(SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID)
+              .setLabel('Settings permitted roles')
+              .setStyle(ButtonStyle.Success)
+          );
+        }
+
+        guildSettingsRow.addComponents(
           new ButtonBuilder()
-            .setCustomId(CONFIGURATION_GUILD_BUTTON_CUSTOM_ID)
-            .setLabel('Configuration')
-            .setStyle(ButtonStyle.Primary),
+            .setCustomId(ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID)
+            .setLabel('Add emote permitted roles')
+            .setStyle(ButtonStyle.Success),
           new ButtonBuilder()
-            .setCustomId(SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID)
-            .setLabel('Settings permitted roles')
-            .setStyle(ButtonStyle.Success)
+            .setCustomId(ALLOW_EVERYONE_TO_ADD_EMOTE_BUTTON_CUSTOM_ID)
+            .setLabel(`Allow everyone to add emote (Currently: ${booleanToAllowed(guild.allowEveryoneToAddEmote)})`)
+            .setStyle(ButtonStyle.Success),
+          new ButtonBuilder()
+            .setCustomId(ADDED_EMOTE_DELETION_MENU_BUTTON_CUSTOM_ID)
+            .setLabel('Added emote deletion menu')
+            .setStyle(ButtonStyle.Danger)
         );
       }
 
-      row.addComponents(
+      const userSettingsRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
+
+      userSettingsRow.addComponents(
         new ButtonBuilder()
-          .setCustomId(ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID)
-          .setLabel('Add emote permitted roles')
-          .setStyle(ButtonStyle.Success),
-        new ButtonBuilder()
-          .setCustomId(ALLOW_EVERYONE_TO_ADD_EMOTE_BUTTON_CUSTOM_ID)
-          .setLabel(`Allow everyone to add emote (Currently: ${booleanToAllowed(guild.allowEveryoneToAddEmote)})`)
-          .setStyle(ButtonStyle.Success),
-        new ButtonBuilder()
-          .setCustomId(ADDED_EMOTE_DELETION_MENU_BUTTON_CUSTOM_ID)
-          .setLabel('Added emote deletion menu')
-          .setStyle(ButtonStyle.Danger)
+          .setCustomId(EMOTE_BORDER_CONFIGURATION_BUTTON_CUSTOM_ID)
+          .setLabel('Border on emotes configuration')
+          .setStyle(ButtonStyle.Primary)
       );
 
       await defer;
-      await interaction.editReply({ components: [row] });
+      await interaction.editReply({
+        components: guildSettingsRow !== undefined ? [guildSettingsRow, userSettingsRow] : [userSettingsRow]
+      });
     } catch (error) {
       logError(error, 'Error at settingsHandler');
 

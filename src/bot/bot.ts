@@ -161,6 +161,7 @@ export class Bot {
         this.#apiManager.cachedUrl,
         message,
         guild,
+        this.#users,
         this.#databaseManager.mediaDatabase
       );
     });
@@ -205,7 +206,7 @@ export class Bot {
         const guildId_ = ((): string | undefined => {
           const user_ = this.#users.find((userge) => userge.id === interaction.user.id);
           if (user_ === undefined) return undefined;
-          return user_.guild.id;
+          return user_.guild?.id;
         })();
         if (guildId_ === undefined) return undefined;
         const guild_ = this.#guilds.find((guildge) => guildge.id === guildId_);
@@ -275,7 +276,7 @@ export class Bot {
       if (guild === undefined) return;
 
       if (interaction.commandName === SLASH_COMMAND_NAMES.emotes) {
-        void emotesHandler(this.#apiManager.cachedUrl)(guild, interaction);
+        void emotesHandler(this.#apiManager.cachedUrl)(guild, this.#users, interaction);
         return;
       }
 

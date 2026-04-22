@@ -8,6 +8,7 @@ import {
   TextInputBuilder,
   ModalBuilder,
   LabelBuilder,
+  CheckboxBuilder,
   type Client,
   type ButtonInteraction,
   type MessageActionRowComponentBuilder,
@@ -62,7 +63,8 @@ import {
   ALLOW_EVERYONE_TO_ADD_EMOTE_BUTTON_CUSTOM_ID,
   ADDED_EMOTE_DELETION_MENU_BUTTON_CUSTOM_ID,
   CONFIGURATION_GUILD_BUTTON_CUSTOM_ID,
-  CONFIGURATION_USER_BUTTON_CUSTOM_ID
+  CONFIGURATION_USER_BUTTON_CUSTOM_ID,
+  EMOTE_BORDER_CONFIGURATION_BUTTON_CUSTOM_ID
 } from '../command-handlers/settings.ts';
 
 import type {
@@ -89,6 +91,11 @@ export const ASSIGN_GUILD_MODAL_CUSTOM_ID = 'assignGuildModal' as const;
 export const BROADCASTER_NAME_TEXT_INPUT_CUSTOM_ID = 'broadcasterNameTextInput' as const;
 export const SEVEN_TV_TEXT_INPUT_CUSTOM_ID = 'sevenTVTextInput' as const;
 export const GUILD_ID_TEXT_INPUT_CUSTOM_ID = 'guildIdTextInput' as const;
+
+export const EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID = 'emoteBorderConfigurationModal' as const;
+export const EMOTE_BORDER_ENABLED_CHECKBOX_CUSTOM_ID = 'emoteBorderEnabledCheckbox' as const;
+export const EMOTE_BORDER_COLOR_TEXT_INPUT_CUSTOM_ID = 'emoteBorderColorTextInput' as const;
+// export const EMOTE_BORDER_OPACITY_TEXT_INPUT_CUSTOM_ID = 'emoteBorderOpacityTextInput' as const;
 
 const MAX_ROLE_SELECT_MENU_VALUES = 10 as const;
 
@@ -119,7 +126,7 @@ export function buttonHandler(
           .setCustomId(GUILD_ID_TEXT_INPUT_CUSTOM_ID)
           .setStyle(TextInputStyle.Short)
           .setRequired(true);
-        if (user !== undefined) GUILD_ID_TEXT_INPUT.setValue(user.guild.id);
+        if (user?.guild !== undefined) GUILD_ID_TEXT_INPUT.setValue(user.guild.id);
 
         const GUILD_ID_TEXT_INPUT_LABEL = new LabelBuilder()
           .setLabel('Guild ID')
@@ -237,6 +244,51 @@ export function buttonHandler(
         }
 
         await interaction.showModal(ASSIGN_EMOTE_SETS_MODAL);
+        return undefined;
+      } else if (customId === EMOTE_BORDER_CONFIGURATION_BUTTON_CUSTOM_ID) {
+        const enableEmoteBorder = user?.enableEmoteBorder;
+        const emoteBorderColor = user?.emoteBorderColor;
+        // const emoteBorderOpacity = user?.emoteBorderOpacity;
+
+        const EMOTE_BORDER_ENABLED_CHECKBOX = new CheckboxBuilder().setCustomId(
+          EMOTE_BORDER_ENABLED_CHECKBOX_CUSTOM_ID
+        );
+        const EMOTE_BORDER_ENABLED_LABEL = new LabelBuilder()
+          .setLabel('Emote Border Enabled')
+          .setDescription('Whether the emote border is enabled.')
+          .setCheckboxComponent(EMOTE_BORDER_ENABLED_CHECKBOX);
+        if (enableEmoteBorder !== undefined) EMOTE_BORDER_ENABLED_CHECKBOX.setDefault(enableEmoteBorder);
+
+        const EMOTE_BORDER_COLOR_TEXT_INPUT = new TextInputBuilder()
+          .setCustomId(EMOTE_BORDER_COLOR_TEXT_INPUT_CUSTOM_ID)
+          .setStyle(TextInputStyle.Short)
+          .setRequired(false)
+          .setPlaceholder('RRGGBB');
+        const EMOTE_BORDER_COLOR_LABEL = new LabelBuilder()
+          .setLabel('Emote Border Color')
+          .setDescription('The HEX code or name of the color of the emote border.')
+          .setTextInputComponent(EMOTE_BORDER_COLOR_TEXT_INPUT);
+        if (emoteBorderColor !== undefined) EMOTE_BORDER_COLOR_TEXT_INPUT.setValue(emoteBorderColor);
+
+        /*
+        const EMOTE_BORDER_OPACITY_TEXT_INPUT = new TextInputBuilder()
+          .setCustomId(EMOTE_BORDER_OPACITY_TEXT_INPUT_CUSTOM_ID)
+          .setStyle(TextInputStyle.Short)
+          .setRequired(false)
+          .setPlaceholder('1.0');
+        const EMOTE_BORDER_OPACITY_LABEL = new LabelBuilder()
+          .setLabel('Emote Border Opacity')
+          .setDescription('The opacity of the emote border. A value between 0.0 and 1.0.')
+          .setTextInputComponent(EMOTE_BORDER_OPACITY_TEXT_INPUT);
+        if (emoteBorderOpacity !== undefined) EMOTE_BORDER_OPACITY_TEXT_INPUT.setValue(emoteBorderOpacity);
+        */
+
+        const EMOTE_BORDER_CONFIGURATION_MODAL = new ModalBuilder()
+          .setCustomId(EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID)
+          .setTitle('Configuration')
+          .addLabelComponents(EMOTE_BORDER_ENABLED_LABEL, EMOTE_BORDER_COLOR_LABEL);
+
+        await interaction.showModal(EMOTE_BORDER_CONFIGURATION_MODAL);
         return undefined;
       }
 

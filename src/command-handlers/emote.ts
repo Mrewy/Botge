@@ -20,6 +20,7 @@ import type { AssetInfo, DownloadedAsset } from '../types.ts';
 import { TMP_DIR } from '../directory-paths.ts';
 import { GUILD_ID_CUTEDOG } from '../discord/guilds.ts';
 import type { Guild } from '../discord/guild.ts';
+import type { User } from '../discord/user.ts';
 
 export const EMOTE_COMMAND_IDENTIFIER = '+' as const;
 export const EMOTE_SIZE_IDENTIFIER = ':' as const;
@@ -49,13 +50,28 @@ class SimpleElement implements HorizontalStackElement {
   readonly #width: number;
   readonly #height: number;
   readonly #animated: boolean;
+  readonly #borderColor: string | undefined = undefined;
+  readonly #stopDuration: string | undefined = undefined;
+  // readonly #borderOpacity: string | undefined = undefined;
 
-  public constructor(id: number, asset: DownloadedAsset, width: number, height: number) {
+  public constructor(
+    id: number,
+    asset: DownloadedAsset,
+    width: number,
+    height: number,
+    borderColor?: string,
+    stopDuration?: string
+  ) {
     this.id = id;
     this.#asset = asset;
     this.#width = width;
     this.#height = height;
     this.#animated = this.#asset.animated;
+
+    if (borderColor !== undefined) this.#borderColor = borderColor;
+    // if (borderOpacity !== undefined) this.#borderOpacity = borderOpacity;
+
+    if (stopDuration !== undefined) this.#stopDuration = stopDuration;
   }
 
   public filterString(): string {
@@ -64,6 +80,13 @@ class SimpleElement implements HorizontalStackElement {
     if (this.#height > this.#asset.height) filterString += `pad=h=${this.#height}:x=-1:y=-1:color=black@0.0,`;
     filterString += `scale=${this.#width}:${this.#height}:force_original_aspect_ratio=decrease`;
     if (this.#animated) filterString += `,fps=${DEFAULT_FPS}`;
+
+    if (this.#borderColor !== undefined) {
+      filterString += `,pad=iw+6:ih+6:3:3:color=#${this.#borderColor}`;
+
+      // if (this.#borderOpacity !== undefined) filterString += `@${this.#borderOpacity}`;
+    }
+    if (this.#stopDuration !== undefined) filterString += `,tpad=stop_mode=clone:stop_duration=${this.#stopDuration}`;
 
     filterString += `[o${this.id}];`;
     return filterString;
@@ -172,8 +195,8 @@ export function emoteHandler() {
 
       await defer;
       if (size !== undefined)
-        await interaction.editReply(emoteSizeChange(url, size, platform).replace('.gif', '.webp'));
-      else await interaction.editReply(url.replace('.gif', '.webp'));
+        await interaction.editReply(emoteSizeChange(url, size, platform)); // .replace('.gif', '.webp')
+      else await interaction.editReply(url); // .replace('.gif', '.webp')
     } catch (error) {
       logError(error, 'Error at emoteSingleHandler');
 
@@ -203,12 +226,14 @@ export function emoteListHandler(emoteMessageBuilders: EmoteMessageBuilder[]) {
         return;
       }
 
+      /*
       const transformedMatches: readonly AssetInfo[] = matches.map((asset) => ({
         ...asset,
         url: asset.url.replace('.gif', '.webp')
       }));
+      */
 
-      const emoteMessageBuilder = new EmoteMessageBuilder(interaction, transformedMatches);
+      const emoteMessageBuilder = new EmoteMessageBuilder(interaction, matches);
       const reply = emoteMessageBuilder.first();
       await defer;
 
@@ -229,6 +254,7 @@ export function emoteListHandler(emoteMessageBuilders: EmoteMessageBuilder[]) {
 export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
   return async (
     guild: Readonly<Guild>,
+    users: readonly Readonly<User>[],
     interaction?: ChatInputCommandInteraction,
     message?: OmitPartialGroupDMChannel<Message>
   ): Promise<void> => {
@@ -298,7 +324,25 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
       })();
       const stretch = interaction !== undefined ? (getOptionValue(interaction, 'stretch', Boolean) ?? false) : false;
 
-      if (emotes.length === 1) {
+      const userId =
+        interaction !== undefined ? interaction.user.id : message !== undefined ? message.author.id : undefined;
+      if (userId === undefined) throw new Error('Interaction and message both undefined.');
+
+      const user = users.find((user_) => user_.id === userId);
+      const enableEmoteBorder = user?.enableEmoteBorder !== undefined && user.enableEmoteBorder;
+      const stopDuration = ((): string | undefined => {
+        if (emotes.length !== 1) return undefined;
+
+        const [emote] = emotes;
+        const match = emoteMatcher.matchSingle(emote);
+
+        if (match === undefined) return undefined;
+
+        if (match.url === 'https://cdn.7tv.app/emote/01HQPVVAYR0007V5J7WCNKMP48/2x.gif') return '1.08';
+        return undefined;
+      })();
+
+      if (emotes.length === 1 && !enableEmoteBorder && stopDuration === undefined) {
         const [emote] = emotes;
         const match = emoteMatcher.matchSingle(emote);
 
@@ -321,13 +365,12 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         }
 
         const { url, platform } = match;
-        const reply = (
-          fullSize
-            ? emoteSizeChange(url, maxPlatformSize(platform), platform)
-            : size !== undefined
-              ? emoteSizeChange(url, size, platform)
-              : url
-        ).replace('.gif', '.webp');
+        const reply = fullSize
+          ? emoteSizeChange(url, maxPlatformSize(platform), platform)
+          : size !== undefined
+            ? emoteSizeChange(url, size, platform)
+            : url;
+        // .replace('.gif', '.webp')
 
         await defer;
         if (interaction !== undefined) await interaction.editReply(reply);
@@ -426,6 +469,16 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
 
       const elements: HorizontalStackElement[] = [];
       ((): void => {
+        if (assets.length === 1) {
+          if (enableEmoteBorder)
+            elements.push(
+              new SimpleElement(0, downloadedAssets[0], maxWidth, maxHeight, user.emoteBorderColor, stopDuration)
+            );
+          else elements.push(new SimpleElement(0, downloadedAssets[0], maxWidth, maxHeight, undefined, stopDuration));
+
+          return;
+        }
+
         // at least 2
         let boundary = 0;
         let i = 0;
@@ -497,9 +550,10 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         filter.push(`[o0]scale`); // only to point the output stream
       }
 
-      // if (animated) filter.push(',split=2[stacked][palette];[palette]palettegen[p];[stacked][p]paletteuse');
+      if (animated) filter.push(',split=2[stacked][palette];[palette]palettegen[p];[stacked][p]paletteuse');
       args.push(filter.join(''));
 
+      /*
       args.push('-c:v');
       if (animated) {
         args.push('libwebp_anim');
@@ -508,12 +562,13 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
       } else {
         args.push('libwebp');
       }
+      */
 
       args.push('-y');
       args.push('-fs');
       args.push('25M');
 
-      const outfile = join(outdir, 'output.webp');
+      const outfile = join(outdir, 'output.gif');
       args.push(outfile);
 
       const ffmpeg = spawn('ffmpeg', args);

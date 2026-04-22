@@ -7,6 +7,7 @@ import type { CachedUrl } from '../api/cached-url.ts';
 import { EMOTE_COMMAND_IDENTIFIER, emotesHandler } from '../command-handlers/emote.ts';
 import { logError } from '../utils/log-error.ts';
 import type { Guild } from '../discord/guild.ts';
+import type { User } from '../discord/user.ts';
 import { MEDIA_COMMAND_IDENTIFIER, mediaMessageCreateHandler } from './media-message-create-handler.ts';
 import { ollamaMessageCreateHandler } from './ollama-message-create-handler.ts';
 
@@ -15,6 +16,7 @@ export function messageCreateHandler(clientUserId: string | null) {
     cachedUrl: Readonly<CachedUrl>,
     message: OmitPartialGroupDMChannel<Message>,
     guild: Readonly<Guild>,
+    users: readonly Readonly<User>[],
     mediaDataBase: Readonly<MediaDatabase>
   ): Promise<void> => {
     try {
@@ -22,7 +24,7 @@ export function messageCreateHandler(clientUserId: string | null) {
       if (content[EMOTE_COMMAND_IDENTIFIER.length] === ' ') return;
 
       if (content.startsWith(EMOTE_COMMAND_IDENTIFIER)) {
-        await emotesHandler(cachedUrl)(guild, undefined, message);
+        await emotesHandler(cachedUrl)(guild, users, undefined, message);
       } else if (content.startsWith(MEDIA_COMMAND_IDENTIFIER)) {
         await mediaMessageCreateHandler(message, guild, mediaDataBase);
       }

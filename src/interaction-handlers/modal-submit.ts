@@ -25,6 +25,7 @@ import {
   getBttvApiUrlFromBroadcasterName,
   getFfzApiUrlFromBroadcasterName
 } from '../utils/interaction-handlers/get-api-url.ts';
+import { booleanToEnabled } from '../utils/boolean-to-string.ts';
 import { logError } from '../utils/log-error.ts';
 
 import {
@@ -32,7 +33,10 @@ import {
   BROADCASTER_NAME_TEXT_INPUT_CUSTOM_ID,
   SEVEN_TV_TEXT_INPUT_CUSTOM_ID,
   ASSIGN_GUILD_MODAL_CUSTOM_ID,
-  GUILD_ID_TEXT_INPUT_CUSTOM_ID
+  GUILD_ID_TEXT_INPUT_CUSTOM_ID,
+  EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID,
+  EMOTE_BORDER_ENABLED_CHECKBOX_CUSTOM_ID,
+  EMOTE_BORDER_COLOR_TEXT_INPUT_CUSTOM_ID
 } from './button.ts';
 
 import { PersonalEmoteSets } from '../emote-matcher/personal-emote-sets.ts';
@@ -52,7 +56,9 @@ export function modalSubmitHandler(
   return async (interaction: ModalSubmitInteraction): Promise<void> => {
     const { customId } = interaction;
     const deferReply =
-      customId === ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID || customId === ASSIGN_GUILD_MODAL_CUSTOM_ID
+      customId === ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID ||
+      customId === ASSIGN_GUILD_MODAL_CUSTOM_ID ||
+      customId === EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID
         ? interaction.deferReply({ flags: MessageFlags.Ephemeral })
         : undefined;
 
@@ -73,7 +79,7 @@ export function modalSubmitHandler(
         let user = users.find((user_) => user_.id === userId);
         if (user !== undefined) {
           await deferReply;
-          if (user.guild.id === guildId) {
+          if (user.guild?.id === guildId) {
             await interaction.editReply('Nothing changed.');
           } else {
             usersDatabase.changeGuildId(userId, guildId);
@@ -83,7 +89,7 @@ export function modalSubmitHandler(
           return;
         }
 
-        user = new User(userId, guild_);
+        user = new User(userId, guild_, undefined, undefined);
         users.push(user);
         usersDatabase.changeGuildId(userId, guildId);
         await deferReply;
@@ -200,6 +206,104 @@ export function modalSubmitHandler(
         reply = reply === '' ? 'Nothing changed.' : reply;
         await deferReply;
         await interaction.editReply(reply);
+        return;
+      } else if (customId === EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID) {
+        const { usersDatabase } = databaseManager;
+
+        const userId = interaction.user.id;
+
+        const emoteBorderColorRegex = /^[0-9A-Fa-f]{6}$/;
+        //const emoteBorderOpacityRegex = /^(?:0\.[1-9]|1\.0)$/;
+
+        let reply = '';
+
+        const emoteBorderEnabled = interaction.fields.getCheckbox(EMOTE_BORDER_ENABLED_CHECKBOX_CUSTOM_ID);
+
+        const emoteBorderColor = ((): string | undefined => {
+          const emoteBorderColor_ = interaction.fields
+            .getTextInputValue(EMOTE_BORDER_COLOR_TEXT_INPUT_CUSTOM_ID)
+            .trim();
+
+          return emoteBorderColor_ !== '' ? emoteBorderColor_ : undefined;
+        })();
+        if (emoteBorderColor !== undefined && !emoteBorderColorRegex.test(emoteBorderColor))
+          reply += 'The format of the emote border color is incorrect. Format: RRGGBB';
+
+        /*
+        const emoteBorderOpacity = ((): string | undefined => {
+          const emoteBorderOpacity_ = interaction.fields
+            .getTextInputValue(EMOTE_BORDER_OPACITY_TEXT_INPUT_CUSTOM_ID)
+            .trim();
+
+          return emoteBorderOpacity_ !== '' ? emoteBorderOpacity_ : undefined;
+        })();
+        if (emoteBorderOpacity !== undefined && !emoteBorderOpacityRegex.test(emoteBorderOpacity))
+          reply += '\nThe format of the emote border opacity is incorrect. Format: a number between 0.1 and 1.0';
+        */
+
+        reply = reply.trim();
+        if (reply !== '') {
+          await deferReply;
+          await interaction.editReply(reply);
+          return;
+        }
+
+        let user = users.find((user_) => user_.id === userId);
+        if (user !== undefined) {
+          if (user.enableEmoteBorder !== emoteBorderEnabled) {
+            reply += `${booleanToEnabled(emoteBorderEnabled)} emote border.`;
+            user.changeEnableEmoteBorder(emoteBorderEnabled);
+            usersDatabase.changeEnableEmoteBorder(user.id, emoteBorderEnabled);
+          }
+
+          if (emoteBorderColor !== undefined && user.emoteBorderColor !== emoteBorderColor) {
+            reply += '\nChanged emote border color.';
+            user.changeEmoteBorderColor(emoteBorderColor);
+            usersDatabase.changeEmoteBorderColor(user.id, emoteBorderColor);
+          }
+
+          /*
+          if (emoteBorderOpacity !== undefined && user.emoteBorderOpacity !== emoteBorderOpacity) {
+            reply += '\nChanged emote border opacity.';
+            user.changeEmoteBorderOpacity(emoteBorderOpacity);
+            usersDatabase.changeEmoteBorderOpacity(user.id, emoteBorderOpacity);
+          }
+          */
+
+          await deferReply;
+          reply = reply.trim();
+          await interaction.editReply(reply !== '' ? reply : 'Nothing changed.');
+          return;
+        }
+
+        if (!emoteBorderEnabled && emoteBorderColor === undefined) {
+          await deferReply;
+          await interaction.editReply('Nothing changed.');
+          return;
+        }
+
+        user = new User(userId, undefined, emoteBorderEnabled, emoteBorderColor);
+        users.push(user);
+
+        if (emoteBorderEnabled) {
+          reply += 'Enabled emote border.';
+          usersDatabase.changeEnableEmoteBorder(userId, emoteBorderEnabled);
+        }
+        if (emoteBorderColor !== undefined) {
+          reply += '\nChanged emote border color.';
+          usersDatabase.changeEmoteBorderColor(userId, emoteBorderColor);
+        }
+
+        /*
+        if (emoteBorderOpacity !== undefined) {
+          reply += '\nChanged emote border opacity.';
+          usersDatabase.changeEmoteBorderColor(userId, emoteBorderOpacity);
+        }
+        */
+
+        await deferReply;
+        reply = reply.trim();
+        await interaction.editReply(reply !== '' ? reply : 'Nothing changed.');
         return;
       }
 

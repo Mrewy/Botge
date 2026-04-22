@@ -9,12 +9,12 @@
 					"label": "bot"
 				},
 				{
-					"line": 211,
+					"line": 215,
 					"column": 0,
 					"label": "functions"
 				},
 				{
-					"line": 264,
+					"line": 268,
 					"column": 0,
 					"label": "schedules"
 				}
@@ -59,22 +59,22 @@
 			"path": "src/command-handlers/emote.ts",
 			"bookmarks": [
 				{
-					"line": 40,
+					"line": 41,
 					"column": 0,
 					"label": "horizontalStackElements"
 				},
 				{
-					"line": 146,
+					"line": 169,
 					"column": 0,
 					"label": "emoteHandler"
 				},
 				{
-					"line": 185,
+					"line": 208,
 					"column": 0,
 					"label": "emoteListHandler"
 				},
 				{
-					"line": 228,
+					"line": 253,
 					"column": 0,
 					"label": "emotesHandler"
 				}
@@ -119,52 +119,52 @@
 			"path": "src/interaction-handlers/button.ts",
 			"bookmarks": [
 				{
-					"line": 116,
+					"line": 123,
 					"column": 0,
 					"label": "CONFIGURATION_USER"
 				},
 				{
-					"line": 139,
+					"line": 146,
 					"column": 0,
 					"label": "PERMITTED_ROLES"
 				},
 				{
-					"line": 170,
+					"line": 177,
 					"column": 0,
 					"label": "ALLOW_EVERYONE_TO_ADD_EMOTE"
 				},
 				{
-					"line": 182,
+					"line": 189,
 					"column": 0,
 					"label": "ADDED_EMOTE_DELETION_MENU"
 				},
 				{
-					"line": 206,
+					"line": 213,
 					"column": 0,
 					"label": "CONFIGURATION_GUILD"
 				},
 				{
-					"line": 242,
+					"line": 294,
 					"column": 0,
 					"label": "messageBuilderType"
 				},
 				{
-					"line": 321,
+					"line": 373,
 					"column": 0,
 					"label": "messageBuilders"
 				},
 				{
-					"line": 360,
+					"line": 412,
 					"column": 0,
 					"label": "messageBuilder"
 				},
 				{
-					"line": 367,
+					"line": 419,
 					"column": 0,
 					"label": "reply"
 				},
 				{
-					"line": 564,
+					"line": 616,
 					"column": 0,
 					"label": "editReply"
 				}
@@ -174,32 +174,27 @@
 			"path": "src/interaction-handlers/modal-submit.ts",
 			"bookmarks": [
 				{
-					"line": 53,
+					"line": 61,
 					"column": 0,
 					"label": "deferReply"
 				},
 				{
-					"line": 94,
+					"line": 102,
 					"column": 0,
 					"label": "ASSIGN_EMOTE_SETS"
 				},
 				{
-					"line": 204,
-					"column": 0,
-					"label": "messageBuilderType"
-				},
-				{
-					"line": 205,
+					"line": 311,
 					"column": 0,
 					"label": "messageBuilders"
 				},
 				{
-					"line": 235,
+					"line": 341,
 					"column": 0,
 					"label": "messageBuilder"
 				},
 				{
-					"line": 60,
+					"line": 68,
 					"column": 1,
 					"label": ""
 				}

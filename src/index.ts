@@ -192,16 +192,20 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
   );
 
   //users
-  const users: readonly Readonly<User>[] = usersDatabase
-    .getAllUsers()
-    .entries()
-    .toArray()
-    .map(([userId, [guildId]]: readonly [string, readonly [string]]) => {
-      const guild = guilds.find((guild_) => guild_.id === guildId);
-      if (guild === undefined) throw new Error('Undefined guild while searching for guild for user.');
+  const users: readonly Readonly<User>[] = usersDatabase.getAllUsers().map((databaseUser) => {
+    const { guildId } = databaseUser;
+    const enableEmoteBorder =
+      databaseUser.enableEmoteBorder !== null ? Boolean(databaseUser.enableEmoteBorder) : undefined;
+    const emoteBorderColor = databaseUser.emoteBorderColor ?? undefined;
+    // const emoteBorderOpacity = databaseUser.emoteBorderOpacity ?? undefined;
 
-      return new User(userId, guild);
-    });
+    if (guildId === null) return new User(databaseUser.userId, undefined, enableEmoteBorder, emoteBorderColor);
+
+    const guild = guilds.find((guild_) => guild_.id === guildId);
+    if (guild === undefined) throw new Error('Undefined guild while searching for guild for user.');
+
+    return new User(databaseUser.userId, guild, enableEmoteBorder, emoteBorderColor);
+  });
 
   return new Bot(client, apiManager, databaseManager, guilds, users);
 })();

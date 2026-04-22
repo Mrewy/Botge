@@ -10,7 +10,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
 
   meilisearch:
-    image: getmeili/meilisearch:v1.40
+    image: getmeili/meilisearch:v1.42
     mem_limit: 512m
     healthcheck:
       test: set -o pipefail;curl -fsS http://localhost:7700/health | grep -q '{"status":"available"}'

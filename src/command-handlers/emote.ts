@@ -568,7 +568,7 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
       args.push('-fs');
       args.push('25M');
 
-      const outfile = join(outdir, 'output.gif');
+      const outfile = join(outdir, `output.${animated ? 'gif' : 'png'}`);
       args.push(outfile);
 
       const ffmpeg = spawn('ffmpeg', args);

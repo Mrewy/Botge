@@ -339,6 +339,7 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         if (match === undefined) return undefined;
 
         if (match.url === 'https://cdn.7tv.app/emote/01HQPVVAYR0007V5J7WCNKMP48/2x.gif') return '1.08';
+        else if (match.url === 'https://cdn.7tv.app/emote/01GWBD2YR00002CCPRV6KPX758/2x.gif') return '0.40';
         return undefined;
       })();
 
@@ -568,7 +569,7 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
       args.push('-fs');
       args.push('25M');
 
-      const outfile = join(outdir, `output.${animated ? 'gif' : 'png'}`);
+      const outfile = join(outdir, `output.${animated ? 'gif' : 'gif'}`);
       args.push(outfile);
 
       const ffmpeg = spawn('ffmpeg', args);

@@ -1,8 +1,10 @@
+.devcontainer
 .github
 .vscode
 .husky
 !.husky/install.ts
 assets
+chroma-data
 data
 dist
 docs
@@ -10,18 +12,23 @@ docs
 !docs/CHANGELOG.md
 !docs/PRIVACY.md
 !docs/TERMS.md
-chroma-data
 meili-data
 nginx/cache
 node_modules
+src/tsdoc.json
 tests
 tmp
 
 .dockerignore
 .env
+.env.example
 .gitattributes
 .gitignore
+.prettierignore
 .prettierrc.json
-compose*.yaml
+compose.yaml
 Dockerfile
 eslint.config.ts
+tsconfig.json
+tsdoc.json
+vitest.config.ts

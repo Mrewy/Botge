@@ -1,7 +1,7 @@
 .DS_Store
+/chroma-data
 /data/
 /dist
-/chroma-data
 /meili-data
 /nginx/cache
 /node_modules

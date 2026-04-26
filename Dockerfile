@@ -1,4 +1,4 @@
-FROM node:25.9.0-alpine AS base
+FROM dhi.io/node:25.9.0-debian13-sfw-dev AS base
 
 FROM base AS ci-dependencies
 WORKDIR /app
@@ -37,7 +37,9 @@ LABEL org.opencontainers.image.title="Botge" \
   org.opencontainers.image.authors="Mrewy" \
   org.opencontainers.image.documentation="https://github.com/Mrewy/Botge/tree/main/docs"
 
-RUN apk add --no-cache ffmpeg
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends init-system-helpers ffmpeg \
+  && rm -rf /var/lib/apt/lists/*
 COPY --from=node-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY docs ./docs

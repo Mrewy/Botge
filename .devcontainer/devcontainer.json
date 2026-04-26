@@ -40,8 +40,7 @@
 
         // Extras
         "vscode-icons-team.vscode-icons",
-        "aaron-bond.better-comments",
-        "alefragnani.Bookmarks"
+        "aaron-bond.better-comments"
       ]
     }
   }

@@ -53,14 +53,6 @@
   "yaml.format.printWidth": 120,
   "yaml.format.singleQuote": true,
 
-  "bookmarks.saveBookmarksInProject": true,
-  "bookmarks.experimental.enableNewStickyEngine": true,
-  "bookmarks.keepBookmarksOnLineDelete": true, // ! needed for agents
-  "bookmarks.useWorkaroundForFormatters": false,
-  "bookmarks.sideBar.countBadge": "off",
-  "bookmarks.sideBar.expanded": false,
-  "bookmarks.revealLocation": "center",
-
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
@@ -138,6 +130,7 @@
     "chromadb",
     "CNTREC",
     "RRGGBB",
+    "noninteractive",
 
     // Names
     "Botge",

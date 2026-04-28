@@ -51,7 +51,7 @@
     "meilisearch": "0.57.0",
     "node-fetch": "3.3.2",
     "node-schedule": "2.1.1",
-    "openai": "6.34.0",
+    "openai": "6.35.0",
     "sql.js": "1.14.1",
     "timezones-list": "3.1.0"
   },
@@ -67,10 +67,10 @@
     "markdownlint": "0.40.0",
     "prettier": "3.8.3",
     "prettier-plugin-sh": "0.18.1",
-    "ts-essentials": "10.1.1",
+    "ts-essentials": "10.2.0",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.58.2",
-    "vitest": "4.1.4"
+    "typescript-eslint": "8.59.1",
+    "vitest": "4.1.5"
   },
   "engines": {
     "node": "v25.9.0",

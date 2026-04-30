@@ -198,9 +198,7 @@ export function autocompleteHandler(
             return { name: clip.title, value: clip.title };
           });
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         } else if (focusedOptionName === 'clipper') {
           const title = getOptionValue<string>(interaction, 'title') ?? '';
           const category = getOptionValue<string>(interaction, 'category');
@@ -223,9 +221,7 @@ export function autocompleteHandler(
               };
             });
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         } else if (focusedOptionName === 'category') {
           const title = getOptionValue<string>(interaction, 'title') ?? '';
           const clipper = getOptionValue<string>(interaction, 'clipper');
@@ -248,9 +244,7 @@ export function autocompleteHandler(
               };
             });
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.shortestUniqueSubstrings) {
         if (focusedOptionName === 'emotes') {
@@ -288,9 +282,7 @@ export function autocompleteHandler(
           if (options.some((option: ReadonlyApplicationCommandOptionChoiceDataString) => option.name.length > 100))
             return;
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.pingList) {
         if (focusedOptionName === 'timezone') {
@@ -307,9 +299,7 @@ export function autocompleteHandler(
             }
           );
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.media) {
         if (focusedOptionName === 'name') {
@@ -324,9 +314,7 @@ export function autocompleteHandler(
             };
           });
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.quote) {
         if (focusedOptionName === 'name') {
@@ -341,9 +329,7 @@ export function autocompleteHandler(
             };
           });
 
-          await interaction.respond(
-            options.slice(0, MAX_OPTIONS_LENGTH) as readonly ApplicationCommandOptionChoiceData<string>[]
-          );
+          await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
       }
     } catch (error) {

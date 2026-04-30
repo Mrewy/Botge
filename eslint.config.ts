@@ -2,7 +2,7 @@
 
 import { defineConfig, globalIgnores, type Config } from 'eslint/config';
 
-const globalConfig: readonly Config[] = defineConfig([
+const globalConfig: readonly Readonly<Config>[] = defineConfig([
   {
     name: 'globalLanguageOptions',
     languageOptions: {
@@ -43,7 +43,7 @@ import { plugin, parser, configs } from 'typescript-eslint';
 import js from '@eslint/js';
 import tsdoc from 'eslint-plugin-tsdoc';
 
-const config: readonly Config[] = defineConfig([
+const config: readonly Readonly<Config>[] = defineConfig([
   ...globalConfig,
   {
     name: 'ts',

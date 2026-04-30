@@ -2,7 +2,7 @@
 
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 
-const viteUserConfig: ViteUserConfig = defineConfig({
+const viteUserConfig: Readonly<ViteUserConfig> = defineConfig({
   resolve: {
     tsconfigPaths: true
   },

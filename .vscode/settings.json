@@ -27,6 +27,8 @@
   "npm.packageManager": "npm",
   "npm.scriptRunner": "npm",
 
+  "js/ts.experimental.useTsgo": true,
+
   "js/ts.implicitProjectConfig.module": "NodeNext",
   "js/ts.implicitProjectConfig.target": "ESNext",
 
@@ -93,6 +95,7 @@
     "NodeNext",
     "ESNext",
     "devcontainers",
+    "tsgo",
 
     // Lib
     "healthcheck",

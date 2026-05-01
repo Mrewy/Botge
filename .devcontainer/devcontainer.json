@@ -9,13 +9,15 @@
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "moby": false,
       "installDockerBuildx": true,
-      "azureDnsAutoDetection": false
+      "azureDnsAutoDetection": false,
+      "installDockerComposeSwitch": true
     },
-    "ghcr.io/devcontainers/features/node:1": { "version": "latest", "nodeGypDependencies": false },
+    "ghcr.io/devcontainers/features/node:2.0.0": { "version": "v25.9.0", "nodeGypDependencies": false },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
 
   "postCreateCommand": {
+    "global-npm-packages": "npm install -g npm-check-updates && npm install -g sort-package-json",
     "install-and-build": "npm install && npm run build",
     "directories": "mkdir -p data tmp nginx/cache/tmp && sudo chmod -R a+rwx data && sudo chmod -R a+rwx tmp && sudo chmod -R a+rx nginx/cache"
   },
@@ -27,6 +29,8 @@
     "vscode": {
       "extensions": [
         // Project
+        "docker.docker",
+        "TypeScriptTeam.native-preview",
         "GitHub.copilot-chat",
         "eamodio.gitlens",
         "dbaeumer.vscode-eslint",

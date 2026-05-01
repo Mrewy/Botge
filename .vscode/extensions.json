@@ -2,8 +2,9 @@
   "recommendations": [
     // Project
     "ms-vscode-remote.remote-containers",
-    "GitHub.copilot-chat",
     "docker.docker",
+    "TypeScriptTeam.native-preview",
+    "GitHub.copilot-chat",
     "eamodio.gitlens",
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",

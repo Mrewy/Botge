@@ -22,8 +22,6 @@ import type {
   Attachment
 } from 'discord.js';
 
-import type { Platform } from './enums.ts';
-
 export type ReadonlyOpenAI = DeepReadonly<OpenAI>;
 export type ReadonlyTranslator = DeepReadonly<Translator>;
 export type ReadonlyHit = DeepReadonly<Hit>;
@@ -48,6 +46,8 @@ export type OpenAIResponseInput = OpenAI.Responses.ResponseInput;
 export type OpenAIResponseInputImage = OpenAI.Responses.ResponseInputImage;
 
 export type ReadonlyMetaData = DeepReadonly<Metadata>;
+
+export type Platform = 'sevenInSet' | 'sevenNotInSet' | 'bttv' | 'ffz' | 'twitch';
 
 export type SevenTVEmoteFile = {
   readonly name: string;

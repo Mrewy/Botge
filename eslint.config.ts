@@ -30,7 +30,7 @@ const globalConfig: readonly Readonly<Config>[] = defineConfig([
       'data/',
       'dist/',
       'docs/',
-      'chroma-data',
+      'chroma-data/',
       'meili-data/',
       'nginx/cache/',
       'tmp/'

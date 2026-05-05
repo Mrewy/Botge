@@ -4,7 +4,7 @@ import scheduler, { type Job } from 'node-schedule';
 
 import type { Client, TextChannel } from 'discord.js';
 
-import { getContent, ContentType } from '../message-builders/ping-for-ping-me-message-builder.ts';
+import { getContent } from '../message-builders/ping-for-ping-me-message-builder.ts';
 import { daysAndHoursAndMinutesToMilliseconds } from '../command-handlers/ping-me.ts';
 import type { PingsDatabase } from '../database/pings-database.ts';
 import { logError } from './log-error.ts';
@@ -40,7 +40,7 @@ export async function registerPings(
     }
 
     const difference = timeMilliseconds - Date.now();
-    const pingedContent = getContent(ping, ContentType.Pinged);
+    const pingedContent = getContent(ping, 'Pinged');
     if (difference > 0) {
       const scheduledJob = scheduler.scheduleJob(pingDate, async () => {
         try {

@@ -8,6 +8,7 @@ import {
   twitchToAsset
 } from '../utils/emote-matcher/emote-to-asset.ts';
 import type {
+  Platform,
   SevenTVEmoteNotInSet,
   BTTVEmote,
   SevenTVEmotes,
@@ -17,7 +18,6 @@ import type {
   TwitchGlobalEmotes,
   AssetInfo
 } from '../types.ts';
-import type { Platform } from '../enums.ts';
 
 const FFZ_GLOBAL_SETS_KEY = 3 as const;
 

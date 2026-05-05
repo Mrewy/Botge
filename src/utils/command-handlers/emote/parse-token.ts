@@ -7,7 +7,6 @@ const twemoji = await (async (): Promise<Twemoji> => {
 })();
 
 import type { AssetInfo } from '../../../types.ts';
-import { Platform } from '../../../enums.ts';
 import { sevenTVNotInSetToAsset } from '../../emote-matcher/emote-to-asset.ts';
 import { sevenTVUrlToSevenTVNotInSet } from '../platform-url-to-api-url.ts';
 import { maxPlatformSize } from './size-change.ts';
@@ -76,7 +75,7 @@ export async function parseToken(url: string, highestSize: boolean): Promise<Ass
   const sevenTVNotInSetToAsset_ =
     sevenTVUrlToSevenTVNotInSet_ !== undefined
       ? highestSize
-        ? sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_, maxPlatformSize(Platform.sevenNotInSet))
+        ? sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_, maxPlatformSize('sevenNotInSet'))
         : sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_)
       : undefined;
 

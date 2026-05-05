@@ -26,6 +26,7 @@
     "allowJs": false,
 
     // Interop Constraints
+    "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
     "isolatedDeclarations": true,
 

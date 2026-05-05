@@ -14,10 +14,15 @@ import { getShortestUniqueSubstrings } from '../command-handlers/shortest-unique
 
 import type { DatabaseManager } from '../bot/database-manager.ts';
 
-import type { TwitchClip, ReadonlyHit, ReadonlyApplicationCommandOptionChoiceDataString, AssetInfo } from '../types.ts';
+import type {
+  TwitchClip,
+  ReadonlyHit,
+  ReadonlyApplicationCommandOptionChoiceDataString,
+  Platform,
+  AssetInfo
+} from '../types.ts';
 import type { EmoteMatcher } from '../emote-matcher/emote-matcher.ts';
 import { SLASH_COMMAND_NAMES } from '../discord/commands.ts';
-import { Platform } from '../enums.ts';
 
 const MAX_OPTIONS_LENGTH = 25 as const; //THE MAXIMUM YOU CAN SET HERE IS 25
 
@@ -40,8 +45,8 @@ async function getHitsFromTwitchClipsMeilisearchIndex(
 }
 
 function applicableSizes(platform: Platform | undefined): readonly number[] {
-  if (platform === Platform.bttv || platform === Platform.twitch) return [1, 2, 3];
-  else if (platform === Platform.ffz) return [1, 2, 4];
+  if (platform === 'bttv' || platform === 'twitch') return [1, 2, 3];
+  else if (platform === 'ffz') return [1, 2, 4];
   else return [1, 2, 3, 4];
 }
 

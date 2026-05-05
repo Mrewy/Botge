@@ -80,8 +80,6 @@ import type { Guild } from '../discord/guild.ts';
 
 import type { User } from '../discord/user.ts';
 
-import { Platform } from '../enums.ts';
-
 export const SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID = 'selectSettingsPermittedRolesRoleSelectMenu';
 export const SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID =
   'selectAddEmotePermittedRolesRoleSelectMenu' as const;
@@ -191,7 +189,7 @@ export function buttonHandler(
         const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
         const emotes = guild.emoteMatcher.matchSingleArray(
           '',
-          Platform.sevenNotInSet,
+          'sevenNotInSet',
           undefined,
           undefined,
           undefined,

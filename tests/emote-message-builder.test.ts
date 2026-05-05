@@ -7,7 +7,6 @@ import type { ChatInputCommandInteraction } from 'discord.js';
 import { getAllSubstrings } from 'src/command-handlers/shortest-unique-substrings.ts';
 import { EmoteMessageBuilder } from 'src/message-builders/emote-message-builder.ts';
 import type { AssetInfo } from 'src/types.ts';
-import { Platform } from 'src/enums.ts';
 
 const EMOTES_LENGTH = 4 as const; //at least 4
 
@@ -21,7 +20,7 @@ describe('EmoteMessageBuilder', () => {
     const emotes_: AssetInfo[] = [];
 
     for (let i = 0; i < EMOTES_LENGTH; i++) {
-      const emote = { name: getTestName(i), platform: Platform.sevenNotInSet, zeroWidth: false } as AssetInfo;
+      const emote = { name: getTestName(i), platform: 'sevenNotInSet', zeroWidth: false } as AssetInfo;
       emotes_.push(emote);
     }
 

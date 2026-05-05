@@ -24,10 +24,7 @@ import type {
 
 import { getCustomId } from './base.ts';
 
-export const enum ContentType {
-  PingRegistered = 0,
-  Pinged = 1
-}
+type ContentType = 'PingRegistered' | 'Pinged';
 
 export function getContent(ping: Ping, contentType: ContentType): string {
   const { days, hours, minutes, userId, message, userIds, userIdRemoved } = ping;
@@ -54,7 +51,7 @@ export function getContent(ping: Ping, contentType: ContentType): string {
   })();
 
   let content = '';
-  if (contentType === ContentType.PingRegistered) {
+  if (contentType === 'PingRegistered') {
     content += `The ping has been registered for ${contentTimePart}.`;
 
     if (userIdRemoved !== null && userIdRemoved) content += ' The original command user was removed from the ping.';
@@ -294,7 +291,7 @@ export class PingForPingMeMessageBuilder {
   }
 
   #schedulePing(pingsDataBase: Readonly<PingsDatabase>): Readonly<Job> {
-    const pingedContent = getContent(this.#ping, ContentType.Pinged);
+    const pingedContent = getContent(this.#ping, 'Pinged');
 
     const scheduledJob = scheduleJob(this.#pingDate, async () => {
       try {
@@ -356,7 +353,7 @@ export class PingForPingMeMessageBuilder {
 
   #transformFunction(): PingForPingMeMessageBuilderTransformFunctionReturnType {
     return {
-      content: getContent(this.#ping, ContentType.PingRegistered),
+      content: getContent(this.#ping, 'PingRegistered'),
       components: [this.#row]
     };
   }

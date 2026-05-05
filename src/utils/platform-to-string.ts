@@ -1,6 +1,6 @@
 /** @format */
 
-import { Platform } from '../enums.ts';
+import type { Platform } from '../types.ts';
 
 const SEVEN_IN_SET_STRING = '7TV' as const;
 const SEVEN_NOT_IN_SET_STRING = '7TV | Added Emote' as const;
@@ -13,17 +13,17 @@ export function platformStrings(): readonly string[] {
 }
 
 export function platformToString(platform: Platform): string {
-  if (platform === Platform.sevenInSet) return SEVEN_IN_SET_STRING;
-  else if (platform === Platform.sevenNotInSet) return SEVEN_NOT_IN_SET_STRING;
-  else if (platform === Platform.bttv) return BTTV_STRING;
-  else if (platform === Platform.ffz) return FFZ_STRING;
+  if (platform === 'sevenInSet') return SEVEN_IN_SET_STRING;
+  else if (platform === 'sevenNotInSet') return SEVEN_NOT_IN_SET_STRING;
+  else if (platform === 'bttv') return BTTV_STRING;
+  else if (platform === 'ffz') return FFZ_STRING;
   return TWITCH_STRING;
 }
 
 export function stringToPlatform(platform: string): Platform {
-  if (platform === SEVEN_IN_SET_STRING) return Platform.sevenInSet;
-  else if (platform === SEVEN_NOT_IN_SET_STRING) return Platform.sevenNotInSet;
-  else if (platform === BTTV_STRING) return Platform.bttv;
-  else if (platform === FFZ_STRING) return Platform.ffz;
-  return Platform.twitch;
+  if (platform === SEVEN_IN_SET_STRING) return 'sevenInSet';
+  else if (platform === SEVEN_NOT_IN_SET_STRING) return 'sevenNotInSet';
+  else if (platform === BTTV_STRING) return 'bttv';
+  else if (platform === FFZ_STRING) return 'ffz';
+  return 'twitch';
 }

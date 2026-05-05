@@ -24,8 +24,6 @@ import type {
   ReadonlyActionRowBuilderMessageActionRowComponentBuilder
 } from '../types.ts';
 
-import { Platform } from '../enums.ts';
-
 import { BaseMessageBuilder, getCustomId } from './base.ts';
 
 export const DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID = 'deleteEmoteButton' as const;
@@ -112,7 +110,7 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMess
     if (this.#markedAsDeletedArray.includes(this.currentIndex)) return undefined;
 
     const currentEmote = this.currentItem;
-    if (currentEmote.platform !== Platform.sevenNotInSet) return undefined;
+    if (currentEmote.platform !== 'sevenNotInSet') return undefined;
 
     const emoteCdnUrlToEmoteApiCdnUrl_ = emoteCdnUrlToEmoteApiCdnUrl(currentEmote);
     if (emoteCdnUrlToEmoteApiCdnUrl_ === undefined) return undefined;

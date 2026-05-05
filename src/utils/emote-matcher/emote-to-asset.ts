@@ -1,6 +1,5 @@
 /** @format */
 
-import { Platform } from '../../enums.ts';
 import type {
   SevenTVEmoteFile,
   SevenTVEmoteInSet,
@@ -29,7 +28,7 @@ export function sevenTVInSetToAsset(emote: SevenTVEmoteInSet, size?: number): As
     animated: animated,
     width: file?.width,
     height: file?.height,
-    platform: Platform.sevenInSet,
+    platform: 'sevenInSet',
     timestamp: timestamp
   };
 }
@@ -46,7 +45,7 @@ export function sevenTVNotInSetToAsset(emote: Readonly<SevenTVEmoteNotInSet>, si
     animated: animated,
     width: file?.width,
     height: file?.height,
-    platform: Platform.sevenNotInSet,
+    platform: 'sevenNotInSet',
     timestamp: undefined
   };
 }
@@ -62,7 +61,7 @@ export function bttvToAsset(emote: BTTVEmote): AssetInfo {
     animated: animated,
     width: undefined,
     height: undefined,
-    platform: Platform.bttv,
+    platform: 'bttv',
     timestamp: undefined
   };
 }
@@ -77,7 +76,7 @@ export function ffzToAsset(emote: FFZEmote): AssetInfo {
     animated: false,
     width: undefined,
     height: undefined,
-    platform: Platform.ffz,
+    platform: 'ffz',
     timestamp: undefined
   };
 }
@@ -95,7 +94,7 @@ export function twitchToAsset(emote: TwitchEmote): AssetInfo {
     animated: animated,
     width: undefined,
     height: undefined,
-    platform: Platform.twitch,
+    platform: 'twitch',
     timestamp: undefined
   };
 }

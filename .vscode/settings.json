@@ -49,7 +49,7 @@
   },
 
   "prettier.requireConfig": true,
-  "prettier.configPath": ".prettierrc.json",
+  "prettier.configPath": "prettier.config.ts",
 
   "redhat.telemetry.enabled": false,
   "yaml.format.printWidth": 120,

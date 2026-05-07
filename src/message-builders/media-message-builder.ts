@@ -23,7 +23,7 @@ export const DELETE_MEDIA_BUTTON_BASE_CUSTOM_ID = 'deleteMediaButton' as const;
 export const RENAME_MEDIA_BUTTON_BASE_CUSTOM_ID = 'renameMediaButton' as const;
 
 export class MediaMessageBuilder extends BaseMessageBuilder<Media, MediaMessageBuilderTransformFunctionReturnType> {
-  public static readonly messageBuilderType = 'Media' as const;
+  static readonly #messageBuilderType = 'Media' as const;
   static #staticCounter = 0;
   readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder;
   readonly #markedAsDeletedArray: number[] = [];
@@ -89,6 +89,10 @@ export class MediaMessageBuilder extends BaseMessageBuilder<Media, MediaMessageB
         .setLabel('Rename')
         .setStyle(ButtonStyle.Secondary)
     );
+  }
+
+  public static get messageBuilderType(): string {
+    return MediaMessageBuilder.#messageBuilderType;
   }
 
   public get currentMedia(): Media | undefined {

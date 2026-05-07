@@ -23,7 +23,7 @@ export const DELETE_QUOTE_BUTTON_BASE_CUSTOM_ID = 'deleteQuoteButton' as const;
 export const RENAME_QUOTE_BUTTON_BASE_CUSTOM_ID = 'renameQuoteButton' as const;
 
 export class QuoteMessageBuilder extends BaseMessageBuilder<Quote, QuoteMessageBuilderTransformFunctionReturnType> {
-  public static readonly messageBuilderType = 'Quote' as const;
+  static readonly #messageBuilderType = 'Quote' as const;
   static #staticCounter = 0;
   readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder;
   readonly #markedAsDeletedArray: number[] = [];
@@ -85,6 +85,10 @@ export class QuoteMessageBuilder extends BaseMessageBuilder<Quote, QuoteMessageB
         .setLabel('Rename')
         .setStyle(ButtonStyle.Secondary)
     );
+  }
+
+  public static get messageBuilderType(): string {
+    return QuoteMessageBuilder.#messageBuilderType;
   }
 
   public get currentQuote(): Quote | undefined {

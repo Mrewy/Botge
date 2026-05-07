@@ -24,7 +24,7 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
   Readonly<PingForPingMeMessageBuilder>,
   PingForPingListMessageBuilderTransformFunctionReturnType
 > {
-  public static readonly messageBuilderType = 'PingForPingList' as const;
+  static readonly #messageBuilderType = 'PingForPingList' as const;
   static #staticCounter = 0;
   readonly #markedAsDeletedArray: number[];
 
@@ -111,6 +111,10 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
     );
 
     this.#markedAsDeletedArray = [];
+  }
+
+  public static get messageBuilderType(): string {
+    return PingForPingListMessageBuilder.#messageBuilderType;
   }
 
   public get currentPingForPingMeMessageBuilder(): Readonly<PingForPingMeMessageBuilder> | undefined {

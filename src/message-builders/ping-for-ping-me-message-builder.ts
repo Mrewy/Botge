@@ -77,8 +77,8 @@ export const DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID = 'deletePingButtonFo
 const CLEANUP_MINUTES = 4 as const;
 
 export class PingForPingMeMessageBuilder {
-  public static readonly messageBuilderTypeForPingMe = 'PingForPingMeForPingMe' as const;
-  public static readonly messageBuilderTypeForPingList = 'PingForPingMeForPingList' as const;
+  static readonly #messageBuilderTypeForPingMe = 'PingForPingMeForPingMe' as const;
+  static readonly #messageBuilderTypeForPingList = 'PingForPingMeForPingList' as const;
   static readonly #emptyPingMessageBuilderReplies: PingForPingMeMessageBuilderReplies = {
     reply: undefined,
     buttonReply: undefined,
@@ -142,6 +142,13 @@ export class PingForPingMeMessageBuilder {
         .setLabel('Delete ping')
         .setStyle(ButtonStyle.Danger)
     );
+  }
+
+  public static get messageBuilderTypeForPingMe(): string {
+    return PingForPingMeMessageBuilder.#messageBuilderTypeForPingMe;
+  }
+  public static get messageBuilderTypeForPingList(): string {
+    return PingForPingMeMessageBuilder.#messageBuilderTypeForPingList;
   }
 
   public get ping(): Ping {

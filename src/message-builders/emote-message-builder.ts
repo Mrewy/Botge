@@ -29,7 +29,7 @@ import { BaseMessageBuilder, getCustomId } from './base.ts';
 export const DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID = 'deleteEmoteButton' as const;
 
 export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMessageBuilderTransformFunctionReturnType> {
-  public static readonly messageBuilderType = 'Emote' as const;
+  static readonly #messageBuilderType = 'Emote' as const;
   static #staticCounter = 0;
   readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder | undefined = undefined;
   readonly #shortestUniqueSubstrings: readonly string[] | undefined;
@@ -103,6 +103,10 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMess
     }
 
     this.#shortestUniqueSubstrings = shortestUniqueSubstrings;
+  }
+
+  public static get messageBuilderType(): string {
+    return EmoteMessageBuilder.#messageBuilderType;
   }
 
   public get currentAddedEmote(): AddedEmote | undefined {

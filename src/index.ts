@@ -32,7 +32,7 @@ import { PingsDatabase } from './database/pings-database.ts';
 import { QuotesDatabase } from './database/quotes-database.ts';
 import { UsersDatabase } from './database/users-database.ts';
 
-import { newRedditApi } from './utils/constructors/new-reddit-api.ts';
+// import { newRedditApi } from './utils/constructors/new-reddit-api.ts';
 import { newTwitchApi } from './utils/constructors/new-twitch-api.ts';
 import { newGuild } from './utils/constructors/new-guild.ts';
 import { registerPings } from './utils/register-pings.ts';
@@ -100,8 +100,8 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     DEEPL_API_KEY,
     TWITCH_CLIENT_ID,
     TWITCH_SECRET,
-    REDDIT_CLIENT_ID,
-    REDDIT_SECRET,
+    // REDDIT_CLIENT_ID,
+    // REDDIT_SECRET,
     MEILISEARCH_HOST,
     MEILI_MASTER_KEY,
     LOCAL_CACHE_BASE
@@ -118,10 +118,12 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
       ? new TwitchClipsMeilisearch(new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY }))
       : undefined;
 
+  /*
   const redditApi =
     REDDIT_CLIENT_ID !== undefined && REDDIT_SECRET !== undefined
       ? newRedditApi(REDDIT_CLIENT_ID, REDDIT_SECRET)
       : undefined;
+  */
   const twitchApi =
     TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined
       ? newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
@@ -136,7 +138,7 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
 
   const apiManager: Readonly<ApiManager> = new ApiManager(
     twitchClipsMeiliSearch,
-    await redditApi,
+    // await redditApi,
     await twitchApi,
     cachedUrl,
     translator,
@@ -279,9 +281,11 @@ scheduleJob('0 */20 * * * *', async () => {
 scheduleJob('0 54 * * * *', async () => {
   await bot.apiManager.twitchApi?.validateAndGetNewAccessTokenIfInvalid();
 });
+/*
 scheduleJob('0 54 * * * *', async () => {
   await bot.apiManager.redditApi?.validateAndGetNewAccessTokenIfInvalid();
 });
+*/
 
 scheduleJob('0 */2 * * *', async () => {
   await Promise.all(bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi)));

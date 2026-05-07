@@ -45,7 +45,7 @@ type HorizontalStackElement = {
 };
 
 class SimpleElement implements HorizontalStackElement {
-  public readonly id: number;
+  readonly #id: number;
   readonly #asset: DownloadedAsset;
   readonly #width: number;
   readonly #height: number;
@@ -62,7 +62,7 @@ class SimpleElement implements HorizontalStackElement {
     borderColor?: string,
     stopDuration?: string
   ) {
-    this.id = id;
+    this.#id = id;
     this.#asset = asset;
     this.#width = width;
     this.#height = height;
@@ -74,8 +74,12 @@ class SimpleElement implements HorizontalStackElement {
     if (stopDuration !== undefined) this.#stopDuration = stopDuration;
   }
 
+  public get id(): number {
+    return this.#id;
+  }
+
   public filterString(): string {
-    let filterString = `[${this.id}:v]`;
+    let filterString = `[${this.#id}:v]`;
 
     if (this.#height > this.#asset.height) filterString += `pad=h=${this.#height}:x=-1:y=-1:color=black@0.0,`;
     filterString += `scale=${this.#width}:${this.#height}:force_original_aspect_ratio=decrease`;
@@ -88,13 +92,13 @@ class SimpleElement implements HorizontalStackElement {
     }
     if (this.#stopDuration !== undefined) filterString += `,tpad=stop_mode=clone:stop_duration=${this.#stopDuration}`;
 
-    filterString += `[o${this.id}];`;
+    filterString += `[o${this.#id}];`;
     return filterString;
   }
 }
 
 class OverlayElement implements HorizontalStackElement {
-  public readonly id: number;
+  readonly #id: number;
   readonly #layers: readonly DownloadedAsset[];
   readonly #fullSize: boolean;
   readonly #stretch: boolean;
@@ -109,7 +113,7 @@ class OverlayElement implements HorizontalStackElement {
     width: number,
     height: number
   ) {
-    this.id = id;
+    this.#id = id;
     this.#layers = layers;
     this.#fullSize = fullSize;
     this.#stretch = stretch;
@@ -118,12 +122,16 @@ class OverlayElement implements HorizontalStackElement {
     this.#width = width !== MAXWIDTH ? width : Math.min(getMaxWidth(this.#layers, this.#height), MAXWIDTH);
   }
 
+  public get id(): number {
+    return this.#id;
+  }
+
   public filterString(): string {
     const segments: string[] = [];
-    let { id } = this;
+    let id = this.#id;
     let layerId = 0;
 
-    segments.push(`[${this.id}]`);
+    segments.push(`[${this.#id}]`);
 
     // ! pad second because scale doesn't keep transparency
     segments.push(`scale=${this.#width}:${this.#height}:force_original_aspect_ratio=decrease`);
@@ -136,7 +144,7 @@ class OverlayElement implements HorizontalStackElement {
 
     if (this.#layers[layerId].animated) segments.push(`,fps=${DEFAULT_FPS}`);
 
-    segments.push(`[o${this.id}];`);
+    segments.push(`[o${this.#id}];`);
 
     id++;
     layerId++;
@@ -153,7 +161,7 @@ class OverlayElement implements HorizontalStackElement {
 
       segments.push(`[v${id}];`);
 
-      segments.push(`[o${this.id}][v${id}]overlay=(W-w)/2:(H-h)/2[o${this.id}];`);
+      segments.push(`[o${this.#id}][v${id}]overlay=(W-w)/2:(H-h)/2[o${this.#id}];`);
 
       id++;
       layerId++;

@@ -91,6 +91,7 @@ const config: readonly Readonly<Config>[] = defineConfig([
                 'GuildMember',
                 'Guild',
                 'TextChannel',
+                'GuildBasedChannel',
                 'Message',
                 'MessageContextMenuCommandInteraction'
               ],

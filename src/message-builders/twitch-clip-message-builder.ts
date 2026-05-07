@@ -26,7 +26,7 @@ export class TwitchClipMessageBuilder extends BaseMessageBuilder<
   TwitchClip,
   TwitchClipMessageBuilderTransformFunctionReturnType
 > {
-  public static readonly messageBuilderType = 'Clip' as const;
+  static readonly #messageBuilderType = 'Clip' as const;
   static #staticCounter = 0;
   readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder | undefined = undefined;
 
@@ -69,6 +69,10 @@ export class TwitchClipMessageBuilder extends BaseMessageBuilder<
           .setStyle(ButtonStyle.Success)
       );
     }
+  }
+
+  public static get messageBuilderType(): string {
+    return TwitchClipMessageBuilder.#messageBuilderType;
   }
 
   public currentWithSentBy(): TwitchClipMessageBuilderTransformFunctionReturnType {

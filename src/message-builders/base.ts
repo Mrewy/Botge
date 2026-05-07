@@ -232,24 +232,30 @@ export class BaseMessageBuilder<
 
   public previous(): TransformFunctionReturnType | undefined {
     if (this.#currentIndex <= 0) return undefined;
-    return this.#transformFunction(this.#array[--this.#currentIndex]);
+
+    this.#currentIndex--;
+    return this.current();
   }
 
   public next(): TransformFunctionReturnType | undefined {
     if (this.#currentIndex >= this.#array.length - 1) return undefined;
-    return this.#transformFunction(this.#array[++this.#currentIndex]);
+
+    this.#currentIndex++;
+    return this.current();
   }
 
   public first(): TransformFunctionReturnType | undefined {
     if (this.#currentIndex === 0) return undefined;
+
     this.#currentIndex = 0;
-    return this.#transformFunction(this.#array[this.#currentIndex]);
+    return this.current();
   }
 
   public last(): TransformFunctionReturnType | undefined {
     if (this.#currentIndex === this.#array.length - 1) return undefined;
+
     this.#currentIndex = this.#array.length - 1;
-    return this.#transformFunction(this.#array[this.#currentIndex]);
+    return this.current();
   }
 
   public random(): TransformFunctionReturnType | undefined {
@@ -263,7 +269,7 @@ export class BaseMessageBuilder<
     })();
 
     this.#currentIndex = randomNumberInInterval_;
-    return this.#transformFunction(this.#array[this.#currentIndex]);
+    return this.current();
   }
 
   public jumpTo(jumpTo: number): TransformFunctionReturnType | undefined {
@@ -272,7 +278,7 @@ export class BaseMessageBuilder<
 
     if (this.#currentIndex === jumpTo) return undefined;
     this.#currentIndex = jumpTo;
-    return this.#transformFunction(this.#array[this.#currentIndex]);
+    return this.current();
   }
 
   public jumpToIdentifier(jumpTo: string): TransformFunctionReturnType | undefined {
@@ -280,6 +286,7 @@ export class BaseMessageBuilder<
 
     for (const [index, arrayItem] of this.#array.entries()) {
       const identifier = this.#getIdentifierFunction(arrayItem);
+
       if (identifier === jumpTo) {
         if (this.#currentIndex === index) return undefined;
 
@@ -290,6 +297,7 @@ export class BaseMessageBuilder<
 
     for (const [index, arrayItem] of this.#array.entries()) {
       const identifier = this.#getIdentifierFunction(arrayItem);
+
       if (identifier.toLowerCase() === jumpTo.toLowerCase()) {
         if (this.#currentIndex === index) return undefined;
 
@@ -300,6 +308,7 @@ export class BaseMessageBuilder<
 
     for (const [index, arrayItem] of this.#array.entries()) {
       const identifier = this.#getIdentifierFunction(arrayItem);
+
       if (identifier.toLowerCase().includes(jumpTo.toLowerCase())) {
         if (this.#currentIndex === index) return undefined;
 

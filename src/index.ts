@@ -107,6 +107,16 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     LOCAL_CACHE_BASE
   } = process.env;
 
+  delete process.env['OPENAI_API_KEY'];
+  delete process.env['DEEPL_API_KEY'];
+  delete process.env['TWITCH_CLIENT_ID'];
+  delete process.env['TWITCH_SECRET'];
+  delete process.env['REDDIT_CLIENT_ID'];
+  delete process.env['REDDIT_SECRET'];
+  delete process.env['MEILISEARCH_HOST'];
+  delete process.env['MEILI_MASTER_KEY'];
+  delete process.env['LOCAL_CACHE_BASE'];
+
   //client
   const client: Client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
@@ -267,6 +277,7 @@ const refreshClipsOrRefreshUniqueCreatorNamesAndGameIds: readonly Promise<void>[
   process.env['UPDATE_CLIPS_ON_STARTUP'] === 'true'
     ? bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi))
     : bot.guilds.map(async (guild) => guild.refreshUniqueCreatorNamesAndGameIds());
+delete process.env['UPDATE_CLIPS_ON_STARTUP'];
 
 scheduleJob('0 */4 * * * *', () => {
   bot.messageBuilderManager.cleanupMessageBuilders();
@@ -306,4 +317,5 @@ await ensureDirs;
 await updateCommands(COMMANDS_PATH);
 await Promise.all(refreshClipsOrRefreshUniqueCreatorNamesAndGameIds);
 await bot.client.login(process.env['DISCORD_TOKEN']);
+delete process.env['DISCORD_TOKEN'];
 await registerPings(bot.client, bot.dataBaseManager.pingsDatabase, bot.scheduledJobs);

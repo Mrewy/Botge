@@ -9,8 +9,6 @@ import {
 } from 'src/utils/interaction-handlers/get-api-url.ts';
 import { newTwitchApi } from 'src/utils/constructors/new-twitch-api.ts';
 
-const { TWITCH_CLIENT_ID, TWITCH_SECRET } = process.env;
-
 describe('Get API Url', () => {
   const broadcasterNameValid = 'CuteDog_' as const;
   const broadcasterNameInvalid = 'invalidBroadcasterName' as const;
@@ -55,6 +53,11 @@ describe('Get API Url', () => {
       expect(sevenTvApiUrlMessage.type).toBe('error');
     });
   });
+
+  const { TWITCH_CLIENT_ID, TWITCH_SECRET } = process.env;
+
+  delete process.env['TWITCH_CLIENT_ID'];
+  delete process.env['TWITCH_SECRET'];
 
   describe.runIf(TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined)(
     'getBttvApiUrlFromBroadcasterName',

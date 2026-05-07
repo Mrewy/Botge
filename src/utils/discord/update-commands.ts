@@ -8,9 +8,12 @@ import { REST, Routes } from 'discord.js';
 
 import { commands } from '../../discord/commands.ts';
 
-const { APP_ID, DISCORD_TOKEN } = process.env;
-
 export async function updateCommands(lockFilePath: string): Promise<void> {
+  const { APP_ID, DISCORD_TOKEN } = process.env;
+
+  delete process.env['APP_ID'];
+  delete process.env['DISCORD_TOKEN'];
+
   if (DISCORD_TOKEN === undefined || APP_ID === undefined) throw new Error('DISCORD_TOKEN and APP_ID required.');
 
   const currentCommands = ((): string | undefined => {

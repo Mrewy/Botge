@@ -110,6 +110,8 @@ export class Bot {
       try {
         const { JOIN_VOICE_CHANNEL } = process.env;
 
+        delete process.env['JOIN_VOICE_CHANNEL'];
+
         if (JOIN_VOICE_CHANNEL === 'true') {
           const cuteDogGeneralChannel = channels.cache.find(
             (channel: { readonly id: string }) => channel.id === GENERAL_CHANNEL_ID_CUTEDOG

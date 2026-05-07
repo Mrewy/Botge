@@ -21,6 +21,8 @@ type TenorResponse = {
 
 const { TENOR_API_KEY } = process.env;
 
+delete process.env['TENOR_API_KEY'];
+
 async function getAllMediaWithTenorUrls(allMedia: readonly Media[]): Promise<readonly Media[]> {
   const tenorIds = allMedia
     .map((media) => {

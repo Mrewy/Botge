@@ -43,10 +43,10 @@ RUN apt-get update \
 COPY --from=node-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY docs ./docs
-COPY LICENSE.txt README.md ./
+COPY LICENSE.txt node.config.json README.md ./
 
 USER node
 
 VOLUME ["/app/data", "/app/tmp"]
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "--experimental-default-config-file", "--title", "botge", "dist/index.js"]

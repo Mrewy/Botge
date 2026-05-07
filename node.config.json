@@ -1,0 +1,30 @@
+{
+  "$schema": "https://nodejs.org/docs/v25.9.0/node-config-schema.json",
+  "nodeOptions": {
+    "disable-proto": "delete",
+    "disable-sigusr1": true,
+    "experimental-detect-module": true,
+    "experimental-global-navigator": false,
+    "experimental-sqlite": false,
+    "experimental-websocket": false,
+    "experimental-webstorage": false,
+    "force-async-hooks-checks": true,
+    "force-context-aware": true,
+    "force-node-api-uncaught-exceptions-policy": true,
+    "frozen-intrinsics": false,
+    "global-search-paths": false,
+    "require-module": false,
+    "unhandled-rejections": "strict",
+    "zero-fill-buffers": true
+  },
+  "permission": {
+    "allow-addons": true,
+    "allow-child-process": true,
+    "allow-fs-read": ["data", "dist", "node_modules", "tmp"],
+    "allow-fs-write": ["data", "tmp"],
+    "allow-inspector": false,
+    "allow-net": true,
+    "allow-wasi": false,
+    "allow-worker": false
+  }
+}

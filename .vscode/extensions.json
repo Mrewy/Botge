@@ -10,6 +10,7 @@
     "esbenp.prettier-vscode",
 
     // Syntax
+    "github.vscode-github-actions",
     "streetsidesoftware.code-spell-checker",
     "DavidAnson.vscode-markdownlint",
     "redhat.vscode-yaml",

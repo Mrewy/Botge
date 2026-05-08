@@ -25,10 +25,10 @@ tmp
 .gitattributes
 .gitignore
 .prettierignore
-.prettierrc.json
 compose.yaml
 Dockerfile
 eslint.config.ts
+prettier.config.ts
 tsconfig.json
 tsdoc.json
 vitest.config.ts

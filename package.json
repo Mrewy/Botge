@@ -51,7 +51,7 @@
     "meilisearch": "0.58.0",
     "node-fetch": "3.3.2",
     "node-schedule": "2.1.1",
-    "openai": "6.36.0",
+    "openai": "6.37.0",
     "sql.js": "1.14.1",
     "timezones-list": "3.1.0"
   },

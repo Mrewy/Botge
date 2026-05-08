@@ -4,7 +4,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 import { TWITCH_ACCESS_TOKEN_PATH, TwitchApi } from '../../api/twitch-api.ts';
 
-import { getTwitchAccessToken } from '../api/twitch-api-utils.ts';
+import { getTwitchAccessToken } from '../api/get-twitch-access-token.ts';
 
 export async function newTwitchApi(twitchClientId: string, twitchSecret: string): Promise<Readonly<TwitchApi>> {
   if (existsSync(TWITCH_ACCESS_TOKEN_PATH)) {

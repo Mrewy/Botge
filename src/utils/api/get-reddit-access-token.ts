@@ -2,7 +2,11 @@
 
 import fetch from 'node-fetch';
 
-import { REDDIT_API_ENDPOINTS } from '../../api/reddit-api.ts';
+export const REDDIT_API_ENDPOINTS = {
+  accessToken: 'https://www.reddit.com/api/v1/access_token',
+  accessTokenValidate: 'https://oauth.reddit.com/api/v1/scopes', // there is no real validation path.
+  livestreamFail: 'https://oauth.reddit.com/r/LivestreamFail'
+} as const;
 
 type RedditClientCredentialsGrantFlow = {
   readonly access_token: string;

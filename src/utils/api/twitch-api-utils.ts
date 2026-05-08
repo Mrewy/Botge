@@ -1,29 +1,7 @@
 /** @format */
 
-import fetch from 'node-fetch';
-
-import { TWITCH_API_ENDPOINTS, type TwitchApi } from '../../api/twitch-api.ts';
+import type { TwitchApi } from '../../api/twitch-api.ts';
 import type { TwitchClip, TwitchClips } from '../../types.ts';
-
-type TwitchClientCredentialsGrantFlow = {
-  readonly access_token: string;
-  readonly expires_in: number;
-  readonly token_type: string;
-};
-
-export async function getTwitchAccessToken(clientId: string, clientSecret: string): Promise<string> {
-  const response = await fetch(TWITCH_API_ENDPOINTS.accessToken, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
-  });
-
-  if (!response.ok) throw new Error(`Cannot get access token from Twitch: ${response.status}`);
-
-  return ((await response.json()) as TwitchClientCredentialsGrantFlow).access_token;
-}
 
 async function transformClipsGameIdFromIdToNameAndTransformCreatedAt(
   twitchApi: Readonly<TwitchApi>,

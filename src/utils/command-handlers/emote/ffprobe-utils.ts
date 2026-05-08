@@ -2,7 +2,7 @@
 
 import { exec, type ExecException } from 'node:child_process';
 
-import { DEFAULT_DURATION } from './download-asset.ts';
+export const DEFAULT_DURATION = 0 as const;
 
 export async function getDimension(filename: string): Promise<readonly [number, number] | undefined> {
   return new Promise((resolve) => {

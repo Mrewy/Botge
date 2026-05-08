@@ -3,7 +3,7 @@
 import fetch from 'node-fetch';
 import { writeFileSync } from 'node:fs';
 
-import { getTwitchAccessToken } from '../utils/api/twitch-api-utils.ts';
+import { TWITCH_API_ENDPOINTS, getTwitchAccessToken } from '../utils/api/get-twitch-access-token.ts';
 import { fetchAndJson } from '../utils/fetch-and-json.ts';
 
 import type { TwitchClips, TwitchGlobalEmotes } from '../types.ts';
@@ -33,14 +33,6 @@ type TwitchUsers = {
   readonly data: readonly TwitchUser[];
 };
 
-export const TWITCH_API_ENDPOINTS = {
-  accessToken: 'https://id.twitch.tv/oauth2/token',
-  accessTokenValidate: 'https://id.twitch.tv/oauth2/validate',
-  users: 'https://api.twitch.tv/helix/users',
-  games: 'https://api.twitch.tv/helix/games',
-  clips: 'https://api.twitch.tv/helix/clips',
-  emotesGlobal: 'https://api.twitch.tv/helix/chat/emotes/global'
-} as const;
 export const TWITCH_ACCESS_TOKEN_PATH: 'data/twitchAccessToken.txt' = `${DATABASE_DIR}/twitchAccessToken.txt` as const;
 
 export class TwitchApi {

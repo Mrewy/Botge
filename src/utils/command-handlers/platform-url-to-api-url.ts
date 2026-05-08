@@ -1,9 +1,9 @@
 /** @format */
 
-import { SEVEN_TV_NOT_IN_SET_CDN } from '../../command-handlers/add-emote.ts';
 import type { SevenTVEmoteNotInSet } from '../../types.ts';
 import { fetchAndJson } from '../fetch-and-json.ts';
 
+export const SEVEN_TV_NOT_IN_SET_CDN = 'https://7tv.io/v3/emotes' as const;
 export const SPLITTER = '/' as const;
 
 const regExpSevenTVEmoteNotInSet: Readonly<RegExp> = new RegExp(/^https:\/\/7tv\.app\/emotes\/[A-Za-z0-9]+$/);

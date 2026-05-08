@@ -2,7 +2,11 @@
 
 import type { ChatInputCommandInteraction, GuildMember, Role } from 'discord.js';
 
-import { sevenTVUrlToSevenTVNotInSet, SPLITTER } from '../utils/command-handlers/platform-url-to-api-url.ts';
+import {
+  SEVEN_TV_NOT_IN_SET_CDN,
+  sevenTVUrlToSevenTVNotInSet,
+  SPLITTER
+} from '../utils/command-handlers/platform-url-to-api-url.ts';
 import { permitted, owner, globalAdministrator } from '../utils/command-handlers/permitted.ts';
 import { getOptionValue, getOptionValueWithoutUndefined } from '../utils/get-option-value.ts';
 import { fetchAndJson } from '../utils/fetch-and-json.ts';
@@ -10,8 +14,6 @@ import { logError } from '../utils/log-error.ts';
 import type { AddedEmotesDatabase } from '../database/added-emotes-database.ts';
 import type { AddedEmote, SevenTVEmoteNotInSet } from '../types.ts';
 import type { Guild } from '../discord/guild.ts';
-
-export const SEVEN_TV_NOT_IN_SET_CDN = 'https://7tv.io/v3/emotes' as const;
 
 export function addEmoteHandlerSevenTVNotInSet(addedEmotesDatabase: Readonly<AddedEmotesDatabase>) {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {

@@ -23,7 +23,7 @@ import type { Guild } from '../discord/guild.ts';
 import type { User } from '../discord/user.ts';
 
 export const EMOTE_COMMAND_IDENTIFIER = '+' as const;
-export const EMOTE_SIZE_IDENTIFIER = ':' as const;
+const EMOTE_SIZE_IDENTIFIER = ':' as const;
 
 const DEFAULT_FPS = 25 as const;
 const MAXWIDTH = 192 as const;

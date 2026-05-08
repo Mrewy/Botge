@@ -3,7 +3,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 import { REDDIT_ACCESS_TOKEN_PATH, RedditApi } from '../../api/reddit-api.ts';
-import { getRedditAccessToken } from '../api/reddit-api-utils.ts';
+import { getRedditAccessToken } from '../api/get-reddit-access-token.ts';
 
 export async function newRedditApi(redditClientId: string, redditSecret: string): Promise<Readonly<RedditApi>> {
   if (existsSync(REDDIT_ACCESS_TOKEN_PATH)) {

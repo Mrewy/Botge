@@ -1,7 +1,8 @@
 /** @format */
 
-import { SEVEN_TV_NOT_IN_SET_CDN } from '../../command-handlers/add-emote.ts';
 import type { Platform, AssetInfo } from '../../types.ts';
+
+import { SEVEN_TV_NOT_IN_SET_CDN } from '../command-handlers/platform-url-to-api-url.ts';
 
 const EMOTE_ENDPOINTS: Readonly<Map<Platform, string>> = new Map<Platform, string>([
   ['sevenInSet', 'https://7tv.app/emotes/'],

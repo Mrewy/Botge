@@ -12,7 +12,7 @@
       "azureDnsAutoDetection": false,
       "installDockerComposeSwitch": true
     },
-    "ghcr.io/devcontainers/features/node:2.0.0": { "version": "v25.9.0", "nodeGypDependencies": false },
+    "ghcr.io/devcontainers/features/node:2": { "version": "v25.9.0", "nodeGypDependencies": false },
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
 

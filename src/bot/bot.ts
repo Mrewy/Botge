@@ -171,7 +171,7 @@ export class Bot {
 
   #registerInteractionCreateListener(): void {
     this.#client.on(Events.InteractionCreate, async (interaction): Promise<void> => {
-      //not interaction
+      // not interaction
       if (
         !interaction.isChatInputCommand() &&
         !interaction.isButton() &&
@@ -212,7 +212,7 @@ export class Bot {
         })();
         if (guildId_ === undefined) return undefined;
         const guild_ = this.#guilds.find((guildge) => guildge.id === guildId_);
-        //there cannot be a case when we found a guildId from a user and we would need to create a guild without personal emotes
+        // there cannot be a case when we found a guildId from a user and we would need to create a guild without personal emotes
         if (guild_ === undefined) throw new Error("Couldn't find guild.");
         return guild_;
       })();

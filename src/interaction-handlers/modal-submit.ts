@@ -213,7 +213,7 @@ export function modalSubmitHandler(
         const userId = interaction.user.id;
 
         const emoteBorderColorRegex = /^[0-9A-Fa-f]{6}$/;
-        //const emoteBorderOpacityRegex = /^(?:0\.[1-9]|1\.0)$/;
+        // const emoteBorderOpacityRegex = /^(?:0\.[1-9]|1\.0)$/;
 
         let reply = '';
 

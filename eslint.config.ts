@@ -56,7 +56,7 @@ const config: readonly Readonly<Config>[] = defineConfig([
     languageOptions: {
       parser: parser
     },
-    extends: [js.configs.recommended, configs.all, configs.stylisticTypeChecked, configs.strictTypeChecked],
+    extends: [js.configs.recommended, configs.all, configs.stylisticTypeChecked, configs.strictTypeChecked], // later entries take precedence over earlier ones
 
     rules: {
       '@typescript-eslint/adjacent-overload-signatures': 'off',
@@ -68,7 +68,6 @@ const config: readonly Readonly<Config>[] = defineConfig([
       '@typescript-eslint/no-type-alias': 'off',
       '@typescript-eslint/no-unsafe-type-assertion': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^guild$' }],
-
       '@typescript-eslint/prefer-readonly-parameter-types': [
         'warn',
         {
@@ -105,46 +104,33 @@ const config: readonly Readonly<Config>[] = defineConfig([
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
       '@typescript-eslint/strict-void-return': 'off', // generally useful.
 
-      'eqeqeq': 'error',
-      'strict': ['error', 'never'],
-      'tsdoc/syntax': 'error',
-
       'array-callback-return': 'error',
-
-      'no-await-in-loop': 'off', // ?
-      'no-constructor-return': 'error',
-      'no-duplicate-imports': 'error',
-      'no-inner-declarations': 'error',
-      'no-promise-executor-return': 'error',
-      'no-self-compare': 'error',
-      'no-template-curly-in-string': 'error',
-      'no-unassigned-vars': 'warn', // ?
-      'no-unmodified-loop-condition': 'error',
-      'no-unreachable-loop': 'error',
-      'no-use-before-define': 'off', // ! @typescript-eslint
-      'no-useless-assignment': 'warn', // ?
-
-      'require-atomic-updates': 'error',
       'block-scoped-var': 'error',
+      'eqeqeq': 'error',
       'guard-for-in': 'error',
       'new-cap': 'error',
 
       'no-alert': 'error',
       'no-array-constructor': 'off', // ! @typescript-eslint
+      'no-await-in-loop': 'off', // ?
       'no-bitwise': ['error', { allow: ['&'] }],
       'no-caller': 'error',
+      'no-constructor-return': 'error',
+      'no-duplicate-imports': 'error',
+      'no-eq-null': 'error',
       'no-empty': 'off', // ?
       'no-empty-function': 'off', // ! @typescript-eslint
-      'no-eq-null': 'error',
       'no-eval': 'off', // TODO
       'no-extend-native': 'error',
       'no-extra-bind': 'error',
       'no-implicit-globals': 'error',
       'no-implied-eval': 'off', // ! @typescript-eslint
+      'no-inner-declarations': 'error',
       'no-invalid-this': 'off', // ! @typescript-eslint
       'no-iterator': 'error',
       'no-lone-blocks': 'error',
       'no-loop-func': 'off', // ! @typescript-eslint
+      'no-magic-numbers': 'off',
       'no-multi-assign': 'error',
       'no-new': 'off', // ?
       'no-new-func': 'error',
@@ -152,6 +138,7 @@ const config: readonly Readonly<Config>[] = defineConfig([
       'no-object-constructor': 'error',
       'no-octal-escape': 'error',
       'no-param-reassign': 'error',
+      'no-promise-executor-return': 'error',
       'no-proto': 'error',
       'no-restricted-exports': 'error',
       'no-restricted-globals': 'error',
@@ -160,10 +147,18 @@ const config: readonly Readonly<Config>[] = defineConfig([
       'no-restricted-syntax': 'error',
       'no-return-assign': 'error',
       'no-script-url': 'error',
+      'no-self-compare': 'error',
       'no-sequences': 'error',
       'no-shadow': 'off', // ! @typescript-eslint
+      'no-template-curly-in-string': 'error',
       'no-throw-literal': 'error',
+      'no-type-alias': 'off',
+      'no-unassigned-vars': 'warn', // ?
+      'no-unmodified-loop-condition': 'error',
+      'no-unreachable-loop': 'error',
+      'no-use-before-define': 'off', // ! @typescript-eslint
       'no-unused-expressions': 'off', // ! @typescript-eslint
+      'no-useless-assignment': 'warn', // ?
       'no-useless-call': 'error',
       'no-useless-constructor': 'off', // ! @typescript-eslint
       'no-useless-rename': 'error',
@@ -181,8 +176,12 @@ const config: readonly Readonly<Config>[] = defineConfig([
 
       'radix': 'error',
       'require-await': 'off', // ! @typescript-eslint
+      'require-atomic-updates': 'error',
       'require-unicode-regexp': 'off', // ?
-      'symbol-description': 'error'
+      'strict': ['error', 'never'],
+      'symbol-description': 'error',
+
+      'tsdoc/syntax': 'error'
     }
   }
 ]);

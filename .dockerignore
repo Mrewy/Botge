@@ -20,11 +20,13 @@ tests
 tmp
 
 .dockerignore
+.editorconfig
 .env
 .env.example
 .gitattributes
 .gitignore
 .prettierignore
+commitlint.config.ts
 compose.yaml
 Dockerfile
 eslint.config.ts

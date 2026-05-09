@@ -35,6 +35,7 @@
         "eamodio.gitlens",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
+        "EditorConfig.EditorConfig",
 
         // Syntax
         "github.vscode-github-actions",

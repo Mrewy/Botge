@@ -1,0 +1,113 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "validateDirectives": false,
+  "dictionaries": ["en_US", "softwareTerms", "typescript", "node", "npm", "filetypes"],
+  "ignoreRandomStrings": true,
+  "ignoreWords": [
+    // Commands
+    "shortestuniquesubstrings",
+    "findtheemoji",
+    "emotelist",
+    "medialist",
+    "quotelist",
+    "addemote",
+    "pinglist",
+    "pingme",
+
+    "fullsize",
+    "tinygif",
+
+    "doesnt",
+    "commitlint",
+
+    // ? Ge - rename later
+    "guildge",
+    "clipsge",
+    "namege",
+    "testge",
+    "userge",
+
+    // Random
+    "KHTML",
+    "jtvnw",
+    "01FDMJPSF8000CJ4MDR2FNZEQ3"
+  ],
+  "words": [
+    // Project
+    "NodeNext",
+    "ESNext",
+    "devcontainers",
+    "tsgo",
+
+    // Lib
+    "healthcheck",
+    "pipefail",
+
+    "paletteuse",
+    "palettegen",
+    "libwebp",
+    "ffprobe",
+    "hstack",
+    "tpad",
+
+    "noprint",
+    "nokey",
+
+    "Vitest",
+    "axios",
+
+    "nomic",
+    "mxbai",
+    "hnsw",
+
+    // Specific
+    "FrankerFaceZ",
+    "BetterTTV",
+    "GitBook",
+    "Meilisearch",
+    "getmeili",
+    "Meili",
+    "DeepL",
+    "GenAI",
+    "BTTV",
+    "Ollama",
+    "ARPG",
+    "chromadb",
+    "CNTREC",
+    "RRGGBB",
+    "noninteractive",
+
+    // Names
+    "Botge",
+    "Mrewy",
+    "gentlebob",
+    "widepogcrazy",
+    "TimotronPrime",
+    "ravenuy",
+
+    "CuteDog",
+    "zackrawrr",
+
+    // Words
+    "DUMPLESS",
+    "pingable",
+    "cooldown",
+    "analyse",
+    "unforgeable",
+    "metadatas",
+    "nums",
+    "drawbox",
+
+    // DevContainer
+    "moby",
+    "eamodio",
+    "buildx",
+    "esbenp",
+    "jmrog",
+    "alefragnani",
+    "Anson",
+    "dbaeumer",
+    "ahmadalli"
+  ]
+}

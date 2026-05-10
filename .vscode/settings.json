@@ -3,7 +3,27 @@
   "workbench.iconTheme": "vscode-icons",
 
   "terminal.integrated.shellIntegration.enabled": true,
+
   "terminal.integrated.suggest.enabled": true,
+  "terminal.integrated.suggest.showStatusBar": true,
+  "terminal.integrated.suggest.insertTrailingSpace": true,
+  "terminal.integrated.suggest.quickSuggestions": {
+    "commands": "on",
+    "arguments": "on",
+    "unknown": "off"
+  },
+
+  "terminal.integrated.tabs.title": "botge${separator}${process}",
+  "terminal.integrated.tabs.showActions": "singleTerminalOrNarrow",
+  "terminal.integrated.tabs.showActiveTerminal": "always",
+
+  "terminal.integrated.enablePersistentSessions": false,
+  "terminal.integrated.persistentSessionReviveProcess": "never",
+
+  // "terminal.integrated.gpuAcceleration": "off",
+  // "terminal.integrated.enableImages": true,
+
+  "terminal.integrated.smoothScrolling": true,
 
   "github.copilot.enable": {
     "*": false
@@ -66,181 +86,8 @@
   "yaml.format.printWidth": 120,
   "yaml.format.singleQuote": true,
 
+  // "editor.experimentalGpuAcceleration": "off",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-
-  "cSpell.validateDirectives": false,
-  "cSpell.dictionaries": ["typescript"],
-  "cSpell.ignoreRandomStrings": true,
-  "cSpell.ignoreWords": [
-    // Commands
-    "shortestuniquesubstrings",
-    "findtheemoji",
-    "emotelist",
-    "medialist",
-    "quotelist",
-    "addemote",
-    "pinglist",
-    "pingme",
-
-    "fullsize",
-    "tinygif",
-
-    "doesnt",
-    "commitlint",
-
-    // ? Ge - rename later
-    "guildge",
-    "clipsge",
-    "namege",
-    "testge",
-    "userge",
-
-    // Random
-    "KHTML",
-    "jtvnw",
-    "01FDMJPSF8000CJ4MDR2FNZEQ3"
-  ],
-  "cSpell.words": [
-    // Project
-    "NodeNext",
-    "ESNext",
-    "devcontainers",
-    "tsgo",
-
-    // Lib
-    "healthcheck",
-    "pipefail",
-
-    "paletteuse",
-    "palettegen",
-    "libwebp",
-    "ffprobe",
-    "hstack",
-    "tpad",
-
-    "noprint",
-    "nokey",
-
-    "Vitest",
-    "axios",
-
-    "nomic",
-    "mxbai",
-    "hnsw",
-
-    // Specific
-    "FrankerFaceZ",
-    "BetterTTV",
-    "GitBook",
-    "Meilisearch",
-    "getmeili",
-    "Meili",
-    "DeepL",
-    "GenAI",
-    "BTTV",
-    "Ollama",
-    "ARPG",
-    "chromadb",
-    "CNTREC",
-    "RRGGBB",
-    "noninteractive",
-
-    // Names
-    "Botge",
-    "Mrewy",
-    "gentlebob",
-    "widepogcrazy",
-    "TimotronPrime",
-    "ravenuy",
-
-    "CuteDog",
-    "zackrawrr",
-
-    // Words
-    "DUMPLESS",
-    "pingable",
-    "cooldown",
-    "analyse",
-    "unforgeable",
-    "metadatas",
-    "nums",
-    "drawbox",
-
-    // DevContainer
-    "moby",
-    "eamodio",
-    "buildx",
-    "esbenp",
-    "jmrog",
-    "alefragnani",
-    "Anson",
-    "dbaeumer",
-    "ahmadalli"
-  ],
-
-  "markdownlint.config": {
-    "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/v0.40.0/schema/markdownlint-config-schema-strict.json",
-
-    "MD001": true,
-    "MD003": true,
-    "MD004": true,
-    "MD005": true,
-    "MD007": true,
-    "MD009": true,
-
-    "MD010": true,
-    "MD011": true,
-    "MD012": true,
-    "MD013": false,
-    "MD014": true,
-    "MD018": true,
-    "MD019": true,
-
-    "MD020": true,
-    "MD021": true,
-    "MD022": true,
-    "MD023": true,
-    "MD024": true,
-    "MD025": true,
-    "MD026": true,
-    "MD027": true,
-    "MD028": true,
-    "MD029": true,
-
-    "MD030": true,
-    "MD031": true,
-    "MD032": true,
-    "MD033": true,
-    "MD034": true,
-    "MD035": true,
-    "MD036": true,
-    "MD037": true,
-    "MD038": true,
-    "MD039": true,
-
-    "MD040": true,
-    "MD041": true,
-    "MD042": true,
-    "MD043": true,
-    "MD044": true,
-    "MD045": true,
-    "MD046": true,
-    "MD047": true,
-    "MD048": true,
-    "MD049": true,
-
-    "MD050": true,
-    "MD051": true,
-    "MD052": true,
-    "MD053": true,
-    "MD054": true,
-    "MD055": true,
-    "MD056": true,
-    "MD058": true,
-    "MD059": true,
-
-    "MD060": true
-  }
+  "editor.formatOnPaste": true
 }

@@ -19,12 +19,14 @@ src/tsdoc.json
 tests
 tmp
 
+.cspell.json
 .dockerignore
 .editorconfig
 .env
 .env.example
 .gitattributes
 .gitignore
+.markdownlint.json
 .prettierignore
 commitlint.config.ts
 compose.yaml

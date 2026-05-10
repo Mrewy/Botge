@@ -2,7 +2,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 
 import { REST, Routes } from 'discord.js';
 

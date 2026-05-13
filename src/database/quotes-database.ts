@@ -1,7 +1,5 @@
 /** @format */
 
-import type { SqlJsStatic } from 'sql.js';
-
 import type { Quote } from '../types.ts';
 import { BaseDatabase } from './base-database.ts';
 
@@ -15,54 +13,48 @@ type QuoteOnlyNameAndContent = Omit<Quote, 'dateAdded'>;
 type DatabaseQuote = QuoteOnlyNameAndContent & { readonly dateAdded: number };
 
 export class QuotesDatabase extends BaseDatabase {
-  public constructor(filepath: string, sqlJsStatic: SqlJsStatic) {
-    super(filepath, sqlJsStatic);
+  public constructor(filepath: string) {
+    super(filepath);
   }
 
   public insert(userId: string, quote: Quote): void {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) this.#createTable(userId);
 
-    const statement = this.database.prepare(`INSERT INTO ${tableName} (name,content,dateAdded) VALUES (?,?,?)`);
     const { content, name, dateAdded } = quote;
-    statement.run([name, content, dateAdded.getTime()]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`INSERT INTO ${tableName} (name, content, dateAdded) VALUES (?, ?, ?)`);
+    statement.run(name, content, dateAdded.getTime());
   }
 
   public delete(userId: string, quote: QuoteOnlyNameAndContent): void {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return;
 
-    const statement = this.database.prepare(`DELETE FROM ${tableName} WHERE content=(?) AND name=(?)`);
     const { content, name } = quote;
-    statement.run([content, name]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`DELETE FROM ${tableName} WHERE content = (?) AND name = (?)`);
+    statement.run(content, name);
   }
 
   public rename(userId: string, content: string, name: string): void {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return;
 
-    const statement = this.database.prepare(`UPDATE ${tableName} SET name=(?) WHERE content=(?)`);
-    statement.run([name, content]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`UPDATE ${tableName} SET name = (?) WHERE content = (?)`);
+    statement.run(name, content);
   }
 
   public getQuoteName(userId: string, content: string): string | undefined {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return undefined;
 
-    const statement = this.database.prepare(`SELECT name FROM ${tableName} WHERE content=(?)`);
-    const rows = statement.get([content]) as readonly string[];
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT name FROM ${tableName} WHERE content = (?)`);
+    const row = statement.get(content) as
+      | {
+          readonly name: string;
+        }
+      | undefined;
 
-    if (rows.length === 1) return rows[0];
+    if (row !== undefined) return row.name;
     return undefined;
   }
 
@@ -70,9 +62,10 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return undefined;
 
-    const quoteArray = this.getAll_(`SELECT content, dateAdded FROM ${tableName} WHERE name LIKE '%' || (?) || '%'`, [
-      name
-    ]) as readonly Omit<DatabaseQuote, 'name'>[];
+    const statement = this.databaseSync.prepare(
+      `SELECT content, dateAdded FROM ${tableName} WHERE name LIKE '%' || (?) || '%'`
+    );
+    const quoteArray = statement.all(name) as Omit<DatabaseQuote, 'name'>[];
 
     if (quoteArray.length === 0) return undefined;
     return [...quoteArray].sort((a, b) => b.dateAdded - a.dateAdded)[0].content;
@@ -82,9 +75,8 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return [];
 
-    const databaseQuoteArray = this.getAll_(
-      `SELECT name, content, dateAdded FROM ${tableName}`
-    ) as readonly DatabaseQuote[];
+    const statement = this.databaseSync.prepare(`SELECT name, content, dateAdded FROM ${tableName}`);
+    const databaseQuoteArray = statement.all() as DatabaseQuote[];
 
     const quoteArray: Quote[] = databaseQuoteArray.map((databaseQuote) => {
       return { name: databaseQuote.name, content: databaseQuote.content, dateAdded: new Date(databaseQuote.dateAdded) };
@@ -96,11 +88,10 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return false;
 
-    const statement = this.database.prepare(`SELECT content FROM ${tableName} WHERE content=(?)`);
-    const rows = statement.get([content]);
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT content FROM ${tableName} WHERE content = (?)`);
+    const row = statement.get(content);
 
-    if (rows.length === 1) return true;
+    if (row !== undefined) return true;
     return false;
   }
 
@@ -108,36 +99,30 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return false;
 
-    const statement = this.database.prepare(`SELECT name FROM ${tableName} WHERE name=(?)`);
-    const rows = statement.get([name]);
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT name FROM ${tableName} WHERE name = (?)`);
+    const row = statement.get(name);
 
-    if (rows.length === 1) return true;
+    if (row !== undefined) return true;
     return false;
   }
 
   #createTable(userId: string): void {
     const tableName = getTableName(userId);
 
-    const statement = this.database.prepare(`
+    this.databaseSync.exec(`
       CREATE TABLE ${tableName} (
         name TEXT NOT NULL PRIMARY KEY,
         content TEXT NOT NULL,
         dateAdded INTEGER NOT NULL
-      );
+      ) STRICT;
     `);
-    statement.run();
-    statement.free();
-
-    this.exportDatabase();
   }
 
   #tableExists(tableName: string): boolean {
-    const statement = this.database.prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name=(?)`);
-    const rows = statement.get([tableName]);
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = (?)`);
+    const row = statement.get(tableName);
 
-    if (rows.length === 1) return true;
+    if (row !== undefined) return true;
     return false;
   }
 }

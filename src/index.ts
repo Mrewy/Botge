@@ -22,7 +22,6 @@ import { Translator } from 'deepl-node';
 import OpenAI from 'openai';
 import { Client, GatewayIntentBits } from 'discord.js';
 import { getVoiceConnections } from '@discordjs/voice';
-import initSqlJs from 'sql.js';
 
 import { BroadcasterNameAndPersonalEmoteSetsDatabase } from './database/broadcaster-name-and-personal-emote-sets-database.ts';
 import { PermittedRoleIdsDatabase } from './database/permitted-role-ids-database.ts';
@@ -156,23 +155,17 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
   );
 
   //databaseManager
-  const sqlJsStatic = await initSqlJs();
-
   const broadcasterNameAndPersonalEmoteSetsDatabase: Readonly<BroadcasterNameAndPersonalEmoteSetsDatabase> =
-    new BroadcasterNameAndPersonalEmoteSetsDatabase(DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets, sqlJsStatic);
+    new BroadcasterNameAndPersonalEmoteSetsDatabase(DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets);
   const permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase> = new PermittedRoleIdsDatabase(
-    DATABASE_PATHS.permitRoleIds,
-    sqlJsStatic
+    DATABASE_PATHS.permitRoleIds
   );
-  const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(
-    DATABASE_PATHS.addedEmotes,
-    sqlJsStatic
-  );
+  const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(DATABASE_PATHS.addedEmotes);
 
-  const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_PATHS.media, sqlJsStatic);
-  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_PATHS.users, sqlJsStatic);
-  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_PATHS.pings, sqlJsStatic);
-  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_PATHS.quote, sqlJsStatic);
+  const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_PATHS.media);
+  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_PATHS.users);
+  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_PATHS.pings);
+  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_PATHS.quote);
 
   const databaseManager: Readonly<DatabaseManager> = new DatabaseManager(
     broadcasterNameAndPersonalEmoteSetsDatabase,
@@ -266,7 +259,7 @@ process.on('SIGTERM', (): void => {
 });
 
 process.on('uncaughtException', (error: Readonly<Error>): void => {
-  console.log(`uncaughtException: ${error.message}`);
+  logError(error, `uncaughtException`);
 });
 
 process.on('unhandledRejection', (error): void => {

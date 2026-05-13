@@ -1,7 +1,5 @@
 /** @format */
 
-import type { SqlJsStatic } from 'sql.js';
-
 import type { Ping } from '../types.ts';
 import { BaseDatabase } from './base-database.ts';
 
@@ -24,30 +22,24 @@ function getId(ping: Ping): string {
 const TABLE_NAME = 'pings' as const;
 
 export class PingsDatabase extends BaseDatabase {
-  public constructor(filepath: string, sqlJsStatic: SqlJsStatic) {
-    super(filepath, sqlJsStatic);
+  public constructor(filepath: string) {
+    super(filepath);
 
     this.#createTable();
     // this.#alterTable();
   }
 
   public insert(ping: Ping): void {
-    const statement = this.database.prepare(
-      `INSERT INTO ${TABLE_NAME} (id,time,days,hours,minutes,userId,channelId,message) VALUES (?,?,?,?,?,?,?,?)`
-    );
     const { time, days, hours, minutes, userId, channelId, message } = ping;
-    statement.run([getId(ping), time, days, hours, minutes, userId, channelId, message]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(
+      `INSERT INTO ${TABLE_NAME} (id, time, days, hours, minutes, userId, channelId, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+    );
+    statement.run(getId(ping), time, days, hours, minutes, userId, channelId, message);
   }
 
   public delete(ping: Ping): void {
-    const statement = this.database.prepare(`DELETE FROM ${TABLE_NAME} WHERE id=(?)`);
-    statement.run([getId(ping)]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`DELETE FROM ${TABLE_NAME} WHERE id = (?)`);
+    statement.run(getId(ping));
   }
 
   public updateUserIds(ping: Ping): void {
@@ -56,11 +48,8 @@ export class PingsDatabase extends BaseDatabase {
     const { userIds } = ping;
     const userIdsJoined = userIds !== null ? (userIds.length !== 0 ? userIds.join(',') : null) : null;
 
-    const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET userIds=(?) WHERE id=(?)`);
-    statement.run([userIdsJoined, getId(ping)]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET userIds = (?) WHERE id = (?)`);
+    statement.run(userIdsJoined, getId(ping));
   }
 
   public updateUserIdRemoved(ping: Ping): void {
@@ -69,17 +58,15 @@ export class PingsDatabase extends BaseDatabase {
     const { userIdRemoved } = ping;
     const userIdRemovedUpdated = userIdRemoved !== null ? Number(userIdRemoved) : null;
 
-    const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET userIdRemoved=(?) WHERE id=(?)`);
-    statement.run([userIdRemovedUpdated, getId(ping)]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET userIdRemoved = (?) WHERE id = (?)`);
+    statement.run(userIdRemovedUpdated, getId(ping));
   }
 
   public getAll(): readonly Ping[] {
-    const databasePings = this.getAll_(
-      `SELECT time,days,hours,minutes,userId,channelId,message,userIds,userIdRemoved FROM ${TABLE_NAME}`
-    ) as readonly DatabasePing[];
+    const statement = this.databaseSync.prepare(
+      `SELECT time, days, hours, minutes, userId, channelId, message, userIds, userIdRemoved FROM ${TABLE_NAME}`
+    );
+    const databasePings = statement.all() as DatabasePing[];
 
     return databasePings.map((databasePing) => {
       const pingSelectedUserIds = databasePing.userIds;
@@ -93,7 +80,7 @@ export class PingsDatabase extends BaseDatabase {
   }
 
   #createTable(): void {
-    const statement = this.database.prepare(`
+    this.databaseSync.exec(`
       CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
         id TEXT NOT NULL PRIMARY KEY,
         time INTEGER NOT NULL,
@@ -105,12 +92,8 @@ export class PingsDatabase extends BaseDatabase {
         message TEXT,
         userIds TEXT,
         userIdRemoved INTEGER
-      );
+      ) STRICT;
     `);
-    statement.run();
-    statement.free();
-
-    this.exportDatabase();
   }
 
   /*
@@ -130,11 +113,10 @@ export class PingsDatabase extends BaseDatabase {
   */
 
   #rowExists(ping: Ping): boolean {
-    const statement = this.database.prepare(`SELECT id FROM ${TABLE_NAME} WHERE id=(?)`);
-    const rows = statement.get([getId(ping)]);
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT id FROM ${TABLE_NAME} WHERE id = (?)`);
+    const row = statement.get(getId(ping));
 
-    if (rows.length === 0) return false;
-    return true;
+    if (row !== undefined) return true;
+    return false;
   }
 }

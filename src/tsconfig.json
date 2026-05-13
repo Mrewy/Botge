@@ -2,9 +2,6 @@
   "extends": "../tsconfig.base",
   "references": [],
   "compilerOptions": {
-    // Language and Environment
-    "lib": ["ESNext", "WebWorker"],
-
     // Emit
     "outDir": "../dist"
   }

@@ -1,7 +1,5 @@
 /** @format */
 
-import type { SqlJsStatic } from 'sql.js';
-
 import { PersonalEmoteSets } from '../emote-matcher/personal-emote-sets.ts';
 import { BaseDatabase } from './base-database.ts';
 
@@ -16,8 +14,8 @@ type DatabaseBroadcasterNamesAndPersonalEmoteSets = {
 const TABLE_NAME = 'assignedEmoteSets' as const;
 
 export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
-  public constructor(filepath: string, sqlJsStatic: SqlJsStatic) {
-    super(filepath, sqlJsStatic);
+  public constructor(filepath: string) {
+    super(filepath);
 
     this.#createTable();
   }
@@ -25,43 +23,34 @@ export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
   public changePersonalEmoteSets(guildId: string, personalEmoteSets: PersonalEmoteSets): void {
     const { sevenTv, bttv, ffz } = personalEmoteSets;
     if (this.#rowExists(guildId)) {
-      const statement = this.database.prepare(
-        `UPDATE ${TABLE_NAME} SET sevenTv=(?), bttv=(?), ffz=(?) WHERE guildId=(?)`
+      const statement = this.databaseSync.prepare(
+        `UPDATE ${TABLE_NAME} SET sevenTv = (?), bttv = (?), ffz = (?) WHERE guildId = (?)`
       );
-      statement.run([sevenTv, bttv, ffz, guildId]);
-      statement.free();
+      statement.run(sevenTv, bttv, ffz, guildId);
     } else {
-      const statement = this.database.prepare(`INSERT INTO ${TABLE_NAME} VALUES(?,?,?,?,?)`);
-      statement.run([guildId, null, sevenTv, bttv, ffz]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      statement.run(guildId, null, sevenTv, bttv, ffz);
     }
-
-    this.exportDatabase();
   }
 
   public changeBroadcasterName(guildId: string, broadcasterName: string): void {
     if (this.#rowExists(guildId)) {
-      const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET broadcasterName=(?) WHERE guildId=(?)`);
-      statement.run([broadcasterName, guildId]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET broadcasterName = (?) WHERE guildId = (?)`);
+      statement.run(broadcasterName, guildId);
     } else {
-      const statement = this.database.prepare(`INSERT INTO ${TABLE_NAME} VALUES(?,?,?,?,?)`);
-      statement.run([guildId, broadcasterName, null, null, null]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      statement.run(guildId, broadcasterName, null, null, null);
     }
-
-    this.exportDatabase();
   }
 
   public getPersonalEmoteSets(guildId: string): readonly [string | null, PersonalEmoteSets] {
-    const statement = this.database.prepare(
-      `SELECT broadcasterName, sevenTv, bttv, ffz FROM ${TABLE_NAME} WHERE guildId=(?)`
+    const statement = this.databaseSync.prepare(
+      `SELECT broadcasterName, sevenTv, bttv, ffz FROM ${TABLE_NAME} WHERE guildId = (?)`
     );
-    const databaseBroadcasterNamesAndPersonalEmoteSets = statement.getAsObject([guildId]) as Omit<
+    const databaseBroadcasterNamesAndPersonalEmoteSets = statement.get(guildId) as Omit<
       DatabaseBroadcasterNamesAndPersonalEmoteSets,
       'guildId'
     >;
-    statement.free();
 
     return [
       databaseBroadcasterNamesAndPersonalEmoteSets.broadcasterName,
@@ -76,9 +65,11 @@ export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
   public getAllBroadcasterNamesAndPersonalEmoteSets(): Readonly<
     Map<string, readonly [string | null, PersonalEmoteSets]>
   > {
-    const databaseBroadcasterNamesAndPersonalEmoteSetsArray = this.getAll_(
+    const statement = this.databaseSync.prepare(
       `SELECT guildId, broadcasterName, sevenTv, bttv, ffz FROM ${TABLE_NAME}`
-    ) as readonly DatabaseBroadcasterNamesAndPersonalEmoteSets[];
+    );
+    const databaseBroadcasterNamesAndPersonalEmoteSetsArray =
+      statement.all() as DatabaseBroadcasterNamesAndPersonalEmoteSets[];
     const map = new Map<string, readonly [string | null, PersonalEmoteSets]>();
 
     databaseBroadcasterNamesAndPersonalEmoteSetsArray.forEach((databaseBroadcasterNamesAndPersonalEmoteSets) => {
@@ -96,27 +87,22 @@ export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
   }
 
   #createTable(): void {
-    const statement = this.database.prepare(`
+    this.databaseSync.exec(`
       CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
         guildId TEXT NOT NULL PRIMARY KEY,
         broadcasterName TEXT,
         sevenTv TEXT,
         bttv TEXT,
         ffz TEXT
-      );
+      ) STRICT;
     `);
-    statement.run();
-    statement.free();
-
-    this.exportDatabase();
   }
 
   #rowExists(guildId: string): boolean {
-    const statement = this.database.prepare(`SELECT guildId FROM ${TABLE_NAME} WHERE guildId=(?)`);
-    const rows = statement.get([guildId]);
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT guildId FROM ${TABLE_NAME} WHERE guildId = (?)`);
+    const row = statement.get(guildId);
 
-    if (rows.length === 0) return false;
-    return true;
+    if (row !== undefined) return true;
+    return false;
   }
 }

@@ -1,7 +1,5 @@
 /** @format */
 
-import type { SqlJsStatic } from 'sql.js';
-
 import type { AddedEmote } from '../types.ts';
 import { BaseDatabase } from './base-database.ts';
 
@@ -12,49 +10,41 @@ function getTableName(guildId: string): string {
 }
 
 export class AddedEmotesDatabase extends BaseDatabase {
-  public constructor(filepath: string, sqlJsStatic: SqlJsStatic) {
-    super(filepath, sqlJsStatic);
+  public constructor(filepath: string) {
+    super(filepath);
   }
 
   public insert(addedEmote: AddedEmote, guildId: string): void {
     const { url, alias } = addedEmote;
 
-    const statement = this.database.prepare(`INSERT INTO ${getTableName(guildId)} (url,alias) VALUES (?,?)`);
-    statement.run([url, alias]);
-    statement.free();
-
-    this.exportDatabase();
+    const statement = this.databaseSync.prepare(`INSERT INTO ${getTableName(guildId)} (url, alias) VALUES (?, ?)`);
+    statement.run(url, alias);
   }
 
   public delete(addedEmote: AddedEmote, guildId: string): void {
     const { url, alias } = addedEmote;
 
-    const statement = this.database.prepare(
-      `DELETE FROM ${getTableName(guildId)} WHERE url=(?) AND (alias=(?) OR alias IS NULL)`
+    const statement = this.databaseSync.prepare(
+      `DELETE FROM ${getTableName(guildId)} WHERE url = (?) AND (alias = (?) OR alias IS NULL)`
     );
-    statement.run([url, alias]);
-    statement.free();
-
-    this.exportDatabase();
+    statement.run(url, alias);
   }
 
   public getAll(guildId: string): readonly AddedEmote[] {
-    const addedEmotes = this.getAll_(`SELECT url,alias FROM ${getTableName(guildId)}`) as readonly AddedEmote[];
+    const statement = this.databaseSync.prepare(`SELECT url, alias FROM ${getTableName(guildId)}`);
+    const addedEmotes = statement.all() as AddedEmote[];
+
     return addedEmotes;
   }
 
   public createTable(guildId: string): void {
     const tableName = getTableName(guildId);
 
-    const statement = this.database.prepare(`
+    this.databaseSync.exec(`
       CREATE TABLE IF NOT EXISTS ${tableName} (
         url TEXT NOT NULL PRIMARY KEY,
         alias TEXT
-      );
+      ) STRICT;
     `);
-    statement.run();
-    statement.free();
-
-    this.exportDatabase();
   }
 }

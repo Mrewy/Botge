@@ -1,7 +1,5 @@
 /** @format */
 
-import type { SqlJsStatic } from 'sql.js';
-
 import { BaseDatabase } from './base-database.ts';
 
 type DatabaseUser = {
@@ -19,78 +17,61 @@ export const DEFAULT_EMOTE_BORDER_COLOR = '000000' as const; // black
 const DEFAULT_EMOTE_BORDER_OPACITY = '1.0' as const; // 100%
 
 export class UsersDatabase extends BaseDatabase {
-  public constructor(filepath: string, sqlJsStatic: SqlJsStatic) {
-    super(filepath, sqlJsStatic);
+  public constructor(filepath: string) {
+    super(filepath);
 
     this.#createTable();
   }
 
   public changeEnableEmoteBorder(userId: string, enableEmoteBorder: boolean): void {
     if (this.#rowExists(userId)) {
-      const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET enableEmoteBorder=(?) WHERE userId=(?)`);
-      statement.run([Number(enableEmoteBorder), userId]);
-      statement.free();
+      const statement = this.databaseSync.prepare(
+        `UPDATE ${TABLE_NAME} SET enableEmoteBorder = (?) WHERE userId = (?)`
+      );
+      statement.run(Number(enableEmoteBorder), userId);
     } else {
-      const statement = this.database.prepare(`INSERT INTO ${TABLE_NAME} VALUES(?,?,?,?,?)`);
-      statement.run([
-        userId,
-        null,
-        Number(enableEmoteBorder),
-        DEFAULT_EMOTE_BORDER_COLOR,
-        DEFAULT_EMOTE_BORDER_OPACITY
-      ]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      statement.run(userId, null, Number(enableEmoteBorder), DEFAULT_EMOTE_BORDER_COLOR, DEFAULT_EMOTE_BORDER_OPACITY);
     }
-
-    this.exportDatabase();
   }
 
   public changeEmoteBorderColor(userId: string, emoteBorderColor: string): void {
     if (this.#rowExists(userId)) {
-      const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET emoteBorderColor=(?) WHERE userId=(?)`);
-      statement.run([emoteBorderColor, userId]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET emoteBorderColor = (?) WHERE userId = (?)`);
+      statement.run(emoteBorderColor, userId);
     } else {
-      const statement = this.database.prepare(`INSERT INTO ${TABLE_NAME} VALUES(?,?,?,?,?)`);
-      statement.run([userId, null, DEFAULT_EMOTE_BORDER_ENABLED, emoteBorderColor, DEFAULT_EMOTE_BORDER_OPACITY]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      statement.run(userId, null, DEFAULT_EMOTE_BORDER_ENABLED, emoteBorderColor, DEFAULT_EMOTE_BORDER_OPACITY);
     }
-
-    this.exportDatabase();
   }
 
   public changeEmoteBorderOpacity(userId: string, emoteBorderOpacity: string): void {
     if (this.#rowExists(userId)) {
-      const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET emoteBorderOpacity=(?) WHERE userId=(?)`);
-      statement.run([emoteBorderOpacity, userId]);
-      statement.free();
+      const statement = this.databaseSync.prepare(
+        `UPDATE ${TABLE_NAME} SET emoteBorderOpacity = (?) WHERE userId = (?)`
+      );
+      statement.run(emoteBorderOpacity, userId);
     } else {
-      const statement = this.database.prepare(`INSERT INTO ${TABLE_NAME} VALUES(?,?,?,?,?)`);
-      statement.run([userId, null, DEFAULT_EMOTE_BORDER_ENABLED, DEFAULT_EMOTE_BORDER_COLOR, emoteBorderOpacity]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      statement.run(userId, null, DEFAULT_EMOTE_BORDER_ENABLED, DEFAULT_EMOTE_BORDER_COLOR, emoteBorderOpacity);
     }
-
-    this.exportDatabase();
   }
 
   public changeGuildId(userId: string, guildId: string): void {
     if (this.#rowExists(userId)) {
-      const statement = this.database.prepare(`UPDATE ${TABLE_NAME} SET guildId=(?) WHERE userId=(?)`);
-      statement.run([guildId, userId]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET guildId = (?) WHERE userId = (?)`);
+      statement.run(guildId, userId);
     } else {
-      const statement = this.database.prepare(`INSERT INTO ${TABLE_NAME} VALUES(?,?,?,?,?)`);
-      statement.run([userId, guildId, null, null, null]);
-      statement.free();
+      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      statement.run(userId, guildId, null, null, null);
     }
-
-    this.exportDatabase();
   }
 
   public getAllUsers(): readonly DatabaseUser[] {
-    const databaseUsers = this.getAll_(
+    const statement = this.databaseSync.prepare(
       `SELECT userId, guildId, enableEmoteBorder, emoteBorderColor, emoteBorderOpacity FROM ${TABLE_NAME}`
-    ) as readonly DatabaseUser[];
+    );
+    const databaseUsers = statement.all() as DatabaseUser[];
 
     return databaseUsers;
   }
@@ -98,37 +79,31 @@ export class UsersDatabase extends BaseDatabase {
   public getUser(userId: string): DatabaseUser | undefined {
     if (!this.#rowExists(userId)) return undefined;
 
-    const statement = this.database.prepare(
-      `SELECT userId, guildId, enableEmoteBorder, emoteBorderColor, emoteBorderOpacity FROM ${TABLE_NAME} WHERE userId=(?)`
+    const statement = this.databaseSync.prepare(
+      `SELECT userId, guildId, enableEmoteBorder, emoteBorderColor, emoteBorderOpacity FROM ${TABLE_NAME} WHERE userId = (?)`
     );
-    const databaseUser = statement.getAsObject([userId]) as DatabaseUser;
-    statement.free();
+    const databaseUser = statement.get(userId) as DatabaseUser;
 
     return databaseUser;
   }
 
   #createTable(): void {
-    const statement = this.database.prepare(`
+    this.databaseSync.exec(`
       CREATE TABLE IF NOT EXISTS ${TABLE_NAME} (
         userId TEXT NOT NULL PRIMARY KEY,
         guildId TEXT,
         enableEmoteBorder INTEGER,
         emoteBorderColor TEXT,
         emoteBorderOpacity TEXT
-      );
+      ) STRICT;
     `);
-    statement.run();
-    statement.free();
-
-    this.exportDatabase();
   }
 
   #rowExists(userId: string): boolean {
-    const statement = this.database.prepare(`SELECT userId FROM ${TABLE_NAME} WHERE userId=(?)`);
-    const rows = statement.get([userId]);
-    statement.free();
+    const statement = this.databaseSync.prepare(`SELECT userId FROM ${TABLE_NAME} WHERE userId = (?)`);
+    const row = statement.get(userId);
 
-    if (rows.length === 0) return false;
-    return true;
+    if (row !== undefined) return true;
+    return false;
   }
 }

@@ -1,13 +1,13 @@
 /** @format */
 
-import type { DatabaseManager } from '../../bot/database-manager.ts';
-import type { ApiManager } from '../../bot/api-manager.ts';
+import type { DatabaseManager } from '../../modules/bot/database-manager.ts';
+import type { ApiManager } from '../../modules/bot/api-manager.ts';
 
-import { PersonalEmoteMatcherConstructor } from '../../emote-matcher/emote-matcher-constructor.ts';
+import { PersonalEmoteMatcherConstructor } from '../../modules/emote-matcher/emote-matcher-constructor.ts';
 
-import type { PersonalEmoteSets } from '../../emote-matcher/personal-emote-sets.ts';
+import type { PersonalEmoteSets } from '../../modules/emote-matcher/personal-emote-sets.ts';
 
-import { Guild } from '../../discord/guild.ts';
+import { Guild } from '../../modules/discord/guild.ts';
 
 export async function newGuild(
   guildId: string,

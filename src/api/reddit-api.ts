@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import { writeFileSync } from 'node:fs';
 
 import { REDDIT_API_ENDPOINTS, getRedditAccessToken } from '../utils/api/get-reddit-access-token.ts';
-import { fetchAndJson } from '../utils/fetch-and-json.ts';
+import { fetchAndJson } from '../utils/public/fetch-and-json.ts';
 
 import { DATABASE_DIR } from '../directory-paths.ts';
 

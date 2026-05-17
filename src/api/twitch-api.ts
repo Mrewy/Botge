@@ -4,7 +4,7 @@ import fetch from 'node-fetch';
 import { writeFileSync } from 'node:fs';
 
 import { TWITCH_API_ENDPOINTS, getTwitchAccessToken } from '../utils/api/get-twitch-access-token.ts';
-import { fetchAndJson } from '../utils/fetch-and-json.ts';
+import { fetchAndJson } from '../utils/public/fetch-and-json.ts';
 
 import type { TwitchClips, TwitchGlobalEmotes } from '../types.ts';
 

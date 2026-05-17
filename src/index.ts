@@ -34,23 +34,23 @@ import { UsersDatabase } from './database/users-database.ts';
 // import { newRedditApi } from './utils/constructors/new-reddit-api.ts';
 import { newTwitchApi } from './utils/constructors/new-twitch-api.ts';
 import { newGuild } from './utils/constructors/new-guild.ts';
-import { registerPings } from './utils/register-pings.ts';
-import { logError } from './utils/log-error.ts';
+import { registerPings } from './utils/public/register-pings.ts';
+import { logError } from './utils/public/log-error.ts';
 
 import { TwitchClipsMeilisearch } from './api/twitch-clips-meilisearch.ts';
 import { CachedUrl } from './api/cached-url.ts';
 
-import { DatabaseManager } from './bot/database-manager.ts';
-import { ApiManager } from './bot/api-manager.ts';
-import { Bot } from './bot/bot.ts';
+import { DatabaseManager } from './modules/bot/database-manager.ts';
+import { ApiManager } from './modules/bot/api-manager.ts';
+import { Bot } from './modules/bot/bot.ts';
 
-import { GlobalEmoteMatcherConstructor } from './emote-matcher/emote-matcher-constructor.ts';
-import type { PersonalEmoteSets } from './emote-matcher/personal-emote-sets.ts';
+import { GlobalEmoteMatcherConstructor } from './modules/emote-matcher/emote-matcher-constructor.ts';
+import type { PersonalEmoteSets } from './modules/emote-matcher/personal-emote-sets.ts';
 
-import type { Guild } from './discord/guild.ts';
-import { User } from './discord/user.ts';
+import type { Guild } from './modules/discord/guild.ts';
+import { User } from './modules/discord/user.ts';
 
-import { updateCommands } from './utils/discord/update-commands.ts';
+import { updateCommands } from './utils/modules/discord/update-commands.ts';
 
 import type { ReadonlyOpenAI, ReadonlyTranslator } from './types.ts';
 

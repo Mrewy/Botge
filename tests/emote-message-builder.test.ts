@@ -4,8 +4,8 @@ import { describe, expect, test } from 'vitest';
 
 import type { ChatInputCommandInteraction } from 'discord.js';
 
-import { getAllSubstrings } from 'src/command-handlers/shortest-unique-substrings.ts';
-import { EmoteMessageBuilder } from 'src/message-builders/emote-message-builder.ts';
+import { getAllSubstrings } from 'src/handlers/command-handlers/shortest-unique-substrings.ts';
+import { EmoteMessageBuilder } from 'src/modules/message-builders/emote-message-builder.ts';
 import type { AssetInfo } from 'src/types.ts';
 
 const EMOTES_LENGTH = 4 as const; //at least 4

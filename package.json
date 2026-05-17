@@ -43,7 +43,6 @@
     "test": "vitest tests"
   },
   "dependencies": {
-    "@chroma-core/default-embed": "0.1.9",
     "@commitlint/format": "21.0.1",
     "@discordjs/voice": "0.19.2",
     "@twemoji/api": "17.0.2",
@@ -54,7 +53,7 @@
     "meilisearch": "0.58.0",
     "node-fetch": "3.3.2",
     "node-schedule": "2.1.1",
-    "openai": "6.37.0",
+    "openai": "6.38.0",
     "timezones-list": "3.1.0"
   },
   "devDependencies": {
@@ -64,10 +63,10 @@
     "@eslint/js": "10.0.1",
     "@microsoft/tsdoc-config": "0.18.1",
     "@types/fs-extra": "11.0.4",
-    "@types/node": "25.7.0",
+    "@types/node": "25.8.0",
     "@types/node-schedule": "2.1.8",
-    "@typescript/native-preview": "7.0.0-dev.20260512.1",
-    "eslint": "10.3.0",
+    "@typescript/native-preview": "7.0.0-dev.20260517.1",
+    "eslint": "10.4.0",
     "eslint-plugin-tsdoc": "0.5.2",
     "husky": "9.1.7",
     "markdownlint": "0.40.0",

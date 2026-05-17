@@ -2,6 +2,8 @@
   "workbench.startupEditor": "none",
   "workbench.iconTheme": "vscode-icons",
 
+  "workbench.list.smoothScrolling": true,
+
   "terminal.integrated.shellIntegration.enabled": true,
 
   "terminal.integrated.suggest.enabled": true,
@@ -20,8 +22,8 @@
   "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
 
-  // "terminal.integrated.gpuAcceleration": "off",
-  // "terminal.integrated.enableImages": true,
+  "terminal.integrated.gpuAcceleration": "auto",
+  "terminal.integrated.enableImages": false,
 
   "terminal.integrated.smoothScrolling": true,
 
@@ -63,6 +65,8 @@
   "js/ts.implicitProjectConfig.module": "NodeNext",
   "js/ts.implicitProjectConfig.target": "ESNext",
 
+  "js/ts.updateImportsOnFileMove.enabled": "prompt",
+
   "js/ts.tsserver.checkNpmIsInstalled": true,
   "js/ts.preferences.importModuleSpecifierEnding": "js",
   "js/ts.preferences.preferTypeOnlyAutoImports": true,
@@ -86,7 +90,8 @@
   "yaml.format.printWidth": 120,
   "yaml.format.singleQuote": true,
 
-  // "editor.experimentalGpuAcceleration": "off",
+  "editor.experimentalGpuAcceleration": "on",
+  "editor.smoothScrolling": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true

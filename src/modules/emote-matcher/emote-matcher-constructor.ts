@@ -1,5 +1,7 @@
 /** @format */
 
+import { once } from 'helpful-decorators';
+
 import type {
   SevenTVEmoteNotInSet,
   BTTVEmote,
@@ -62,6 +64,7 @@ export class GlobalEmoteMatcherConstructor {
     return this.#twitchGlobal;
   }
 
+  @once
   public static async createInstance(
     twitchApi: Readonly<TwitchApi> | undefined,
     addedEmotesDatabase: Readonly<AddedEmotesDatabase>

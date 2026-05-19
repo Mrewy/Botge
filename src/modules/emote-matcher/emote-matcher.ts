@@ -61,13 +61,14 @@ class SuffixTree {
 
   public addAllSuffix(asset: AssetInfo, priority: number): void {
     const normalized = asset.name.toLowerCase();
+
     for (let i = 0; i < normalized.length; i++) {
-      this._addAllSuffix(normalized.slice(i), priority, asset);
+      this.#addAllSuffix(normalized.slice(i), priority, asset);
     }
   }
 
   public query(suffix: string): AssetInfo | undefined {
-    return this._query(suffix.toLowerCase(), suffix);
+    return this.#query(suffix.toLowerCase(), suffix);
   }
 
   public queryArray(
@@ -80,7 +81,7 @@ class SuffixTree {
     sortByDateAdded?: boolean,
     sortByName?: boolean
   ): readonly AssetInfo[] | undefined {
-    return this._queryArray(
+    return this.#queryArray(
       suffix.toLowerCase(),
       original,
       platform,
@@ -93,14 +94,14 @@ class SuffixTree {
   }
 
   public queryUnique(suffix: string, original: string): boolean {
-    return this._queryUnique(suffix.toLowerCase(), original);
+    return this.#queryUnique(suffix.toLowerCase(), original);
   }
 
   public queryExact(suffix: string): boolean {
-    return this._queryExact(suffix.toLowerCase(), suffix);
+    return this.#queryExact(suffix.toLowerCase(), suffix);
   }
 
-  private _addAllSuffix(suffix: string, priority: number, asset: AssetInfo): void {
+  #addAllSuffix(suffix: string, priority: number, asset: AssetInfo): void {
     if (this.#data === undefined) {
       this.#data = new EmoteNode(priority, asset);
     } else {
@@ -115,11 +116,11 @@ class SuffixTree {
 
     if (suffix !== '') {
       const tree = this.#getOrAddTree(suffix.charAt(0));
-      tree?._addAllSuffix(suffix.slice(1), priority, asset);
+      if (tree !== undefined) tree.#addAllSuffix(suffix.slice(1), priority, asset);
     }
   }
 
-  private _query(normalizedSuffix: string, original: string): AssetInfo | undefined {
+  #query(normalizedSuffix: string, original: string): AssetInfo | undefined {
     if (normalizedSuffix === '') {
       if (this.#data === undefined) return undefined;
       // reached the end of the query string
@@ -137,10 +138,13 @@ class SuffixTree {
 
     const nextChar = normalizedSuffix.charAt(0);
     if (!this.#paths.has(nextChar)) return undefined;
-    return this.#paths.get(nextChar)?._query(normalizedSuffix.slice(1), original) ?? undefined;
+
+    const nextCharGet = this.#paths.get(nextChar);
+    if (nextCharGet !== undefined) return nextCharGet.#query(normalizedSuffix.slice(1), original);
+    return undefined;
   }
 
-  private _queryArray(
+  #queryArray(
     normalizedSuffix: string,
     original: string,
     platform?: Platform,
@@ -153,20 +157,20 @@ class SuffixTree {
     if (normalizedSuffix !== '') {
       const nextChar = normalizedSuffix.charAt(0);
       if (!this.#paths.has(nextChar)) return undefined;
-      return (
-        this.#paths
-          .get(nextChar)
-          ?._queryArray(
-            normalizedSuffix.slice(1),
-            original,
-            platform,
-            animated,
-            zeroWidth,
-            max,
-            sortByDateAdded,
-            sortByName
-          ) ?? undefined
-      );
+
+      const nextCharGet = this.#paths.get(nextChar);
+      if (nextCharGet !== undefined)
+        return nextCharGet.#queryArray(
+          normalizedSuffix.slice(1),
+          original,
+          platform,
+          animated,
+          zeroWidth,
+          max,
+          sortByDateAdded,
+          sortByName
+        );
+      return undefined;
     }
 
     let assets: AssetInfo[] = [];
@@ -213,7 +217,7 @@ class SuffixTree {
     return assets;
   }
 
-  private _queryUnique(normalizedSuffix: string, original: string): boolean {
+  #queryUnique(normalizedSuffix: string, original: string): boolean {
     if (normalizedSuffix === '') {
       if (this.#data === undefined) return false;
       if (this.#data.uniquePath && this.#data.assets[0].name === original) return true;
@@ -222,10 +226,12 @@ class SuffixTree {
 
     const nextChar = normalizedSuffix.charAt(0);
     if (!this.#paths.has(nextChar)) return false;
-    return this.#paths.get(nextChar)?._queryUnique(normalizedSuffix.slice(1), original) ?? false;
+    const nextCharGet = this.#paths.get(nextChar);
+    if (nextCharGet !== undefined) return nextCharGet.#queryUnique(normalizedSuffix.slice(1), original);
+    return false;
   }
 
-  private _queryExact(normalizedSuffix: string, original: string): boolean {
+  #queryExact(normalizedSuffix: string, original: string): boolean {
     if (normalizedSuffix === '') {
       if (this.#data === undefined) return false;
       // reached the end of the query string
@@ -239,7 +245,9 @@ class SuffixTree {
 
     const nextChar = normalizedSuffix.charAt(0);
     if (!this.#paths.has(nextChar)) return false;
-    return this.#paths.get(nextChar)?._queryExact(normalizedSuffix.slice(1), original) ?? false;
+    const nextCharGet = this.#paths.get(nextChar);
+    if (nextCharGet !== undefined) return nextCharGet.#queryExact(normalizedSuffix.slice(1), original);
+    return false;
   }
 
   #getStartsWithLowerCaseMatches(

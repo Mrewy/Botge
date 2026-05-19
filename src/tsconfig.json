@@ -3,6 +3,10 @@
   "references": [],
   "compilerOptions": {
     // Emit
-    "outDir": "../dist"
+    "outDir": "../dist",
+
+    // Language and Environment
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   }
 }

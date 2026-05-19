@@ -217,7 +217,7 @@ export function emoteHandler() {
   };
 }
 
-export function emoteListHandler(emoteMessageBuilders: EmoteMessageBuilder[]) {
+export function emoteListHandler(emoteMessageBuilders: Readonly<EmoteMessageBuilder>[]) {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
     const { emoteMatcher } = guild;
     const defer = interaction.deferReply();

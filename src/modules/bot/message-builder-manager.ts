@@ -10,29 +10,29 @@ import type { QuoteMessageBuilder } from '../message-builders/quote-message-buil
 const CLEANUP_MINUTES = 10 as const;
 
 export class MessageBuilderManager {
-  readonly #pingForPingListMessageBuilders: PingForPingListMessageBuilder[] = [];
-  readonly #pingForPingMeMessageBuilders: PingForPingMeMessageBuilder[] = [];
-  readonly #twitchClipMessageBuilders: TwitchClipMessageBuilder[] = [];
-  readonly #emoteMessageBuilders: EmoteMessageBuilder[] = [];
-  readonly #mediaMessageBuilders: MediaMessageBuilder[] = [];
-  readonly #quoteMessageBuilders: QuoteMessageBuilder[] = [];
+  readonly #pingForPingListMessageBuilders: Readonly<PingForPingListMessageBuilder>[] = [];
+  readonly #pingForPingMeMessageBuilders: Readonly<PingForPingMeMessageBuilder>[] = [];
+  readonly #twitchClipMessageBuilders: Readonly<TwitchClipMessageBuilder>[] = [];
+  readonly #emoteMessageBuilders: Readonly<EmoteMessageBuilder>[] = [];
+  readonly #mediaMessageBuilders: Readonly<MediaMessageBuilder>[] = [];
+  readonly #quoteMessageBuilders: Readonly<QuoteMessageBuilder>[] = [];
 
-  public get pingForPingListMessageBuilders(): PingForPingListMessageBuilder[] {
+  public get pingForPingListMessageBuilders(): Readonly<PingForPingListMessageBuilder>[] {
     return this.#pingForPingListMessageBuilders;
   }
-  public get pingForPingMeMessageBuilders(): PingForPingMeMessageBuilder[] {
+  public get pingForPingMeMessageBuilders(): Readonly<PingForPingMeMessageBuilder>[] {
     return this.#pingForPingMeMessageBuilders;
   }
-  public get twitchClipMessageBuilders(): TwitchClipMessageBuilder[] {
+  public get twitchClipMessageBuilders(): Readonly<TwitchClipMessageBuilder>[] {
     return this.#twitchClipMessageBuilders;
   }
-  public get emoteMessageBuilders(): EmoteMessageBuilder[] {
+  public get emoteMessageBuilders(): Readonly<EmoteMessageBuilder>[] {
     return this.#emoteMessageBuilders;
   }
-  public get mediaMessageBuilders(): MediaMessageBuilder[] {
+  public get mediaMessageBuilders(): Readonly<MediaMessageBuilder>[] {
     return this.#mediaMessageBuilders;
   }
-  public get quoteMessageBuilders(): QuoteMessageBuilder[] {
+  public get quoteMessageBuilders(): Readonly<QuoteMessageBuilder>[] {
     return this.#quoteMessageBuilders;
   }
 
@@ -50,11 +50,11 @@ export class MessageBuilderManager {
 
   #cleanupMessageBuilders(
     messageBuilders: (
-      | PingForPingListMessageBuilder
-      | TwitchClipMessageBuilder
-      | EmoteMessageBuilder
-      | MediaMessageBuilder
-      | QuoteMessageBuilder
+      | Readonly<PingForPingListMessageBuilder>
+      | Readonly<TwitchClipMessageBuilder>
+      | Readonly<EmoteMessageBuilder>
+      | Readonly<MediaMessageBuilder>
+      | Readonly<QuoteMessageBuilder>
     )[],
     timeNow: number
   ): void {

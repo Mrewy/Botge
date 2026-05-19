@@ -5,6 +5,8 @@ import type { Job } from 'node-schedule';
 import { Events, type Client } from 'discord.js';
 import { joinVoiceChannel } from '@discordjs/voice';
 
+import { once } from 'helpful-decorators';
+
 import { messageContextMenuCommandHandler } from '../../handlers/interaction-handlers/message-context-menu-command.ts';
 import { roleSelectMenuHandler } from '../../handlers/interaction-handlers/role-select-menu.ts';
 import { autocompleteHandler } from '../../handlers/interaction-handlers/autocomplete.ts';
@@ -32,6 +34,8 @@ import type { ApiManager } from './api-manager.ts';
  * The central class.
  */
 export class Bot {
+  static #instance: Readonly<Bot> | undefined = undefined;
+
   readonly #scheduledJobs: Readonly<Job>[] = [];
 
   readonly #client: Client;
@@ -45,7 +49,7 @@ export class Bot {
   readonly #guilds: Readonly<Guild>[];
   readonly #users: Readonly<User>[];
 
-  public constructor(
+  private constructor(
     client: Client,
     apiManager: Readonly<ApiManager>,
     databaseManager: Readonly<DatabaseManager>,
@@ -69,6 +73,12 @@ export class Bot {
     this.#users = [...users];
   }
 
+  public static get instance(): Readonly<Bot> {
+    if (Bot.#instance === undefined) throw new Error('Bot instance not created.');
+
+    return Bot.#instance;
+  }
+
   public get scheduledJobs(): Readonly<Job>[] {
     return this.#scheduledJobs;
   }
@@ -88,6 +98,18 @@ export class Bot {
     return this.#apiManager;
   }
 
+  @once
+  public static createInstance(
+    client: Client,
+    apiManager: Readonly<ApiManager>,
+    databaseManager: Readonly<DatabaseManager>,
+    guilds: readonly Readonly<Guild>[],
+    users: readonly Readonly<User>[]
+  ): void {
+    Bot.#instance = new Bot(client, apiManager, databaseManager, guilds, users);
+  }
+
+  @once
   public registerListeners(): void {
     this.#registerClientReadyListener();
     this.#registerMessageCreateListener();

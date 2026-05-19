@@ -212,7 +212,8 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     return new User(databaseUser.userId, guild, enableEmoteBorder, emoteBorderColor);
   });
 
-  return new Bot(client, apiManager, databaseManager, guilds, users);
+  Bot.createInstance(client, apiManager, databaseManager, guilds, users);
+  return Bot.instance;
 })();
 
 /**

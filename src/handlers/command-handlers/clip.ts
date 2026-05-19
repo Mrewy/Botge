@@ -22,7 +22,7 @@ const CLEANUP_MINUTES = 10 as const;
 const MAX_TWITCH_CLIP_MESSAGE_BUILDERS_LENGTH = 15 as const;
 const { EMBED_SERVER_TWITCH } = process.env;
 
-export function clipHandler(twitchClipMessageBuilders: TwitchClipMessageBuilder[]) {
+export function clipHandler(twitchClipMessageBuilders: Readonly<TwitchClipMessageBuilder>[]) {
   return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
     const ephemeral = getOptionValue(interaction, 'ephemeral', Boolean) ?? false;
     if (ephemeral && interaction.guild === null) {

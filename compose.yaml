@@ -2,7 +2,7 @@
 
 services:
   nginx:
-    image: nginx:1.31.0-alpine
+    image: nginx:mainline-alpine
     mem_limit: 256m
     restart: always
     volumes:
@@ -10,7 +10,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
 
   meilisearch:
-    image: getmeili/meilisearch:v1.44
+    image: getmeili/meilisearch:latest
     mem_limit: 512m
     healthcheck:
       test: set -o pipefail;curl -fsS http://localhost:7700/health | grep -q '{"status":"available"}'
@@ -30,7 +30,7 @@ services:
     mem_limit: 1g
     restart: unless-stopped
     volumes:
-      - ./chroma-data:/chroma/chroma # persists your vectors to disk
+      - ./chroma-data:/chroma/chroma
     environment:
       - IS_PERSISTENT=TRUE
       - ANONYMIZED_TELEMETRY=FALSE

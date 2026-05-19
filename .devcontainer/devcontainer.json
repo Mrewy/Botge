@@ -36,6 +36,7 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "EditorConfig.EditorConfig",
+        "GitHub.vscode-pull-request-github",
 
         // Syntax
         "github.vscode-github-actions",

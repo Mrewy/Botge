@@ -8,6 +8,7 @@
 
     "resolveJsonModule": false,
     "allowUmdGlobalAccess": false,
+    "allowArbitraryExtensions": false,
     "noUncheckedSideEffectImports": true,
     "rewriteRelativeImportExtensions": true,
 
@@ -15,6 +16,7 @@
     "target": "esnext",
     "lib": ["ESNext"],
     "libReplacement": false,
+    "moduleDetection": "force",
 
     // JavaScript Support
     "allowJs": false,

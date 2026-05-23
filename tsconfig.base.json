@@ -5,6 +5,7 @@
 
     // Modules
     "module": "nodenext",
+    "types": ["node"],
 
     "resolveJsonModule": false,
     "allowUmdGlobalAccess": false,

@@ -2,11 +2,14 @@
   "extends": "../tsconfig.base",
   "references": [],
   "compilerOptions": {
-    // Emit
-    "outDir": "../dist",
+    // Modules
+    "types": ["fs-extra", "node", "node-schedule"],
 
     // Language and Environment
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+
+    // Emit
+    "outDir": "../dist"
   }
 }

@@ -1,4 +1,6 @@
 npm install
 npm run prettier
-npm run cspell:pre-commit
+npm run eslint
 npm run build
+npm run cspell:pre-commit
+npm run test:pre-commit

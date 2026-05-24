@@ -43,7 +43,8 @@
     "prettier": "prettier . --write",
     "start": "docker image prune --force && docker compose up --build",
     "stop": "docker compose stop",
-    "test": "vitest tests"
+    "test": "vitest tests",
+    "test:pre-commit": "vitest tests --no-color"
   },
   "dependencies": {
     "@commitlint/format": "21.0.1",

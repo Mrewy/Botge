@@ -1,82 +1,23 @@
 {
   "version": "0.2",
   "language": "en",
-  "validateDirectives": false,
-  "dictionaries": ["en_US", "softwareTerms", "typescript", "node", "npm", "filetypes"],
+  "readonly": true,
+  "description": "botgeSpellCheck",
+
+  "useGitignore": true,
+  "enableGlobDot": true,
+  "caseSensitive": false,
+  "allowCompoundWords": true,
+  "validateDirectives": true,
   "ignoreRandomStrings": true,
-  "ignoreWords": [
-    // Commands
-    "shortestuniquesubstrings",
-    "findtheemoji",
-    "emotelist",
-    "medialist",
-    "quotelist",
-    "addemote",
-    "pinglist",
-    "pingme",
 
-    "fullsize",
-    "tinygif",
+  "dictionaries": [],
+  "ignorePaths": [".git/gk", ".git/hooks", ".git/info", ".git/logs", ".git/objects", ".git/refs", "docs/CHANGELOG.md"],
 
-    "doesnt",
-    "commitlint",
-
-    // ? Ge - rename later
-    "guildge",
-    "clipsge",
-    "namege",
-    "testge",
-    "userge",
-
-    // Random
-    "KHTML",
-    "jtvnw",
-    "01FDMJPSF8000CJ4MDR2FNZEQ3"
-  ],
   "words": [
-    // Project
-    "NodeNext",
-    "ESNext",
-    "devcontainers",
-    "tsgo",
-
-    // Lib
-    "healthcheck",
-    "pipefail",
-
-    "paletteuse",
-    "palettegen",
-    "libwebp",
-    "ffprobe",
-    "hstack",
-    "tpad",
-
-    "noprint",
-    "nokey",
-
-    "Vitest",
-    "axios",
-
-    "nomic",
-    "mxbai",
-    "hnsw",
-
-    // Specific
-    "FrankerFaceZ",
-    "BetterTTV",
-    "GitBook",
-    "Meilisearch",
-    "getmeili",
-    "Meili",
-    "DeepL",
-    "GenAI",
-    "BTTV",
-    "Ollama",
-    "ARPG",
-    "chromadb",
-    "CNTREC",
-    "RRGGBB",
-    "noninteractive",
+    // Words
+    "metadatas",
+    "unforgeable",
 
     // Names
     "Botge",
@@ -89,17 +30,19 @@
     "CuteDog",
     "zackrawrr",
 
-    // Words
-    "DUMPLESS",
-    "pingable",
-    "cooldown",
-    "analyse",
-    "unforgeable",
-    "metadatas",
-    "nums",
-    "drawbox",
+    // Lib
+    "tpad",
+    "hstack",
+    "libwebp",
+    "ffprobe",
+    "noprint",
+    "nokey",
 
-    // DevContainer
+    "nomic",
+    "mxbai",
+    "hnsw",
+
+    // Extensions
     "moby",
     "eamodio",
     "buildx",
@@ -108,6 +51,41 @@
     "alefragnani",
     "Anson",
     "dbaeumer",
-    "ahmadalli"
+    "ahmadalli",
+    "kohler",
+
+    // Other
+    "FrankerFaceZ",
+    "BetterTTV",
+    "Meilisearch",
+    "getmeili",
+    "Meili",
+    "DeepL",
+    "BTTV",
+    "Ollama",
+    "ARPG",
+    "chromadb",
+    "CNTREC",
+    "RRGGBB",
+    "tsgo",
+    "tsdoc",
+    "vitest"
+  ],
+  "ignoreWords": [
+    // ? Ge - rename later
+    "guildge",
+    "clipsge",
+    "namege",
+    "testge",
+    "userge",
+
+    // Random
+    "KHTML",
+    "jtvnw",
+    "01FDMJPSF8000CJ4MDR2FNZEQ3",
+
+    // Other
+    "pingme",
+    "doesnt"
   ]
 }

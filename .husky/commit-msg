@@ -1,1 +1,2 @@
 npm run commitlint ${1}
+npm run cspell:commit-msg ${1}

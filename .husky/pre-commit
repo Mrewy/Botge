@@ -1,3 +1,4 @@
 npm install
 npm run prettier
+npm run cspell:pre-commit
 npm run build

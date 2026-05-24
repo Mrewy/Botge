@@ -29,25 +29,26 @@
     "vscode": {
       "extensions": [
         // Project
-        "docker.docker",
         "TypeScriptTeam.native-preview",
-        "GitHub.copilot-chat",
-        "eamodio.gitlens",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
         "EditorConfig.EditorConfig",
-        "GitHub.vscode-pull-request-github",
+        "esbenp.prettier-vscode",
+        "GitHub.copilot-chat",
+        "docker.docker",
 
         // Syntax
-        "github.vscode-github-actions",
         "streetsidesoftware.code-spell-checker",
         "DavidAnson.vscode-markdownlint",
-        "redhat.vscode-yaml",
+        "github.vscode-github-actions",
         "ahmadalli.vscode-nginx-conf",
+        "dbaeumer.vscode-eslint",
+        "joshbolduc.commitlint",
+        "redhat.vscode-yaml",
 
         // Extras
+        "GitHub.vscode-pull-request-github",
         "vscode-icons-team.vscode-icons",
-        "aaron-bond.better-comments"
+        "aaron-bond.better-comments",
+        "eamodio.gitlens"
       ]
     }
   }

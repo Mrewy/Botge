@@ -96,8 +96,7 @@ const config: readonly Readonly<Config>[] = defineConfig([
               ],
               package: 'discord.js'
             },
-            { from: 'package', name: 'VoiceConnection', package: '@discordjs/voice' },
-            { from: 'package', name: 'SqlJsStatic', package: 'sql.js' }
+            { from: 'package', name: 'VoiceConnection', package: '@discordjs/voice' }
           ]
         }
       ],

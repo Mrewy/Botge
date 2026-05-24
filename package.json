@@ -35,7 +35,7 @@
     "build:clean": "tsgo --build --clean src",
     "build:production": "tsgo --project src/tsconfig.production.json",
     "commitlint": "commitlint --edit",
-    "cspell": "cspell .",
+    "cspell": "cspell . --verbose",
     "cspell:commit-msg": "cspell --no-summary --no-progress --language-id commit-msg",
     "cspell:pre-commit": "git diff --cached --name-only | cspell --no-summary --no-progress --no-must-find-files --file-list stdin",
     "eslint": "eslint . --flag unstable_native_nodejs_ts_config --concurrency=auto",

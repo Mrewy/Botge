@@ -12,7 +12,24 @@
   "ignoreRandomStrings": true,
 
   "dictionaries": [],
-  "ignorePaths": [".git/gk", ".git/hooks", ".git/info", ".git/logs", ".git/objects", ".git/refs", "docs/CHANGELOG.md"],
+  "ignorePaths": [
+    ".devcontainer/devcontainer-lock.json",
+    ".git/gk",
+    ".git/hooks",
+    ".git/info",
+    ".git/logs",
+    ".git/objects",
+    ".git/refs",
+    ".git/config",
+    ".git/description",
+    ".git/FETCH_HEAD",
+    ".git/HEAD",
+    ".git/index",
+    ".git/ORIG_HEAD",
+    ".git/packed-refs",
+    "docs/CHANGELOG.md",
+    "src"
+  ],
 
   "words": [
     // Words

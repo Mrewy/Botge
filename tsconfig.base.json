@@ -23,6 +23,7 @@
     "allowJs": false,
 
     // Emit
+    "newLine": "lf",
     "sourceMap": false,
     "noEmitOnError": true,
     "declarationMap": true,

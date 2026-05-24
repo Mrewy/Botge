@@ -46,7 +46,7 @@
     "https://json.schemastore.org/": true,
     "https://json-schema.org/": true,
     "https://developer.microsoft.com/json-schemas/": true,
-    "https://nodejs.org/docs/v26.1.0/node-config-schema.json": true
+    "https://nodejs.org/docs/v26.2.0/node-config-schema.json": true
   },
 
   "telemetry.feedback.enabled": false,

@@ -2,6 +2,7 @@
   "extends": "../tsconfig.base",
   "references": [{ "path": "../src" }],
   "compilerOptions": {
+    // Modules
     "paths": {
       "src/*": ["../src/*"]
     }

@@ -23,7 +23,6 @@
     "allowJs": false,
 
     // Emit
-    "noEmit": true,
     "sourceMap": false,
     "noEmitOnError": true,
     "declarationMap": true,

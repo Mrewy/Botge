@@ -10,7 +10,6 @@
     "experimentalDecorators": true,
 
     // Emit
-    "noEmit": false,
     "outDir": "../dist"
   }
 }

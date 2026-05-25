@@ -27,8 +27,7 @@
     ".git/index",
     ".git/ORIG_HEAD",
     ".git/packed-refs",
-    "docs/CHANGELOG.md",
-    "src"
+    "docs/CHANGELOG.md"
   ],
 
   "words": [

@@ -85,6 +85,7 @@
 
   "prettier.requireConfig": true,
   "prettier.configPath": "prettier.config.ts",
+  "prettier.ignorePath": ".prettierignore",
 
   "redhat.telemetry.enabled": false,
   "yaml.format.printWidth": 120,

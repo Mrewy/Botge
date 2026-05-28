@@ -2,6 +2,10 @@
   "workbench.startupEditor": "none",
   "workbench.iconTheme": "vscode-icons",
 
+  "vsicons.associations.files": [
+    { "icon": "cspell", "extensions": ["cspell.config.ts"], "filename": true, "format": "svg" }
+  ],
+
   "workbench.list.smoothScrolling": true,
 
   "terminal.integrated.shellIntegration.enabled": true,

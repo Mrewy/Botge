@@ -1,6 +1,13 @@
 {
   "extends": "./tsconfig.base",
-  "files": [".husky/install.ts", "commitlint.config.ts", "eslint.config.ts", "prettier.config.ts", "vitest.config.ts"],
+  "files": [
+    ".husky/install.ts",
+    "commitlint.config.ts",
+    "cspell.config.ts",
+    "eslint.config.ts",
+    "prettier.config.ts",
+    "vitest.config.ts"
+  ],
   "references": [{ "path": "./src" }, { "path": "./tests" }],
   "compilerOptions": {
     // Emit

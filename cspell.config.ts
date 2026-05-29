@@ -108,7 +108,8 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
 
     // Other
     'pingme',
-    'doesnt'
+    'doesnt',
+    'nums'
   ]
 });
 

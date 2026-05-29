@@ -27,7 +27,7 @@ COPY . .
 
 RUN npm run build:production
 
-FROM base AS node
+FROM base AS botge
 WORKDIR /app
 LABEL org.opencontainers.image.title="Botge" \
   org.opencontainers.image.version="2.9.0" \

@@ -4,7 +4,7 @@
 
   "vsicons.customIconFolderPath": "assets",
   "vsicons.associations.files": [
-    { "icon": "catSmile", "extensions": ["index.ts"], "filename": true, "format": "png" },
+    { "icon": "catSmile", "extensions": ["index.ts", "README.md"], "filename": true, "format": "png" },
     { "icon": "cspell", "extensions": ["cspell.config.ts"], "filename": true, "format": "svg" }
   ],
 

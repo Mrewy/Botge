@@ -48,6 +48,7 @@
         "GitHub.vscode-pull-request-github",
         "vscode-icons-team.vscode-icons",
         "aaron-bond.better-comments",
+        "xlaoyu.npmrc-helper",
         "eamodio.gitlens"
       ]
     }

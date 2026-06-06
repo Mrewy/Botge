@@ -11,14 +11,14 @@ FROM ci-dependencies AS node-dependencies
 WORKDIR /app
 COPY --from=ci-dependencies /app/ci-deps ./
 
-RUN npm ci --omit=dev --strict-peer-deps=true
+RUN npm ci --omit=dev
 
 FROM node-dependencies AS build-dependencies
 WORKDIR /app
 COPY --from=ci-dependencies /app/ci-deps ./
 COPY --from=node-dependencies /app/node_modules ./node_modules
 
-RUN npm ci --strict-peer-deps=true
+RUN npm ci
 
 FROM build-dependencies AS build
 WORKDIR /app

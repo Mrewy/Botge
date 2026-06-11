@@ -29,7 +29,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       # Uses the `docker/login-action` action to log in to the Container registry registry using the account and password that will publish the packages. Once published, the packages are scoped to the account defined here.
       - name: Log in to the Container registry
-        uses: docker/login-action@3999a1f4362c53e6a6048cde50f69868af81da5c
+        uses: docker/login-action@946f94de75ea52995b6aa1e54fd3e0aeed6cc573
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}

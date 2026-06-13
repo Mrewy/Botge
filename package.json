@@ -71,9 +71,9 @@
     "@types/fs-extra": "11.0.4",
     "@types/node": "25.9.3",
     "@types/node-schedule": "2.1.8",
-    "@typescript/native-preview": "7.0.0-dev.20260611.2",
+    "@typescript/native-preview": "7.0.0-dev.20260612.1",
     "cspell": "10.0.1",
-    "eslint": "10.4.1",
+    "eslint": "10.5.0",
     "eslint-plugin-tsdoc": "0.5.2",
     "husky": "9.1.7",
     "markdownlint-cli2": "0.22.1",
@@ -95,5 +95,8 @@
   "cpu": [
     "x64",
     "arm64"
-  ]
+  ],
+  "allowScripts": {
+    "fsevents": true
+  }
 }

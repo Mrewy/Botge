@@ -1,49 +1,92 @@
 {
-  "workbench.startupEditor": "none",
-  "workbench.iconTheme": "vscode-icons",
-
-  "vsicons.customIconFolderPath": "assets",
-  "vsicons.associations.files": [
-    { "icon": "catSmile", "extensions": ["index.ts", "README.md"], "filename": true, "format": "png" },
-    { "icon": "cspell", "extensions": ["cspell.config.ts"], "filename": true, "format": "svg" }
-  ],
-
-  "workbench.list.smoothScrolling": true,
-
+  // Terminal
   "terminal.integrated.shellIntegration.enabled": true,
 
-  "terminal.integrated.suggest.enabled": true,
-  "terminal.integrated.suggest.showStatusBar": true,
   "terminal.integrated.suggest.insertTrailingSpace": true,
+  "terminal.integrated.suggest.showStatusBar": true,
+  "terminal.integrated.suggest.enabled": true,
   "terminal.integrated.suggest.quickSuggestions": {
     "commands": "on",
     "arguments": "on",
     "unknown": "off"
   },
 
-  "terminal.integrated.tabs.title": "botge${separator}${process}",
   "terminal.integrated.tabs.showActions": "singleTerminalOrNarrow",
+  "terminal.integrated.tabs.title": "botge${separator}${process}",
   "terminal.integrated.tabs.showActiveTerminal": "always",
 
-  "terminal.integrated.enablePersistentSessions": false,
   "terminal.integrated.persistentSessionReviveProcess": "never",
+  "terminal.integrated.enablePersistentSessions": false,
 
   "terminal.integrated.gpuAcceleration": "auto",
   "terminal.integrated.enableImages": false,
 
   "terminal.integrated.smoothScrolling": true,
 
-  "github.copilot.enable": {
-    "*": false
-  },
-  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-  "github.copilot.nextEditSuggestions.enabled": false,
-  "github.copilot.chat.codesearch.enabled": true,
-  "github.copilot.chat.languageContext.fix.typescript.enabled": true,
-  "github.copilot.chat.languageContext.inline.typescript.enabled": true,
-  "github.copilot.chat.languageContext.typescript.enabled": true,
-  "github.copilot.chat.languageContext.typescript.includeDocumentation": true,
+  // TypeScript
+  "js/ts.experimental.useTsgo": true,
 
+  "js/ts.implicitProjectConfig.module": "NodeNext",
+  "js/ts.implicitProjectConfig.target": "ESNext",
+
+  "js/ts.updateImportsOnFileMove.enabled": "prompt",
+
+  "js/ts.preferences.autoImportEntrypointDirectorySearch": true,
+  "js/ts.preferences.importModuleSpecifierEnding": "js",
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
+  "js/ts.preferences.quoteStyle": "single",
+  "js/ts.format.semicolons": "insert",
+
+  // Editor
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+
+  "editor.experimentalGpuAcceleration": "on",
+
+  "editor.smoothScrolling": true,
+
+  // Workbench
+  "workbench.list.smoothScrolling": true,
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "none",
+
+  // Git
+  "git.enableCommitSigning": true,
+  "git.alwaysSignOff": false,
+  "git.autofetch": true,
+
+  // YAML
+  "redhat.telemetry.enabled": false,
+  "yaml.format.printWidth": 120,
+  "yaml.format.singleQuote": true,
+
+  // Prettier
+  "prettier.requireConfig": true,
+  "prettier.configPath": "prettier.config.ts",
+  "prettier.ignorePath": ".prettierignore",
+
+  // ESLint
+  "eslint.runtime": "node",
+  "eslint.options": {
+    "flags": ["unstable_native_nodejs_ts_config"]
+  },
+
+  // npm
+  "npm.packageManager": "npm",
+  "npm.scriptRunner": "npm",
+
+  // Docker
+  "docker.lsp.telemetry": "off",
+
+  // vscode-icons
+  "vsicons.customIconFolderPath": "assets",
+  "vsicons.associations.files": [
+    { "icon": "catSmile", "extensions": ["index.ts", "README.md"], "filename": true, "format": "png" },
+    { "icon": "cspell", "extensions": ["cspell.config.ts"], "filename": true, "format": "svg" }
+  ],
+
+  // Other
   "json.schemaDownload.trustedDomains": {
     "https://schemastore.azurewebsites.net/": true,
     "https://raw.githubusercontent.com/microsoft/vscode/": true,
@@ -55,51 +98,10 @@
     "https://nodejs.org/docs/v26.3.0/node-config-schema.json": true
   },
 
+  "telemetry.editStats.enabled": false,
   "telemetry.feedback.enabled": false,
-  "files.autoSave": "onFocusChange",
 
-  "git.alwaysSignOff": false,
-  "git.autofetch": true,
-  "git.enableCommitSigning": true,
   "diffEditor.ignoreTrimWhitespace": false,
 
-  "npm.packageManager": "npm",
-  "npm.scriptRunner": "npm",
-
-  "js/ts.experimental.useTsgo": true,
-
-  "js/ts.implicitProjectConfig.module": "NodeNext",
-  "js/ts.implicitProjectConfig.target": "ESNext",
-
-  "js/ts.updateImportsOnFileMove.enabled": "prompt",
-
-  "js/ts.tsserver.checkNpmIsInstalled": true,
-  "js/ts.preferences.importModuleSpecifierEnding": "js",
-  "js/ts.preferences.preferTypeOnlyAutoImports": true,
-  "js/ts.preferences.quoteStyle": "single",
-  "js/ts.format.semicolons": "insert",
-
-  "docker.lsp.experimental.vulnerabilityScanning": true,
-  "docker.lsp.experimental.scout.notPinnedDigest": false,
-  "docker.lsp.experimental.scout.recommendedTag": true,
-  "docker.lsp.telemetry": "error",
-
-  "eslint.runtime": "node",
-  "eslint.options": {
-    "flags": ["unstable_native_nodejs_ts_config"]
-  },
-
-  "prettier.requireConfig": true,
-  "prettier.configPath": "prettier.config.ts",
-  "prettier.ignorePath": ".prettierignore",
-
-  "redhat.telemetry.enabled": false,
-  "yaml.format.printWidth": 120,
-  "yaml.format.singleQuote": true,
-
-  "editor.experimentalGpuAcceleration": "on",
-  "editor.smoothScrolling": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "editor.formatOnPaste": true
+  "files.autoSave": "onFocusChange"
 }

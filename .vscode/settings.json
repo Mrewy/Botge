@@ -2,7 +2,7 @@
   // Terminal
   "terminal.integrated.shellIntegration.enabled": true,
 
-  "terminal.integrated.suggest.insertTrailingSpace": true,
+  "terminal.integrated.suggest.insertTrailingSpace": false,
   "terminal.integrated.suggest.showStatusBar": true,
   "terminal.integrated.suggest.enabled": true,
   "terminal.integrated.suggest.quickSuggestions": {
@@ -42,9 +42,27 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
 
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+
   "editor.experimentalGpuAcceleration": "on",
 
   "editor.smoothScrolling": true,
+
+  // Files
+  "files.readonlyInclude": { "data/**/*": true, "dist/**/*": true, "node_modules/**/*": true },
+  "files.trimTrailingWhitespace": true,
+  "files.autoSave": "onFocusChange",
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+
+  // Source Control
+  "scm.repositories.selectionMode": "single",
+  "scm.repositories.explorer": true,
+
+  "scm.showInputActionButton": false,
+
+  "scm.graph.badges": "all",
 
   // Workbench
   "workbench.list.smoothScrolling": true,
@@ -79,12 +97,19 @@
   // Docker
   "docker.lsp.telemetry": "off",
 
+  // GitLens
+  "gitlens.telemetry.enabled": false,
+
   // vscode-icons
   "vsicons.customIconFolderPath": "assets",
   "vsicons.associations.files": [
     { "icon": "catSmile", "extensions": ["index.ts", "README.md"], "filename": true, "format": "png" },
     { "icon": "cspell", "extensions": ["cspell.config.ts"], "filename": true, "format": "svg" }
   ],
+
+  // Telemetry
+  "telemetry.editStats.enabled": false,
+  "telemetry.feedback.enabled": false,
 
   // Other
   "json.schemaDownload.trustedDomains": {
@@ -98,10 +123,5 @@
     "https://nodejs.org/docs/v26.3.0/node-config-schema.json": true
   },
 
-  "telemetry.editStats.enabled": false,
-  "telemetry.feedback.enabled": false,
-
-  "diffEditor.ignoreTrimWhitespace": false,
-
-  "files.autoSave": "onFocusChange"
+  "diffEditor.ignoreTrimWhitespace": false
 }

@@ -2,6 +2,44 @@
 
 # Changelog
 
+## [v3.0.1](https://github.com/Mrewy/Botge/tree/v3.0.1) (2026-06-15)
+
+[Full Changelog](https://github.com/Mrewy/Botge/compare/v2.9.0...v3.0.1)
+
+**Implemented enhancements:**
+
+- add translate context menu command [\#118](https://github.com/Mrewy/Botge/issues/118)
+- use a real database [\#13](https://github.com/Mrewy/Botge/issues/13)
+
+**Closed issues:**
+
+- introduce a way to check if bookmarks.json exists [\#107](https://github.com/Mrewy/Botge/issues/107)
+- remove compose-sample.yaml and introduce a single compose file. [\#74](https://github.com/Mrewy/Botge/issues/74)
+
+**Merged pull requests:**
+
+- chore\(deps\): bump github/codeql-action from 4.36.1 to 4.36.2 [\#181](https://github.com/Mrewy/Botge/pull/181) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from 3999a1f4362c53e6a6048cde50f69868af81da5c to 946f94de75ea52995b6aa1e54fd3e0aeed6cc573 [\#180](https://github.com/Mrewy/Botge/pull/180) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action from 4.36.0 to 4.36.1 [\#179](https://github.com/Mrewy/Botge/pull/179) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from d74126fafb7d8baee06dfff4003b911af7cf0662 to 3999a1f4362c53e6a6048cde50f69868af81da5c [\#178](https://github.com/Mrewy/Botge/pull/178) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from 9f4a8ea54ed9055d5f86c993e1f2ffa674f98344 to d74126fafb7d8baee06dfff4003b911af7cf0662 [\#177](https://github.com/Mrewy/Botge/pull/177) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/build-push-action from 7.1.0 to 7.2.0 [\#176](https://github.com/Mrewy/Botge/pull/176) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/metadata-action from 6.0.0 to 6.1.0 [\#175](https://github.com/Mrewy/Botge/pull/175) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action from 4.35.5 to 4.36.0 [\#174](https://github.com/Mrewy/Botge/pull/174) ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump ghcr.io/devcontainers/features/docker-in-docker from 3.0.0 to 3.0.1 [\#173](https://github.com/Mrewy/Botge/pull/173) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump ghcr.io/devcontainers/features/docker-in-docker from 2.16.1 to 3.0.0 [\#171](https://github.com/Mrewy/Botge/pull/171) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump github/codeql-action from 4.35.4 to 4.35.5 [\#170](https://github.com/Mrewy/Botge/pull/170) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump nginx from 1.29.8-alpine to 1.31.0-alpine [\#169](https://github.com/Mrewy/Botge/pull/169) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump getmeili/meilisearch from v1.43 to v1.44 [\#168](https://github.com/Mrewy/Botge/pull/168) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump github/codeql-action from 4.35.3 to 4.35.4 [\#166](https://github.com/Mrewy/Botge/pull/166) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump github/codeql-action from 4.35.2 to 4.35.3 [\#165](https://github.com/Mrewy/Botge/pull/165) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump getmeili/meilisearch from v1.42 to v1.43 [\#164](https://github.com/Mrewy/Botge/pull/164) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump docker/login-action from 4a8376e001c7725687f0624d1c3698a3f6ab337e to 9f4a8ea54ed9055d5f86c993e1f2ffa674f98344 [\#163](https://github.com/Mrewy/Botge/pull/163) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump github/codeql-action from 4.35.1 to 4.35.2 [\#162](https://github.com/Mrewy/Botge/pull/162) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump docker/login-action from d43e1c853e1fb3780e2a1187b33970c59f58c314 to 4a8376e001c7725687f0624d1c3698a3f6ab337e [\#161](https://github.com/Mrewy/Botge/pull/161) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump nginx from 1.29.6-alpine to 1.29.8-alpine [\#160](https://github.com/Mrewy/Botge/pull/160) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump getmeili/meilisearch from v1.40 to v1.42 [\#159](https://github.com/Mrewy/Botge/pull/159) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v2.9.0](https://github.com/Mrewy/Botge/tree/v2.9.0) (2026-04-20)
 
 [Full Changelog](https://github.com/Mrewy/Botge/compare/v2.8.3...v2.9.0)

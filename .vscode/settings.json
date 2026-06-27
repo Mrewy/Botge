@@ -83,7 +83,7 @@
 
   // YAML
   "redhat.telemetry.enabled": false,
-  "yaml.format.printWidth": 120,
+  "yaml.format.printWidth": 100,
   "yaml.format.singleQuote": true,
 
   // Prettier
@@ -115,8 +115,7 @@
       "extensions": ["index.ts", "README.md"],
       "filename": true,
       "format": "png"
-    },
-    { "icon": "cspell", "extensions": ["cspell.config.ts"], "filename": true, "format": "svg" }
+    }
   ],
 
   // Telemetry

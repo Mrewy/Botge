@@ -8,7 +8,7 @@ export async function getDimension(filename: string): Promise<readonly [number, 
   return new Promise((resolve) => {
     exec(
       `ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 ${filename}`,
-      (error: Readonly<ExecException | null>, stdout) => {
+      (error: ExecException | null, stdout) => {
         if (error) {
           resolve(undefined);
           return;
@@ -36,7 +36,7 @@ export async function getDuration(filename: string): Promise<number | undefined>
   return new Promise((resolve) => {
     exec(
       `ffprobe -v error -select_streams v:0 -show_entries stream=duration -of default=noprint_wrappers=1:nokey=1 "${filename_}"`,
-      (error: Readonly<ExecException | null>, stdout) => {
+      (error: ExecException | null, stdout) => {
         if (error) {
           resolve(undefined);
           return;

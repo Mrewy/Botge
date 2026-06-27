@@ -74,6 +74,7 @@ const config: readonly Readonly<Config>[] = defineConfig([
           allow: [
             { from: 'lib', name: 'Array' },
             { from: 'package', name: 'RequestInit', package: 'node-fetch' },
+            { from: 'package', name: 'ExecException', package: 'node:child_process' },
             { from: 'package', name: ['Meilisearch', 'Index'], package: 'meilisearch' },
             {
               from: 'package',

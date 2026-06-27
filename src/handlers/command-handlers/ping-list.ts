@@ -35,31 +35,36 @@ export function pingListHandler(
           return type === PING_LIST.type.own ? pings_.filter((ping) => ping.userId === interaction.user.id) : pings_;
         })();
 
-        return pings
-          .map((ping) => {
-            const { time, days, hours, minutes, channelId } = ping;
+        const pings2: readonly (PingForPingMeMessageBuilder | undefined)[] = pings.map((ping) => {
+          const { time, days, hours, minutes, channelId } = ping;
 
-            let channel: TextChannel | undefined = undefined;
-            try {
-              channel = client.channels.cache.get(channelId) as TextChannel | undefined;
-              if (channel === undefined) return undefined;
-            } catch {
-              return undefined;
-            }
+          let channel: TextChannel | undefined;
+          try {
+            channel = client.channels.cache.get(channelId) as TextChannel | undefined;
+            if (channel === undefined) return undefined;
+          } catch {
+            return undefined;
+          }
 
-            const timeMilliseconds = time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0);
-            const pingDate = new Date(timeMilliseconds);
+          const timeMilliseconds = time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0);
+          const pingDate = new Date(timeMilliseconds);
 
-            return new PingForPingMeMessageBuilder(
-              interaction,
-              ping,
-              pingDate,
-              channel,
-              scheduledJobs,
-              PingForPingMeMessageBuilder.messageBuilderTypeForPingList
-            );
-          })
-          .filter((pingForPingMeMessageBuilder) => pingForPingMeMessageBuilder !== undefined);
+          return new PingForPingMeMessageBuilder(
+            interaction,
+            ping,
+            pingDate,
+            channel,
+            scheduledJobs,
+            PingForPingMeMessageBuilder.messageBuilderTypeForPingList
+          );
+        });
+
+        const pings3: PingForPingMeMessageBuilder[] = [];
+        for (const pingForPingMeMessageBuilder of pings2) {
+          if (pingForPingMeMessageBuilder !== undefined) pings3.push(pingForPingMeMessageBuilder);
+        }
+
+        return pings3;
       })();
 
       if (pingForPingMeMessageBuilders.length === 0) {

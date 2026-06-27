@@ -159,7 +159,7 @@ export async function ollamaMessageCreateHandler(
     clearInterval(typingTimer);
   }
 
-  let reply: string | undefined = undefined;
+  let reply: string | undefined;
   try {
     const [, generatedReply] = await Promise.all([startTyping(), generateReply(recentHistory, retrievedContext)]);
     reply = generatedReply;

@@ -7,13 +7,20 @@ import { scoreReplyOpportunity, generateReply } from '../../api/ollama.ts';
 import { logError } from '../../utils/public/log-error.ts';
 import { config } from '../../api/config/ollama-config.ts';
 
-type BufferEntry = { readonly author: string; readonly content: string; readonly timestamp: string };
+type BufferEntry = {
+  readonly author: string;
+  readonly content: string;
+  readonly timestamp: string;
+};
 
 // Map of channelId → array of message objects
 const buffers = new Map<string, BufferEntry[]>();
 const lastReplyTime = new Map<string, number>();
 
-async function persistToVectorStore(message: OmitPartialGroupDMChannel<Message>, author: string): Promise<void> {
+async function persistToVectorStore(
+  message: OmitPartialGroupDMChannel<Message>,
+  author: string
+): Promise<void> {
   try {
     await storeMessage({
       id: message.id,
@@ -27,7 +34,10 @@ async function persistToVectorStore(message: OmitPartialGroupDMChannel<Message>,
   }
 }
 
-async function retrieveContext(channelId: string, recentHistory: string): Promise<readonly string[]> {
+async function retrieveContext(
+  channelId: string,
+  recentHistory: string
+): Promise<readonly string[]> {
   try {
     const { ragResults, ragWindowSize } = config.behavior;
 
@@ -119,7 +129,9 @@ export async function ollamaMessageCreateHandler(
       });
       if (scoring === null) return false;
 
-      console.log(`📊 Score: ${scoring.score}/10 | Reply: ${scoring.shouldReply} | ${scoring.reason}`);
+      console.log(
+        `📊 Score: ${scoring.score}/10 | Reply: ${scoring.shouldReply} | ${scoring.reason}`
+      );
 
       if (!scoring.shouldReply) return false;
       return scoring.score >= config.behavior.replyScoreThreshold;
@@ -161,7 +173,10 @@ export async function ollamaMessageCreateHandler(
 
   let reply: string | undefined;
   try {
-    const [, generatedReply] = await Promise.all([startTyping(), generateReply(recentHistory, retrievedContext)]);
+    const [, generatedReply] = await Promise.all([
+      startTyping(),
+      generateReply(recentHistory, retrievedContext)
+    ]);
     reply = generatedReply;
   } catch (error) {
     logError(error, 'Reply generation failed:');

@@ -3,7 +3,9 @@
 import type { Role, GuildMember, Guild } from 'discord.js';
 
 export function administrator(memberRolesCache: readonly (readonly [string, Role])[]): boolean {
-  const memberRoles: readonly Role[] = memberRolesCache.map((memberRolesCacheElement) => memberRolesCacheElement[1]);
+  const memberRoles: readonly Role[] = memberRolesCache.map(
+    (memberRolesCacheElement) => memberRolesCacheElement[1]
+  );
   return memberRoles.some((memberRole) => memberRole.permissions.has('Administrator'));
 }
 

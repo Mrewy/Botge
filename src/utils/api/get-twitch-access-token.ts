@@ -17,7 +17,10 @@ type TwitchClientCredentialsGrantFlow = {
   readonly token_type: string;
 };
 
-export async function getTwitchAccessToken(clientId: string, clientSecret: string): Promise<string> {
+export async function getTwitchAccessToken(
+  clientId: string,
+  clientSecret: string
+): Promise<string> {
   const response = await fetch(TWITCH_API_ENDPOINTS.accessToken, {
     method: 'POST',
     headers: {

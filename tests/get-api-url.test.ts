@@ -19,7 +19,8 @@ describe('Get API Url', () => {
       const sevenTvEmoteSetLink = `https://7tv.app/emote-sets/${emoteSetId}`;
       const sevenTvApiUrl = `https://7tv.io/v3/emote-sets/${emoteSetId}`;
 
-      const sevenTvApiUrlMessage = await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
+      const sevenTvApiUrlMessage =
+        await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
       const { type } = sevenTvApiUrlMessage;
 
       expect(type).toBe('success');
@@ -32,7 +33,8 @@ describe('Get API Url', () => {
       const emoteSetId = 'invalidEmoteSetUrl';
       const sevenTvEmoteSetLink = `https://7tv.app/emote-sets/${emoteSetId}`;
 
-      const sevenTvApiUrlMessage = await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
+      const sevenTvApiUrlMessage =
+        await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
 
       expect(sevenTvApiUrlMessage.type).toBe('error');
     });
@@ -40,7 +42,8 @@ describe('Get API Url', () => {
     test('not URL', async () => {
       const sevenTvEmoteSetLink = 'notUrl';
 
-      const sevenTvApiUrlMessage = await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
+      const sevenTvApiUrlMessage =
+        await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
 
       expect(sevenTvApiUrlMessage.type).toBe('error');
     });
@@ -48,7 +51,8 @@ describe('Get API Url', () => {
     test('not emote set URL', async () => {
       const sevenTvEmoteSetLink = 'https://www.google.com';
 
-      const sevenTvApiUrlMessage = await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
+      const sevenTvApiUrlMessage =
+        await getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink);
 
       expect(sevenTvApiUrlMessage.type).toBe('error');
     });
@@ -69,7 +73,10 @@ describe('Get API Url', () => {
         const userId = (await twitchApi.users([broadcasterNameValid])).data[0].id;
         const bttvApiUrl = `https://api.betterttv.net/3/cached/users/twitch/${userId}`;
 
-        const bttvApiUrlMessage = await getBttvApiUrlFromBroadcasterName(broadcasterNameValid, twitchApi);
+        const bttvApiUrlMessage = await getBttvApiUrlFromBroadcasterName(
+          broadcasterNameValid,
+          twitchApi
+        );
         const { type } = bttvApiUrlMessage;
 
         expect(type).toBe('success');
@@ -79,7 +86,10 @@ describe('Get API Url', () => {
       });
 
       test('invalid broadcasterName', async () => {
-        const bttvApiUrlMessage = await getBttvApiUrlFromBroadcasterName(broadcasterNameInvalid, twitchApi);
+        const bttvApiUrlMessage = await getBttvApiUrlFromBroadcasterName(
+          broadcasterNameInvalid,
+          twitchApi
+        );
 
         expect(bttvApiUrlMessage.type).toBe('error');
       });

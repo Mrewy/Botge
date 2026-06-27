@@ -30,18 +30,36 @@ export class UsersDatabase extends BaseDatabase {
       );
       statement.run(Number(enableEmoteBorder), userId);
     } else {
-      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
-      statement.run(userId, null, Number(enableEmoteBorder), DEFAULT_EMOTE_BORDER_COLOR, DEFAULT_EMOTE_BORDER_OPACITY);
+      const statement = this.databaseSync.prepare(
+        `INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`
+      );
+      statement.run(
+        userId,
+        null,
+        Number(enableEmoteBorder),
+        DEFAULT_EMOTE_BORDER_COLOR,
+        DEFAULT_EMOTE_BORDER_OPACITY
+      );
     }
   }
 
   public changeEmoteBorderColor(userId: string, emoteBorderColor: string): void {
     if (this.#rowExists(userId)) {
-      const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET emoteBorderColor = (?) WHERE userId = (?)`);
+      const statement = this.databaseSync.prepare(
+        `UPDATE ${TABLE_NAME} SET emoteBorderColor = (?) WHERE userId = (?)`
+      );
       statement.run(emoteBorderColor, userId);
     } else {
-      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
-      statement.run(userId, null, DEFAULT_EMOTE_BORDER_ENABLED, emoteBorderColor, DEFAULT_EMOTE_BORDER_OPACITY);
+      const statement = this.databaseSync.prepare(
+        `INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`
+      );
+      statement.run(
+        userId,
+        null,
+        DEFAULT_EMOTE_BORDER_ENABLED,
+        emoteBorderColor,
+        DEFAULT_EMOTE_BORDER_OPACITY
+      );
     }
   }
 
@@ -52,17 +70,29 @@ export class UsersDatabase extends BaseDatabase {
       );
       statement.run(emoteBorderOpacity, userId);
     } else {
-      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
-      statement.run(userId, null, DEFAULT_EMOTE_BORDER_ENABLED, DEFAULT_EMOTE_BORDER_COLOR, emoteBorderOpacity);
+      const statement = this.databaseSync.prepare(
+        `INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`
+      );
+      statement.run(
+        userId,
+        null,
+        DEFAULT_EMOTE_BORDER_ENABLED,
+        DEFAULT_EMOTE_BORDER_COLOR,
+        emoteBorderOpacity
+      );
     }
   }
 
   public changeGuildId(userId: string, guildId: string): void {
     if (this.#rowExists(userId)) {
-      const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET guildId = (?) WHERE userId = (?)`);
+      const statement = this.databaseSync.prepare(
+        `UPDATE ${TABLE_NAME} SET guildId = (?) WHERE userId = (?)`
+      );
       statement.run(guildId, userId);
     } else {
-      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      const statement = this.databaseSync.prepare(
+        `INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`
+      );
       statement.run(userId, guildId, null, null, null);
     }
   }
@@ -100,7 +130,9 @@ export class UsersDatabase extends BaseDatabase {
   }
 
   #rowExists(userId: string): boolean {
-    const statement = this.databaseSync.prepare(`SELECT userId FROM ${TABLE_NAME} WHERE userId = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT userId FROM ${TABLE_NAME} WHERE userId = (?)`
+    );
     const row = statement.get(userId);
 
     if (row !== undefined) return true;

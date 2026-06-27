@@ -13,7 +13,10 @@ import { autocompleteHandler } from '../../handlers/interaction-handlers/autocom
 import { modalSubmitHandler } from '../../handlers/interaction-handlers/modal-submit.ts';
 import { buttonHandler } from '../../handlers/interaction-handlers/button.ts';
 
-import { createCommandHandlers, type CommandHandler } from '../../utils/modules/bot/create-command-handlers.ts';
+import {
+  createCommandHandlers,
+  type CommandHandler
+} from '../../utils/modules/bot/create-command-handlers.ts';
 import { newGuild } from '../../utils/constructors/new-guild.ts';
 import { logError } from '../../utils/public/log-error.ts';
 
@@ -135,9 +138,9 @@ export class Bot {
           );
 
           if (
-            cuteDogGeneralChannel !== undefined &&
-            cuteDogGeneralChannel.isVoiceBased() &&
-            cuteDogGeneralChannel.joinable
+            cuteDogGeneralChannel !== undefined
+            && cuteDogGeneralChannel.isVoiceBased()
+            && cuteDogGeneralChannel.joinable
           ) {
             joinVoiceChannel({
               channelId: cuteDogGeneralChannel.id,
@@ -162,8 +165,8 @@ export class Bot {
       if (guildId === null || message.author.bot) return;
 
       const guild =
-        this.#guilds.find((guild_) => guild_.id === guildId) ??
-        (await (async (): Promise<Readonly<Guild>> => {
+        this.#guilds.find((guild_) => guild_.id === guildId)
+        ?? (await (async (): Promise<Readonly<Guild>> => {
           const newGuildWithoutPersonalEmotes_ = await newGuild(
             guildId,
             null,
@@ -190,12 +193,12 @@ export class Bot {
     this.#client.on(Events.InteractionCreate, async (interaction): Promise<void> => {
       // not interaction
       if (
-        !interaction.isChatInputCommand() &&
-        !interaction.isButton() &&
-        !interaction.isAutocomplete() &&
-        !interaction.isModalSubmit() &&
-        !interaction.isRoleSelectMenu() &&
-        !interaction.isMessageContextMenuCommand()
+        !interaction.isChatInputCommand()
+        && !interaction.isButton()
+        && !interaction.isAutocomplete()
+        && !interaction.isModalSubmit()
+        && !interaction.isRoleSelectMenu()
+        && !interaction.isMessageContextMenuCommand()
       )
         return;
 
@@ -205,8 +208,8 @@ export class Bot {
       const guild = await (async (): Promise<Readonly<Guild> | undefined> => {
         if (guildId !== null) {
           const guild_ =
-            this.#guilds.find((guildge) => guildge.id === guildId) ??
-            (await (async (): Promise<Readonly<Guild>> => {
+            this.#guilds.find((guildge) => guildge.id === guildId)
+            ?? (await (async (): Promise<Readonly<Guild>> => {
               const newGuildWithoutPersonalEmotes_ = await newGuild(
                 guildId,
                 null,
@@ -248,7 +251,8 @@ export class Bot {
 
       if (interaction.isAutocomplete()) {
         if (guild === undefined) return;
-        const { emoteMatcher, twitchClipsMeilisearchIndex, uniqueCreatorNames, uniqueGameIds } = guild;
+        const { emoteMatcher, twitchClipsMeilisearchIndex, uniqueCreatorNames, uniqueGameIds } =
+          guild;
 
         void autocompleteHandler(
           emoteMatcher,

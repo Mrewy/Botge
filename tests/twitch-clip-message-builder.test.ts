@@ -33,7 +33,11 @@ describe('TwitchClipMessageBuilder', () => {
     return twitchClips_;
   })();
 
-  const twitchClipMessageBuilder = new TwitchClipMessageBuilder(chatInputCommandInteraction, twitchClips, false);
+  const twitchClipMessageBuilder = new TwitchClipMessageBuilder(
+    chatInputCommandInteraction,
+    twitchClips,
+    false
+  );
 
   test('jumpToIdentifier exact', () => {
     twitchClipMessageBuilder.first();

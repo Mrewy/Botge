@@ -39,10 +39,8 @@ export async function getClipsWithGameNameFromBroadcasterName(
   const broadcasterId = users.data[0].id;
 
   const clips = await twitchApi.clipsFromBroadcasterId(broadcasterId, cursor);
-  const transformClipsGameIdFromIdToName_ = await transformClipsGameIdFromIdToNameAndTransformCreatedAt(
-    twitchApi,
-    clips
-  );
+  const transformClipsGameIdFromIdToName_ =
+    await transformClipsGameIdFromIdToNameAndTransformCreatedAt(twitchApi, clips);
 
   return [transformClipsGameIdFromIdToName_, clips.pagination.cursor];
 }

@@ -14,7 +14,10 @@ type RedditClientCredentialsGrantFlow = {
   readonly token_type: string;
 };
 
-export async function getRedditAccessToken(clientId: string, clientSecret: string): Promise<string> {
+export async function getRedditAccessToken(
+  clientId: string,
+  clientSecret: string
+): Promise<string> {
   const response = await fetch(REDDIT_API_ENDPOINTS.accessToken, {
     method: 'POST',
     headers: {

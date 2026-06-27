@@ -28,14 +28,21 @@ export class TwitchClipMessageBuilder extends BaseMessageBuilder<
 > {
   static readonly #messageBuilderType = 'Clip' as const;
   static #staticCounter = 0;
-  readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder | undefined = undefined;
+  readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder | undefined =
+    undefined;
 
-  public constructor(interaction: ChatInputCommandInteraction, twitchClips: readonly TwitchClip[], ephemeral: boolean) {
+  public constructor(
+    interaction: ChatInputCommandInteraction,
+    twitchClips: readonly TwitchClip[],
+    ephemeral: boolean
+  ) {
     // if (EMBED_SERVER_TWITCH === undefined) throw new Error('EMBED_SERVER_TWITCH undefined');
     // ! no env file in test
     // there is now env file regardless if its test. rework needed.
 
-    const transformFunction = (twitchClip: TwitchClip): TwitchClipMessageBuilderTransformFunctionReturnType => {
+    const transformFunction = (
+      twitchClip: TwitchClip
+    ): TwitchClipMessageBuilderTransformFunctionReturnType => {
       const { id } = twitchClip;
       const content = `${EMBED_SERVER_TWITCH}${id}\n${this.currentIndex + 1}/${this.arrayLength}`;
 
@@ -63,7 +70,11 @@ export class TwitchClipMessageBuilder extends BaseMessageBuilder<
       this.#extraRow = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId(
-            getCustomId(SEND_CLIP_BUTTON_BASE_CUSTOM_ID, TwitchClipMessageBuilder.messageBuilderType, this.counter)
+            getCustomId(
+              SEND_CLIP_BUTTON_BASE_CUSTOM_ID,
+              TwitchClipMessageBuilder.messageBuilderType,
+              this.counter
+            )
           )
           .setLabel('Send')
           .setStyle(ButtonStyle.Success)

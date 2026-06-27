@@ -40,10 +40,13 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
       const { time, days, hours, minutes, message, userIdRemoved } = ping;
 
       const embed = new EmbedBuilder();
-      if (this.#markedAsDeletedArray.includes(this.currentIndex)) embed.setDescription('❌ DELETED ❌');
+      if (this.#markedAsDeletedArray.includes(this.currentIndex))
+        embed.setDescription('❌ DELETED ❌');
 
       const pingDate = ((): Date => {
-        const pingDate_ = new Date(time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0));
+        const pingDate_ = new Date(
+          time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0)
+        );
         if (timezone === undefined) return pingDate_;
 
         const [operator] = timezone;
@@ -56,7 +59,9 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
           if (hoursOrMinutes === 0) return;
 
           const eval_ = Number(
-            eval(`${i === 0 ? pingDate_.getHours() : pingDate_.getMinutes()} ${operator} ${hoursOrMinutes}`)
+            eval(
+              `${i === 0 ? pingDate_.getHours() : pingDate_.getMinutes()} ${operator} ${hoursOrMinutes}`
+            )
           );
           if (i === 0) pingDate_.setHours(eval_);
           else pingDate_.setMinutes(eval_);
@@ -66,24 +71,34 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
       })();
 
       const { userId, channelId, userIds } = ping;
-      const channelName = interaction.guild?.channels.cache.find((channel_) => channel_.id === channelId)?.name;
-      const userIdDisplayName = interaction.guild?.members.cache.find((member_) => member_.id === userId)?.displayName;
+      const channelName = interaction.guild?.channels.cache.find(
+        (channel_) => channel_.id === channelId
+      )?.name;
+      const userIdDisplayName = interaction.guild?.members.cache.find(
+        (member_) => member_.id === userId
+      )?.displayName;
       const userIdsDisplayNamesJoined = (
-        userIds !== null
-          ? userIds.map(
-              (userId_) =>
-                interaction.guild?.members.cache.find((member_) => member_.id === userId_)?.displayName ?? UNKNOWN_USER
-            )
-          : []
-      ).join(', ');
+        userIds !== null ?
+          userIds.map(
+            (userId_) =>
+              interaction.guild?.members.cache.find((member_) => member_.id === userId_)
+                ?.displayName ?? UNKNOWN_USER
+          )
+        : []).join(', ');
 
       embed
         .setColor('DarkButNotBlack')
-        .setTitle(`${pingDate.toUTCString()}${timezone ?? ''} by ${userIdDisplayName ?? UNKNOWN_USER}`)
+        .setTitle(
+          `${pingDate.toUTCString()}${timezone ?? ''} by ${userIdDisplayName ?? UNKNOWN_USER}`
+        )
         .addFields(
           { name: 'Message', value: message ?? '-' },
           { name: 'Channel', value: channelName ?? 'unknown channel', inline: true },
-          { name: 'Pings', value: userIdsDisplayNamesJoined !== '' ? userIdsDisplayNamesJoined : '-', inline: true },
+          {
+            name: 'Pings',
+            value: userIdsDisplayNamesJoined !== '' ? userIdsDisplayNamesJoined : '-',
+            inline: true
+          },
           {
             name: 'Original command user removed from ping',
             value: booleanToString(userIdRemoved ?? false),
@@ -117,13 +132,15 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
     return PingForPingListMessageBuilder.#messageBuilderType;
   }
 
-  public get currentPingForPingMeMessageBuilder(): Readonly<PingForPingMeMessageBuilder> | undefined {
+  public get currentPingForPingMeMessageBuilder():
+    Readonly<PingForPingMeMessageBuilder> | undefined {
     if (this.#markedAsDeletedArray.includes(this.currentIndex)) return undefined;
 
     return this.currentItem;
   }
 
-  public markCurrentAsDeleted(): PingForPingListMessageBuilderTransformFunctionReturnType | undefined {
+  public markCurrentAsDeleted():
+    PingForPingListMessageBuilderTransformFunctionReturnType | undefined {
     if (this.#markedAsDeletedArray.includes(this.currentIndex)) return undefined;
 
     this.#markedAsDeletedArray.push(this.currentIndex);

@@ -54,7 +54,8 @@ export function getContent(ping: Ping, contentType: ContentType): string {
   if (contentType === 'PingRegistered') {
     content += `The ping has been registered for ${contentTimePart}.`;
 
-    if (userIdRemoved !== null && userIdRemoved) content += ' The original command user was removed from the ping.';
+    if (userIdRemoved !== null && userIdRemoved)
+      content += ' The original command user was removed from the ping.';
   } else {
     content += `You have been pinged ${getPingableUserId(userId)} after ${contentTimePart}!`;
 
@@ -71,8 +72,10 @@ export function getContent(ping: Ping, contentType: ContentType): string {
   return content;
 }
 
-export const PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID = 'pingMeAsWellButtonForPingMe' as const;
-export const REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID = 'removeMeFromPingButtonForPingMe' as const;
+export const PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID =
+  'pingMeAsWellButtonForPingMe' as const;
+export const REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID =
+  'removeMeFromPingButtonForPingMe' as const;
 export const DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID = 'deletePingButtonForPingMe' as const;
 const CLEANUP_MINUTES = 4 as const;
 
@@ -114,8 +117,8 @@ export class PingForPingMeMessageBuilder {
     messageBuilderType: string
   ) {
     if (
-      messageBuilderType !== PingForPingMeMessageBuilder.messageBuilderTypeForPingMe &&
-      messageBuilderType !== PingForPingMeMessageBuilder.messageBuilderTypeForPingList
+      messageBuilderType !== PingForPingMeMessageBuilder.messageBuilderTypeForPingMe
+      && messageBuilderType !== PingForPingMeMessageBuilder.messageBuilderTypeForPingList
     )
       throw new Error('Wrong messageBuilderType.');
 
@@ -128,17 +131,33 @@ export class PingForPingMeMessageBuilder {
 
     this.#row = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId(getCustomId(PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID, messageBuilderType, this.#counter))
+        .setCustomId(
+          getCustomId(
+            PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID,
+            messageBuilderType,
+            this.#counter
+          )
+        )
         .setLabel('Ping me as well!')
         .setStyle(ButtonStyle.Primary),
       new ButtonBuilder()
         .setCustomId(
-          getCustomId(REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID, messageBuilderType, this.#counter)
+          getCustomId(
+            REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID,
+            messageBuilderType,
+            this.#counter
+          )
         )
         .setLabel('Remove me from ping')
         .setStyle(ButtonStyle.Secondary),
       new ButtonBuilder()
-        .setCustomId(getCustomId(DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID, messageBuilderType, this.#counter))
+        .setCustomId(
+          getCustomId(
+            DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID,
+            messageBuilderType,
+            this.#counter
+          )
+        )
         .setLabel('Delete ping')
         .setStyle(ButtonStyle.Danger)
     );
@@ -187,13 +206,18 @@ export class PingForPingMeMessageBuilder {
     return this.#transformFunction();
   }
 
-  public addUserId(pingsDataBase: Readonly<PingsDatabase>, userId: string): PingForPingMeMessageBuilderReplies {
-    const emptyPingMessageBuilderReplies = PingForPingMeMessageBuilder.#emptyPingMessageBuilderReplies;
+  public addUserId(
+    pingsDataBase: Readonly<PingsDatabase>,
+    userId: string
+  ): PingForPingMeMessageBuilderReplies {
+    const emptyPingMessageBuilderReplies =
+      PingForPingMeMessageBuilder.#emptyPingMessageBuilderReplies;
 
     if (this.#isCriticalTimeLeftOrIsPassed()) return emptyPingMessageBuilderReplies;
     if (this.#job === undefined) return emptyPingMessageBuilderReplies;
     if (this.#ping.userId === userId) {
-      if (this.#ping.userIdRemoved === null || !this.#ping.userIdRemoved) return emptyPingMessageBuilderReplies;
+      if (this.#ping.userIdRemoved === null || !this.#ping.userIdRemoved)
+        return emptyPingMessageBuilderReplies;
 
       if (this.#pressedPingMeAsWell.has(userId))
         return PingForPingMeMessageBuilder.#pressedButtonPingMessageBuilderReplies;
@@ -227,8 +251,12 @@ export class PingForPingMeMessageBuilder {
     };
   }
 
-  public removeUserId(pingsDataBase: Readonly<PingsDatabase>, userId: string): PingForPingMeMessageBuilderReplies {
-    const emptyPingMessageBuilderReplies = PingForPingMeMessageBuilder.#emptyPingMessageBuilderReplies;
+  public removeUserId(
+    pingsDataBase: Readonly<PingsDatabase>,
+    userId: string
+  ): PingForPingMeMessageBuilderReplies {
+    const emptyPingMessageBuilderReplies =
+      PingForPingMeMessageBuilder.#emptyPingMessageBuilderReplies;
 
     if (this.#isCriticalTimeLeftOrIsPassed()) return emptyPingMessageBuilderReplies;
     if (this.#job === undefined) return emptyPingMessageBuilderReplies;
@@ -268,7 +296,8 @@ export class PingForPingMeMessageBuilder {
     newUserIds.splice(userIdIndex, 1);
 
     const { userIdRemoved } = this.#ping;
-    if (newUserIds.length === 0 && userIdRemoved !== null && userIdRemoved) return this.#deletePing(pingsDataBase);
+    if (newUserIds.length === 0 && userIdRemoved !== null && userIdRemoved)
+      return this.#deletePing(pingsDataBase);
 
     this.#updatePing(pingsDataBase, newUserIds);
     this.#pressedRemoveMeFromPing.set(userId, Date.now());
@@ -280,7 +309,8 @@ export class PingForPingMeMessageBuilder {
   }
 
   public deletePing(pingsDataBase: Readonly<PingsDatabase>): PingForPingMeMessageBuilderReplies {
-    const emptyPingMessageBuilderReplies = PingForPingMeMessageBuilder.#emptyPingMessageBuilderReplies;
+    const emptyPingMessageBuilderReplies =
+      PingForPingMeMessageBuilder.#emptyPingMessageBuilderReplies;
 
     if (this.#isCriticalTimeLeftOrIsPassed()) return emptyPingMessageBuilderReplies;
     if (this.#job === undefined) return emptyPingMessageBuilderReplies;
@@ -327,7 +357,12 @@ export class PingForPingMeMessageBuilder {
     const oldUserIds = this.#ping.userIds;
     const oldUserIdRemoved = this.#ping.userIdRemoved;
 
-    const newUserIds_ = newUserIds !== undefined ? (newUserIds.length !== 0 ? newUserIds : null) : oldUserIds;
+    const newUserIds_ =
+      newUserIds !== undefined ?
+        newUserIds.length !== 0 ?
+          newUserIds
+        : null
+      : oldUserIds;
     const newUserIdRemoved_ = newUserIdRemoved ?? oldUserIdRemoved;
     const newPing: Ping = {
       ...this.#ping,

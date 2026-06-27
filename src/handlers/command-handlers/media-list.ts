@@ -37,7 +37,9 @@ async function getAllMediaWithTenorUrls(allMedia: readonly Media[]): Promise<rea
     const idsJoined = tenorIds.slice(index, index + 50).join(',');
 
     const tenorResponse = (await (
-      await fetch(`https://tenor.googleapis.com/v2/posts?key=${TENOR_API_KEY}&ids=${idsJoined}&media_filter=tinygif`)
+      await fetch(
+        `https://tenor.googleapis.com/v2/posts?key=${TENOR_API_KEY}&ids=${idsJoined}&media_filter=tinygif`
+      )
     ).json()) as TenorResponse;
 
     tenorResponse.results.forEach((tenorResponseResult) => {
@@ -47,7 +49,8 @@ async function getAllMediaWithTenorUrls(allMedia: readonly Media[]): Promise<rea
 
   let tenorUrlsIndex = 0;
   return allMedia.map((media) => {
-    if (media.url.startsWith('https://tenor.com/view/')) return { ...media, tenorUrl: tenorUrls[tenorUrlsIndex++] };
+    if (media.url.startsWith('https://tenor.com/view/'))
+      return { ...media, tenorUrl: tenorUrls[tenorUrlsIndex++] };
     return media;
   });
 }
@@ -56,7 +59,10 @@ export function mediaListHandler(
   mediaDataBase: Readonly<MediaDatabase>,
   mediaMessageBuilders: Readonly<MediaMessageBuilder>[]
 ) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
     try {
       const sortBy = getOptionValue<string>(interaction, 'sortby');
@@ -64,7 +70,8 @@ export function mediaListHandler(
       const allMedia = ((): readonly Media[] => {
         const allMedia_ = mediaDataBase.getAllMedia(userId);
 
-        if (sortBy === 'alphabetical') return [...allMedia_].sort((a, b) => a.name.localeCompare(b.name));
+        if (sortBy === 'alphabetical')
+          return [...allMedia_].sort((a, b) => a.name.localeCompare(b.name));
         return allMedia_;
       })();
 

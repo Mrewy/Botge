@@ -13,9 +13,15 @@ export async function listCutedogClipIds(): Promise<readonly string[]> {
   const html = await (await fetch(url)).text();
 
   const matches1 = html.matchAll(clipPattern1);
-  const matchesArray1: readonly string[] = Array.from(matches1, (match: ReadonlyRegExpExecArray) => match[1]);
+  const matchesArray1: readonly string[] = Array.from(
+    matches1,
+    (match: ReadonlyRegExpExecArray) => match[1]
+  );
   const matches2 = html.matchAll(clipPattern2);
-  const matchesArray2: readonly string[] = Array.from(matches2, (match: ReadonlyRegExpExecArray) => match[1]);
+  const matchesArray2: readonly string[] = Array.from(
+    matches2,
+    (match: ReadonlyRegExpExecArray) => match[1]
+  );
 
   return [...matchesArray1, ...matchesArray2];
 }

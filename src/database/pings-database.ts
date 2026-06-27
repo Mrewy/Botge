@@ -46,9 +46,16 @@ export class PingsDatabase extends BaseDatabase {
     if (!this.#rowExists(ping)) return;
 
     const { userIds } = ping;
-    const userIdsJoined = userIds !== null ? (userIds.length !== 0 ? userIds.join(',') : null) : null;
+    const userIdsJoined =
+      userIds !== null ?
+        userIds.length !== 0 ?
+          userIds.join(',')
+        : null
+      : null;
 
-    const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET userIds = (?) WHERE id = (?)`);
+    const statement = this.databaseSync.prepare(
+      `UPDATE ${TABLE_NAME} SET userIds = (?) WHERE id = (?)`
+    );
     statement.run(userIdsJoined, getId(ping));
   }
 
@@ -58,7 +65,9 @@ export class PingsDatabase extends BaseDatabase {
     const { userIdRemoved } = ping;
     const userIdRemovedUpdated = userIdRemoved !== null ? Number(userIdRemoved) : null;
 
-    const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET userIdRemoved = (?) WHERE id = (?)`);
+    const statement = this.databaseSync.prepare(
+      `UPDATE ${TABLE_NAME} SET userIdRemoved = (?) WHERE id = (?)`
+    );
     statement.run(userIdRemovedUpdated, getId(ping));
   }
 
@@ -73,7 +82,8 @@ export class PingsDatabase extends BaseDatabase {
       const pingUserIds = pingSelectedUserIds !== null ? pingSelectedUserIds.split(',') : null;
 
       const pingSelectedUserIdRemoved = databasePing.userIdRemoved;
-      const pingUserIdRemoved = pingSelectedUserIdRemoved !== null ? Boolean(pingSelectedUserIdRemoved) : null;
+      const pingUserIdRemoved =
+        pingSelectedUserIdRemoved !== null ? Boolean(pingSelectedUserIdRemoved) : null;
 
       return { ...databasePing, userIds: pingUserIds, userIdRemoved: pingUserIdRemoved };
     });

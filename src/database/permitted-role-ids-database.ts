@@ -31,7 +31,9 @@ export class PermittedRoleIdsDatabase extends BaseDatabase {
     const tableName = getTableName(guildId);
     this.#insertIfIdTypeDoesntExist(tableName, ADD_EMOTE_ID_TYPE, null, Number(permitNoRole));
 
-    const statement = this.databaseSync.prepare(`UPDATE ${tableName} SET permitNoRole = (?) WHERE idType = (?)`);
+    const statement = this.databaseSync.prepare(
+      `UPDATE ${tableName} SET permitNoRole = (?) WHERE idType = (?)`
+    );
     statement.run(Number(permitNoRole), ADD_EMOTE_ID_TYPE);
   }
 
@@ -53,7 +55,9 @@ export class PermittedRoleIdsDatabase extends BaseDatabase {
     const tableName = getTableName(guildId);
     if (!this.#idTypeExists(tableName, ADD_EMOTE_ID_TYPE)) return false;
 
-    const statement = this.databaseSync.prepare(`SELECT permitNoRole FROM ${tableName} WHERE idType = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT permitNoRole FROM ${tableName} WHERE idType = (?)`
+    );
     const permitNoRole = statement.get(ADD_EMOTE_ID_TYPE) as
       | {
           readonly permitNoRole: number;
@@ -76,14 +80,21 @@ export class PermittedRoleIdsDatabase extends BaseDatabase {
   }
 
   #idTypeExists(tableName: string, idType: string): boolean {
-    const statement = this.databaseSync.prepare(`SELECT idType FROM ${tableName} WHERE idType = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT idType FROM ${tableName} WHERE idType = (?)`
+    );
     const row = statement.get(idType);
 
     if (row !== undefined) return true;
     return false;
   }
 
-  #insertIfIdTypeDoesntExist(tableName: string, idType: string, roleIds: string | null, permitNoRole: number): void {
+  #insertIfIdTypeDoesntExist(
+    tableName: string,
+    idType: string,
+    roleIds: string | null,
+    permitNoRole: number
+  ): void {
     if (this.#idTypeExists(tableName, idType)) return;
 
     const statement = this.databaseSync.prepare(
@@ -97,19 +108,24 @@ export class PermittedRoleIdsDatabase extends BaseDatabase {
 
     this.#insertIfIdTypeDoesntExist(tableName, idType, roleIdsJoined, Number(false));
 
-    const statement = this.databaseSync.prepare(`UPDATE ${tableName} SET roleIds = (?) WHERE idType = (?)`);
+    const statement = this.databaseSync.prepare(
+      `UPDATE ${tableName} SET roleIds = (?) WHERE idType = (?)`
+    );
     statement.run(roleIdsJoined, idType);
   }
 
   #getRoleIds(tableName: string, idType: string): readonly string[] | null {
-    const statement = this.databaseSync.prepare(`SELECT roleIds FROM ${tableName} WHERE idType = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT roleIds FROM ${tableName} WHERE idType = (?)`
+    );
     const roleIds = statement.get(idType) as
       | {
           readonly roleIds: string | null;
         }
       | undefined;
 
-    if (roleIds !== undefined && roleIds.roleIds !== null) return roleIds.roleIds.split(ROLE_IDS_SEPARATOR);
+    if (roleIds !== undefined && roleIds.roleIds !== null)
+      return roleIds.roleIds.split(ROLE_IDS_SEPARATOR);
     return null;
   }
 }

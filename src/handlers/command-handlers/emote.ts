@@ -14,7 +14,10 @@ import {
 } from '../../utils/handlers/command-handlers/emote/size-change.ts';
 import { downloadAsset } from '../../utils/handlers/command-handlers/emote/download-asset.ts';
 import { parseToken } from '../../utils/handlers/command-handlers/emote/parse-token.ts';
-import { getOptionValue, getOptionValueWithoutUndefined } from '../../utils/public/get-option-value.ts';
+import {
+  getOptionValue,
+  getOptionValueWithoutUndefined
+} from '../../utils/public/get-option-value.ts';
 import { stringToPlatform } from '../../utils/public/platform-to-string.ts';
 import { stringToBoolean } from '../../utils/public/boolean-to-string.ts';
 import { logError } from '../../utils/public/log-error.ts';
@@ -84,7 +87,8 @@ class SimpleElement implements HorizontalStackElement {
   public filterString(): string {
     let filterString = `[${this.#id}:v]`;
 
-    if (this.#height > this.#asset.height) filterString += `pad=h=${this.#height}:x=-1:y=-1:color=black@0.0,`;
+    if (this.#height > this.#asset.height)
+      filterString += `pad=h=${this.#height}:x=-1:y=-1:color=black@0.0,`;
     filterString += `scale=${this.#width}:${this.#height}:force_original_aspect_ratio=decrease`;
     if (this.#animated) filterString += `,fps=${DEFAULT_FPS}`;
 
@@ -93,7 +97,8 @@ class SimpleElement implements HorizontalStackElement {
 
       // if (this.#borderOpacity !== undefined) filterString += `@${this.#borderOpacity}`;
     }
-    if (this.#stopDuration !== undefined) filterString += `,tpad=stop_mode=clone:stop_duration=${this.#stopDuration}`;
+    if (this.#stopDuration !== undefined)
+      filterString += `,tpad=stop_mode=clone:stop_duration=${this.#stopDuration}`;
 
     filterString += `[o${this.#id}];`;
     return filterString;
@@ -122,7 +127,8 @@ class OverlayElement implements HorizontalStackElement {
     this.#stretch = stretch;
 
     this.#height = height;
-    this.#width = width !== MAXWIDTH ? width : Math.min(getMaxWidth(this.#layers, this.#height), MAXWIDTH);
+    this.#width =
+      width !== MAXWIDTH ? width : Math.min(getMaxWidth(this.#layers, this.#height), MAXWIDTH);
   }
 
   public get id(): number {
@@ -154,8 +160,14 @@ class OverlayElement implements HorizontalStackElement {
 
     // other layers
     this.#layers.slice(1).forEach(() => {
-      const segmentWidth = this.#stretch ? this.#width : this.#fullSize ? this.#layers[layerId].width : -1;
-      const segmentHeight = this.#stretch ? this.#height : this.#fullSize ? this.#layers[layerId].height : MAXHEIGHT;
+      const segmentWidth =
+        this.#stretch ? this.#width
+        : this.#fullSize ? this.#layers[layerId].width
+        : -1;
+      const segmentHeight =
+        this.#stretch ? this.#height
+        : this.#fullSize ? this.#layers[layerId].height
+        : MAXHEIGHT;
 
       segments.push(`[${id}]`);
 
@@ -179,18 +191,25 @@ function onlyUnique(value: string, index: number, array: readonly string[]): boo
 }
 
 export function emoteHandler() {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const { emoteMatcher } = guild;
 
     const emote = getOptionValueWithoutUndefined<string>(interaction, 'name');
     if (emote.split(/\s+/).length > 1) {
-      await interaction.reply({ content: 'Please use /emotes for combined emotes.', flags: 'Ephemeral' });
+      await interaction.reply({
+        content: 'Please use /emotes for combined emotes.',
+        flags: 'Ephemeral'
+      });
       return;
     }
 
     const defer = interaction.deferReply();
     try {
-      const emoteNotFoundReply = interaction.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'emote not found';
+      const emoteNotFoundReply =
+        interaction.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'emote not found';
 
       const size = getOptionValue(interaction, 'size', Number);
 
@@ -218,18 +237,29 @@ export function emoteHandler() {
 }
 
 export function emoteListHandler(emoteMessageBuilders: Readonly<EmoteMessageBuilder>[]) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const { emoteMatcher } = guild;
     const defer = interaction.deferReply();
     try {
-      const emoteNotFoundReply = interaction.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'emote not found';
+      const emoteNotFoundReply =
+        interaction.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'emote not found';
 
       const query = getOptionValue<string>(interaction, 'query');
       const platform = getOptionValue(interaction, 'platform', stringToPlatform);
       const animated = getOptionValue(interaction, 'animated', stringToBoolean);
       const zeroWidth = getOptionValue(interaction, 'overlaying', stringToBoolean);
 
-      const matches = emoteMatcher.matchSingleArray(query ?? '', platform, animated, zeroWidth, undefined, true);
+      const matches = emoteMatcher.matchSingleArray(
+        query ?? '',
+        platform,
+        animated,
+        zeroWidth,
+        undefined,
+        true
+      );
 
       if (matches === undefined) {
         await defer;
@@ -271,13 +301,13 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
   ): Promise<void> => {
     const { emoteMatcher } = guild;
 
-    const ephemeral = interaction !== undefined ? Boolean(interaction.options.get('ephemeral')?.value) : false;
+    const ephemeral =
+      interaction !== undefined ? Boolean(interaction.options.get('ephemeral')?.value) : false;
     const defer =
-      interaction !== undefined
-        ? ephemeral
-          ? interaction.deferReply({ flags: 'Ephemeral' })
-          : interaction.deferReply()
-        : undefined;
+      interaction !== undefined ?
+        ephemeral ? interaction.deferReply({ flags: 'Ephemeral' })
+        : interaction.deferReply()
+      : undefined;
     const outdir = ((): string => {
       if (interaction !== undefined) return join(TMP_DIR, interaction.id);
       else if (message !== undefined) return join(TMP_DIR, message.id);
@@ -286,7 +316,8 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
     })();
 
     try {
-      const emoteNotFoundReply = interaction?.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'emote not found';
+      const emoteNotFoundReply =
+        interaction?.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'emote not found';
 
       const sizeRegExp = new RegExp(`\\s*${EMOTE_SIZE_IDENTIFIER}\\s*[1-4]`, 'g');
       const fullSizeRegExp = new RegExp(`\\s*${EMOTE_SIZE_IDENTIFIER}\\s*fullSize`, 'gi');
@@ -313,7 +344,10 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         if (interaction !== undefined) {
           return getOptionValue(interaction, 'size', Number);
         } else if (message !== undefined) {
-          const message_ = message.content.trim().replaceAll(fullSizeRegExp, '').replaceAll(mentionRegExp, '');
+          const message_ = message.content
+            .trim()
+            .replaceAll(fullSizeRegExp, '')
+            .replaceAll(mentionRegExp, '');
           const exec_ = sizeRegExp.exec(message_);
 
           if (exec_ === null) return undefined;
@@ -333,10 +367,15 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
 
         return false;
       })();
-      const stretch = interaction !== undefined ? (getOptionValue(interaction, 'stretch', Boolean) ?? false) : false;
+      const stretch =
+        interaction !== undefined ?
+          (getOptionValue(interaction, 'stretch', Boolean) ?? false)
+        : false;
 
       const userId =
-        interaction !== undefined ? interaction.user.id : message !== undefined ? message.author.id : undefined;
+        interaction !== undefined ? interaction.user.id
+        : message !== undefined ? message.author.id
+        : undefined;
       if (userId === undefined) throw new Error('Interaction and message both undefined.');
 
       const user = users.find((user_) => user_.id === userId);
@@ -349,8 +388,10 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
 
         if (match === undefined) return undefined;
 
-        if (match.url === 'https://cdn.7tv.app/emote/01HQPVVAYR0007V5J7WCNKMP48/2x.gif') return '1.08';
-        else if (match.url === 'https://cdn.7tv.app/emote/01GWBD2YR00002CCPRV6KPX758/2x.gif') return '0.40';
+        if (match.url === 'https://cdn.7tv.app/emote/01HQPVVAYR0007V5J7WCNKMP48/2x.gif')
+          return '1.08';
+        else if (match.url === 'https://cdn.7tv.app/emote/01GWBD2YR00002CCPRV6KPX758/2x.gif')
+          return '0.40';
         return undefined;
       })();
 
@@ -362,7 +403,8 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
           await defer;
           try {
             new URL(emote);
-            if (interaction !== undefined) await interaction.editReply('posting link through Botge wtf');
+            if (interaction !== undefined)
+              await interaction.editReply('posting link through Botge wtf');
           } catch {
             if (interaction !== undefined) await interaction.editReply(emoteNotFoundReply);
             else if (message !== undefined) {
@@ -377,11 +419,10 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         }
 
         const { url, platform } = match;
-        const reply = fullSize
-          ? emoteSizeChange(url, maxPlatformSize(platform), platform)
-          : size !== undefined
-            ? emoteSizeChange(url, size, platform)
-            : url;
+        const reply =
+          fullSize ? emoteSizeChange(url, maxPlatformSize(platform), platform)
+          : size !== undefined ? emoteSizeChange(url, size, platform)
+          : url;
         // .replace('.gif', '.webp')
 
         await defer;
@@ -399,28 +440,27 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         const tokenPairs_: (readonly [string, number])[] = [];
 
         for (const i of emotes.keys())
-          for (const j of uniqueTokens.keys()) if (emotes[i] === uniqueTokens[j]) tokenPairs_.push([emotes[i], j]);
+          for (const j of uniqueTokens.keys())
+            if (emotes[i] === uniqueTokens[j]) tokenPairs_.push([emotes[i], j]);
 
         return tokenPairs_;
       })();
 
-      const uniqueAssetsWithNullAndUndefined: readonly (AssetInfo | string | null | undefined)[] = await Promise.all(
-        emoteMatcher
-          .matchMulti(uniqueTokens)
-          .map(async (match, i) =>
-            match !== undefined
-              ? fullSize
-                ? assetSizeChange(match, maxPlatformSize(match.platform))
-                : size !== undefined
-                  ? assetSizeChange(match, size)
-                  : match
-              : parseToken(uniqueTokens[i], fullSize).catch(() => null)
+      const uniqueAssetsWithNullAndUndefined: readonly (AssetInfo | string | null | undefined)[] =
+        await Promise.all(
+          emoteMatcher.matchMulti(uniqueTokens).map(async (match, i) =>
+            match !== undefined ?
+              fullSize ? assetSizeChange(match, maxPlatformSize(match.platform))
+              : size !== undefined ? assetSizeChange(match, size)
+              : match
+            : parseToken(uniqueTokens[i], fullSize).catch(() => null)
           )
-      );
+        );
 
       if (uniqueAssetsWithNullAndUndefined.some((asset) => asset === null)) {
         await defer;
-        if (interaction !== undefined) await interaction.editReply(FAILED_TO_DOWNLOAD_OR_GET_EMOJI_MESSAGE);
+        if (interaction !== undefined)
+          await interaction.editReply(FAILED_TO_DOWNLOAD_OR_GET_EMOJI_MESSAGE);
         else if (message !== undefined)
           await message.reply({
             content: FAILED_TO_DOWNLOAD_OR_GET_EMOJI_MESSAGE,
@@ -459,7 +499,9 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
 
       const downloadedAssets = await (async (): Promise<readonly DownloadedAsset[]> => {
         const downloadedAssets_: readonly DownloadedAsset[] = (
-          await Promise.all(uniqueAssets.map(async (asset, i) => downloadAsset(outdir, asset, i, cachedUrl)))
+          await Promise.all(
+            uniqueAssets.map(async (asset, i) => downloadAsset(outdir, asset, i, cachedUrl))
+          )
         ).filter((downloadedAsset) => downloadedAsset !== undefined);
         const downloadedAssets2_: DownloadedAsset[] = [];
 
@@ -475,7 +517,13 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
 
       const maxHeight = ((): number => {
         const maxHeight_ = Math.max(...downloadedAssets.map((asset) => asset.height));
-        return fullSize ? (maxHeight_ % 2 === 0 ? maxHeight_ : maxHeight_ + 1) : MAXHEIGHT;
+        return (
+          fullSize ?
+            maxHeight_ % 2 === 0 ?
+              maxHeight_
+            : maxHeight_ + 1
+          : MAXHEIGHT
+        );
       })();
       const maxWidth = fullSize ? getMaxWidth(downloadedAssets, maxHeight) : MAXWIDTH;
 
@@ -484,9 +532,26 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         if (assets.length === 1) {
           if (enableEmoteBorder)
             elements.push(
-              new SimpleElement(0, downloadedAssets[0], maxWidth, maxHeight, user.emoteBorderColor, stopDuration)
+              new SimpleElement(
+                0,
+                downloadedAssets[0],
+                maxWidth,
+                maxHeight,
+                user.emoteBorderColor,
+                stopDuration
+              )
             );
-          else elements.push(new SimpleElement(0, downloadedAssets[0], maxWidth, maxHeight, undefined, stopDuration));
+          else
+            elements.push(
+              new SimpleElement(
+                0,
+                downloadedAssets[0],
+                maxWidth,
+                maxHeight,
+                undefined,
+                stopDuration
+              )
+            );
 
           return;
         }
@@ -501,7 +566,9 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
             // new group
             if (i === boundary + 1) {
               // single element
-              elements.push(new SimpleElement(boundary, downloadedAssets[boundary], maxWidth, maxHeight));
+              elements.push(
+                new SimpleElement(boundary, downloadedAssets[boundary], maxWidth, maxHeight)
+              );
               boundary = i;
             } else if (i > boundary) {
               // at least 2
@@ -523,11 +590,20 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         // don't forget last one
         if (i === boundary + 1) {
           // single element
-          elements.push(new SimpleElement(boundary, downloadedAssets[boundary], maxWidth, maxHeight));
+          elements.push(
+            new SimpleElement(boundary, downloadedAssets[boundary], maxWidth, maxHeight)
+          );
         } else if (i > boundary) {
           // at least 2
           elements.push(
-            new OverlayElement(boundary, downloadedAssets.slice(boundary, i), fullSize, stretch, maxWidth, maxHeight)
+            new OverlayElement(
+              boundary,
+              downloadedAssets.slice(boundary, i),
+              fullSize,
+              stretch,
+              maxWidth,
+              maxHeight
+            )
           );
         }
       })();
@@ -562,7 +638,8 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
         filter.push(`[o0]scale`); // only to point the output stream
       }
 
-      if (animated) filter.push(',split=2[stacked][palette];[palette]palettegen[p];[stacked][p]paletteuse');
+      if (animated)
+        filter.push(',split=2[stacked][palette];[palette]palettegen[p];[stacked][p]paletteuse');
       args.push(filter.join(''));
 
       /*
@@ -601,7 +678,10 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
             } else {
               if (interaction !== undefined) await interaction.editReply('gif creation failed');
               else if (message !== undefined)
-                await message.reply({ content: 'gif creation failed', allowedMentions: { repliedUser: false } });
+                await message.reply({
+                  content: 'gif creation failed',
+                  allowedMentions: { repliedUser: false }
+                });
             }
 
             void rm(outdir, { recursive: true });
@@ -614,9 +694,9 @@ export function emotesHandler(cachedUrl: Readonly<CachedUrl>) {
       logError(error, 'Error at emoteCombinedHandler');
 
       const editReplyMessage =
-        error instanceof Error && error.message === DOWNLOAD_ASSET_ERROR_MESSAGE
-          ? 'failed to download gif(s)/png(s)'
-          : 'gif creation failed.';
+        error instanceof Error && error.message === DOWNLOAD_ASSET_ERROR_MESSAGE ?
+          'failed to download gif(s)/png(s)'
+        : 'gif creation failed.';
 
       await defer;
       if (interaction !== undefined) await interaction.editReply(editReplyMessage);

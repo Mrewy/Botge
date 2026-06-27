@@ -2,7 +2,10 @@
 
 import type { ChatInputCommandInteraction } from 'discord.js';
 
-import { getOptionValue, getOptionValueWithoutUndefined } from '../../utils/public/get-option-value.ts';
+import {
+  getOptionValue,
+  getOptionValueWithoutUndefined
+} from '../../utils/public/get-option-value.ts';
 import { logError } from '../../utils/public/log-error.ts';
 import type { ReadonlyOpenAI, OpenAIResponseInput } from '../../types.ts';
 import type { Guild } from '../../modules/discord/guild.ts';
@@ -17,7 +20,10 @@ const DISCORD_EMOJIS_JOINED = ((): string | undefined => {
 })();
 
 export function chatgptHandler(openai: ReadonlyOpenAI | undefined) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     if (openai === undefined) {
       await interaction.reply('ChatGPT command is not available right now.');
       return;
@@ -57,15 +63,15 @@ export function chatgptHandler(openai: ReadonlyOpenAI | undefined) {
 
       const input = ((): OpenAIResponseInput => {
         const inputImage: OpenAIResponseInput | undefined =
-          image !== undefined
-            ? [
-                { role: 'user', content: prompt },
-                {
-                  role: 'user',
-                  content: [{ type: 'input_image', image_url: image, detail: 'auto' }]
-                }
-              ]
-            : undefined;
+          image !== undefined ?
+            [
+              { role: 'user', content: prompt },
+              {
+                role: 'user',
+                content: [{ type: 'input_image', image_url: image, detail: 'auto' }]
+              }
+            ]
+          : undefined;
 
         return inputImage ?? [{ role: 'user', content: prompt }];
       })();
@@ -81,9 +87,9 @@ export function chatgptHandler(openai: ReadonlyOpenAI | undefined) {
 
       const messageContent = response.output_text;
       const reply =
-        messageContent.length > MAX_DISCORD_MESSAGE_LENGTH
-          ? messageContent.slice(0, MAX_DISCORD_MESSAGE_LENGTH - 5) + ' ...'
-          : messageContent;
+        messageContent.length > MAX_DISCORD_MESSAGE_LENGTH ?
+          messageContent.slice(0, MAX_DISCORD_MESSAGE_LENGTH - 5) + ' ...'
+        : messageContent;
       await defer;
       await interaction.editReply(reply);
     } catch (error) {

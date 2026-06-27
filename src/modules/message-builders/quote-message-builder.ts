@@ -22,7 +22,10 @@ import { BaseMessageBuilder, getCustomId } from './base.ts';
 export const DELETE_QUOTE_BUTTON_BASE_CUSTOM_ID = 'deleteQuoteButton' as const;
 export const RENAME_QUOTE_BUTTON_BASE_CUSTOM_ID = 'renameQuoteButton' as const;
 
-export class QuoteMessageBuilder extends BaseMessageBuilder<Quote, QuoteMessageBuilderTransformFunctionReturnType> {
+export class QuoteMessageBuilder extends BaseMessageBuilder<
+  Quote,
+  QuoteMessageBuilderTransformFunctionReturnType
+> {
   static readonly #messageBuilderType = 'Quote' as const;
   static #staticCounter = 0;
   readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder;
@@ -39,7 +42,8 @@ export class QuoteMessageBuilder extends BaseMessageBuilder<Quote, QuoteMessageB
 
       const embed = new EmbedBuilder();
 
-      if (this.#markedAsDeletedArray.includes(this.currentIndex)) embed.setDescription('❌ DELETED ❌');
+      if (this.#markedAsDeletedArray.includes(this.currentIndex))
+        embed.setDescription('❌ DELETED ❌');
 
       embed
         .setColor('DarkButNotBlack')
@@ -74,13 +78,21 @@ export class QuoteMessageBuilder extends BaseMessageBuilder<Quote, QuoteMessageB
     this.#extraRow = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
       new ButtonBuilder()
         .setCustomId(
-          getCustomId(DELETE_QUOTE_BUTTON_BASE_CUSTOM_ID, QuoteMessageBuilder.messageBuilderType, this.counter)
+          getCustomId(
+            DELETE_QUOTE_BUTTON_BASE_CUSTOM_ID,
+            QuoteMessageBuilder.messageBuilderType,
+            this.counter
+          )
         )
         .setLabel('Delete')
         .setStyle(ButtonStyle.Danger),
       new ButtonBuilder()
         .setCustomId(
-          getCustomId(RENAME_QUOTE_BUTTON_BASE_CUSTOM_ID, QuoteMessageBuilder.messageBuilderType, this.counter)
+          getCustomId(
+            RENAME_QUOTE_BUTTON_BASE_CUSTOM_ID,
+            QuoteMessageBuilder.messageBuilderType,
+            this.counter
+          )
         )
         .setLabel('Rename')
         .setStyle(ButtonStyle.Secondary)

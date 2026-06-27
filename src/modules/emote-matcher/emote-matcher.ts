@@ -201,12 +201,18 @@ class SuffixTree {
       })();
 
       const lowerCaseMatch = ((): AssetInfo | undefined => {
-        const lowerCaseMatchIndex = assets.findIndex((asset) => asset.name.toLowerCase() === original.toLowerCase());
+        const lowerCaseMatchIndex = assets.findIndex(
+          (asset) => asset.name.toLowerCase() === original.toLowerCase()
+        );
         return lowerCaseMatchIndex !== -1 ? assets.splice(lowerCaseMatchIndex, 1)[0] : undefined;
       })();
 
       const startsWithLowerCaseMatches: AssetInfo[] = [];
-      this.#getStartsWithLowerCaseMatches(assets, original.toLowerCase(), startsWithLowerCaseMatches);
+      this.#getStartsWithLowerCaseMatches(
+        assets,
+        original.toLowerCase(),
+        startsWithLowerCaseMatches
+      );
 
       assets.unshift(...startsWithLowerCaseMatches);
       if (lowerCaseMatch !== undefined) assets.unshift(lowerCaseMatch);
@@ -227,7 +233,8 @@ class SuffixTree {
     const nextChar = normalizedSuffix.charAt(0);
     if (!this.#paths.has(nextChar)) return false;
     const nextCharGet = this.#paths.get(nextChar);
-    if (nextCharGet !== undefined) return nextCharGet.#queryUnique(normalizedSuffix.slice(1), original);
+    if (nextCharGet !== undefined)
+      return nextCharGet.#queryUnique(normalizedSuffix.slice(1), original);
     return false;
   }
 
@@ -246,7 +253,8 @@ class SuffixTree {
     const nextChar = normalizedSuffix.charAt(0);
     if (!this.#paths.has(nextChar)) return false;
     const nextCharGet = this.#paths.get(nextChar);
-    if (nextCharGet !== undefined) return nextCharGet.#queryExact(normalizedSuffix.slice(1), original);
+    if (nextCharGet !== undefined)
+      return nextCharGet.#queryExact(normalizedSuffix.slice(1), original);
     return false;
   }
 
@@ -289,7 +297,8 @@ export class EmoteMatcher {
     this.#root = new SuffixTree();
     let priority = arguments.length;
 
-    for (const emote of sevenGlobal.emotes) this.#root.addAllSuffix(sevenTVInSetToAsset(emote), priority);
+    for (const emote of sevenGlobal.emotes)
+      this.#root.addAllSuffix(sevenTVInSetToAsset(emote), priority);
     priority--;
 
     try {
@@ -304,20 +313,24 @@ export class EmoteMatcher {
     priority--;
 
     try {
-      for (const emote of twitchGlobal?.data ?? []) this.#root.addAllSuffix(twitchToAsset(emote), priority);
+      for (const emote of twitchGlobal?.data ?? [])
+        this.#root.addAllSuffix(twitchToAsset(emote), priority);
     } catch {}
     if (twitchGlobal !== undefined) priority--;
 
-    for (const emote of sevenPersonal?.emotes ?? []) this.#root.addAllSuffix(sevenTVInSetToAsset(emote), priority);
+    for (const emote of sevenPersonal?.emotes ?? [])
+      this.#root.addAllSuffix(sevenTVInSetToAsset(emote), priority);
     if (sevenPersonal !== undefined) priority--;
 
     try {
-      for (const emote of bttvPersonal?.channelEmotes ?? []) this.#root.addAllSuffix(bttvToAsset(emote), priority);
+      for (const emote of bttvPersonal?.channelEmotes ?? [])
+        this.#root.addAllSuffix(bttvToAsset(emote), priority);
     } catch {}
     if (bttvPersonal !== undefined) priority--;
 
     try {
-      for (const emote of bttvPersonal?.sharedEmotes ?? []) this.#root.addAllSuffix(bttvToAsset(emote), priority);
+      for (const emote of bttvPersonal?.sharedEmotes ?? [])
+        this.#root.addAllSuffix(bttvToAsset(emote), priority);
     } catch {}
     if (bttvPersonal !== undefined) priority--;
 
@@ -353,7 +366,16 @@ export class EmoteMatcher {
     sortByDateAdded?: boolean,
     sortByName?: boolean
   ): readonly AssetInfo[] | undefined {
-    return this.#root.queryArray(query, query, platform, animated, zeroWidth, max, sortByDateAdded, sortByName);
+    return this.#root.queryArray(
+      query,
+      query,
+      platform,
+      animated,
+      zeroWidth,
+      max,
+      sortByDateAdded,
+      sortByName
+    );
   }
 
   public matchSingleUnique(query: string, original: string): boolean {

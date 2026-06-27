@@ -40,17 +40,18 @@ async function ollamaChat(systemPrompt: string, userPrompt: string): Promise<str
       ]
     })
   });
-  if (!response.ok) throw new Error(`Ollama API error ${response.status}: ${await response.text()}`);
+  if (!response.ok)
+    throw new Error(`Ollama API error ${response.status}: ${await response.text()}`);
 
   const data = (await response.json()) as OllamaChatResponse;
 
   console.log(
-    'systemPrompt: ' +
-      systemPrompt +
-      '\nuserPrompt: ' +
-      userPrompt +
-      '\nResponse' +
-      (data.message?.content?.trim() ?? '')
+    'systemPrompt: '
+      + systemPrompt
+      + '\nuserPrompt: '
+      + userPrompt
+      + '\nResponse'
+      + (data.message?.content?.trim() ?? '')
   );
   return data.message?.content?.trim() ?? '';
 }
@@ -59,7 +60,9 @@ async function ollamaChat(systemPrompt: string, userPrompt: string): Promise<str
  * Ask the model to score whether a reply opportunity exists.
  * Returns an object with shouldReply, reason, and score fields.
  */
-export async function scoreReplyOpportunity(chatHistory: string): Promise<ScoreReplyOpportunityResult> {
+export async function scoreReplyOpportunity(
+  chatHistory: string
+): Promise<ScoreReplyOpportunityResult> {
   const { name } = config.bot;
   const systemPrompt = `You are a silent observer of a group chat. Your job is to decide if ${name} — a witty, laid-back human — should chime in.
 
@@ -98,7 +101,10 @@ Be conservative. It's better to stay silent than to force a response.`;
  * @param recentHistory - Last N messages formatted as "Author: message"
  * @param retrievedContext - Semantically similar past messages from vector store
  */
-export async function generateReply(recentHistory: string, retrievedContext: readonly string[] = []): Promise<string> {
+export async function generateReply(
+  recentHistory: string,
+  retrievedContext: readonly string[] = []
+): Promise<string> {
   const { name } = config.bot;
   const systemPrompt = `You are ${name}, a Bot member of this Discord group chat.
 
@@ -117,9 +123,9 @@ Your goal: contribute one natural, human message. Make it count.\n`;
   // messages. Separate blocks with a divider so the model understands they
   // are distinct conversation snippets, not one continuous thread.
   const ragSection =
-    retrievedContext.length > 0
-      ? `[Relevant past conversations — use for context only, do not reference directly]\n${retrievedContext.join('\n---\n')}\n\n`
-      : '';
+    retrievedContext.length > 0 ?
+      `[Relevant past conversations — use for context only, do not reference directly]\n${retrievedContext.join('\n---\n')}\n\n`
+    : '';
   const userPrompt = `${ragSection}[Recent chat]\n${recentHistory}\n\nWrite your reply as ${name}. One short message only.`;
 
   return await ollamaChat(systemPrompt, userPrompt);

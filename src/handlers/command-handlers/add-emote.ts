@@ -7,8 +7,15 @@ import {
   sevenTVUrlToSevenTVNotInSet,
   SPLITTER
 } from '../../utils/handlers/command-handlers/platform-url-to-api-url.ts';
-import { permitted, owner, globalAdministrator } from '../../utils/handlers/command-handlers/permitted.ts';
-import { getOptionValue, getOptionValueWithoutUndefined } from '../../utils/public/get-option-value.ts';
+import {
+  permitted,
+  owner,
+  globalAdministrator
+} from '../../utils/handlers/command-handlers/permitted.ts';
+import {
+  getOptionValue,
+  getOptionValueWithoutUndefined
+} from '../../utils/public/get-option-value.ts';
 import { fetchAndJson } from '../../utils/public/fetch-and-json.ts';
 import { logError } from '../../utils/public/log-error.ts';
 import type { AddedEmotesDatabase } from '../../database/added-emotes-database.ts';
@@ -16,7 +23,10 @@ import type { AddedEmote, SevenTVEmoteNotInSet } from '../../types.ts';
 import type { Guild } from '../../modules/discord/guild.ts';
 
 export function addEmoteHandlerSevenTVNotInSet(addedEmotesDatabase: Readonly<AddedEmotesDatabase>) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const defer = interaction.deferReply();
     try {
       const { member } = interaction;
@@ -26,13 +36,15 @@ export function addEmoteHandlerSevenTVNotInSet(addedEmotesDatabase: Readonly<Add
       const member_ = member as GuildMember;
       const memberRolesCache: readonly (readonly [string, Role])[] = [...member_.roles.cache];
       if (
-        !guild.allowEveryoneToAddEmote &&
-        !permitted(memberRolesCache, guild.addEmotePermittedRoleIds) &&
-        !owner(member_, interactionGuild) &&
-        !globalAdministrator(member_)
+        !guild.allowEveryoneToAddEmote
+        && !permitted(memberRolesCache, guild.addEmotePermittedRoleIds)
+        && !owner(member_, interactionGuild)
+        && !globalAdministrator(member_)
       ) {
         await defer;
-        await interaction.editReply('You do not have the necessary permissions to use this command.');
+        await interaction.editReply(
+          'You do not have the necessary permissions to use this command.'
+        );
         return;
       }
 
@@ -55,7 +67,10 @@ export function addEmoteHandlerSevenTVNotInSet(addedEmotesDatabase: Readonly<Add
       }
 
       const emoteId = url.split(SPLITTER).at(-1);
-      const addedEmote: AddedEmote = { url: `${SEVEN_TV_NOT_IN_SET_CDN}${SPLITTER}${emoteId}`, alias: name };
+      const addedEmote: AddedEmote = {
+        url: `${SEVEN_TV_NOT_IN_SET_CDN}${SPLITTER}${emoteId}`,
+        alias: name
+      };
       const addedEmotes = addedEmotesDatabase.getAll(guild.id);
       if (addedEmotes.some((addedEmote_) => addedEmote_.url === addedEmote.url)) {
         await defer;

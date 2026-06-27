@@ -12,7 +12,10 @@ import {
   SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID
 } from './button.ts';
 
-export function roleSelectMenuHandler(guild: Readonly<Guild>, databaseManager: Readonly<DatabaseManager>) {
+export function roleSelectMenuHandler(
+  guild: Readonly<Guild>,
+  databaseManager: Readonly<DatabaseManager>
+) {
   return async (interaction: RoleSelectMenuInteraction): Promise<void> => {
     const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
     try {
@@ -21,8 +24,8 @@ export function roleSelectMenuHandler(guild: Readonly<Guild>, databaseManager: R
       if (interactionGuild === null || member === null) return;
 
       if (
-        customId === SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID ||
-        customId === SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID
+        customId === SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID
+        || customId === SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID
       ) {
         const { permittedRoleIdsDatabase } = databaseManager;
 
@@ -43,7 +46,9 @@ export function roleSelectMenuHandler(guild: Readonly<Guild>, databaseManager: R
       logError(error, 'Error at roleSelectMenuHandler');
 
       await defer;
-      await interaction.editReply('Failed to show role select menu or failed to change permitted roles.');
+      await interaction.editReply(
+        'Failed to show role select menu or failed to change permitted roles.'
+      );
     }
   };
 }

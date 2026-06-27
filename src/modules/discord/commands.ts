@@ -66,7 +66,11 @@ const emote: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
   .setName(SLASH_COMMAND_NAMES.emote)
   .setDescription('Get an emote')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('name').setDescription("The emote's name").setRequired(true).setAutocomplete(true)
+    option
+      .setName('name')
+      .setDescription("The emote's name")
+      .setRequired(true)
+      .setAutocomplete(true)
   )
   .addIntegerOption((option: ReadonlySlashCommandIntegerOption) =>
     option.setName('size').setDescription("The emote's size").setAutocomplete(true)
@@ -92,7 +96,9 @@ const emotes: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
       )
   )
   .addBooleanOption((option: ReadonlySlashCommandBooleanOption) =>
-    option.setName('stretch').setDescription('Whether to stretch the overlaying emotes instead of centering them')
+    option
+      .setName('stretch')
+      .setDescription('Whether to stretch the overlaying emotes instead of centering them')
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -103,10 +109,16 @@ const emoteList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
     option.setName('query').setDescription('The query').setAutocomplete(true)
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('platform').setDescription('The platform of the queried emotes').setAutocomplete(true)
+    option
+      .setName('platform')
+      .setDescription('The platform of the queried emotes')
+      .setAutocomplete(true)
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('animated').setDescription('Whether the queried emotes should be animated').setAutocomplete(true)
+    option
+      .setName('animated')
+      .setDescription('Whether the queried emotes should be animated')
+      .setAutocomplete(true)
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
     option
@@ -123,7 +135,10 @@ const clip: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
     option.setName('title').setDescription('The clip title').setAutocomplete(true)
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('clipper').setDescription('The Twitch username of the clipper').setAutocomplete(true)
+    option
+      .setName('clipper')
+      .setDescription('The Twitch username of the clipper')
+      .setAutocomplete(true)
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
     option.setName('category').setDescription('The category of the clips').setAutocomplete(true)
@@ -135,7 +150,9 @@ const clip: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
       .addChoices({ name: 'Views', value: 'views' }, { name: 'Shuffle the list', value: 'shuffle' })
   )
   .addBooleanOption((option: ReadonlySlashCommandBooleanOption) =>
-    option.setName('ephemeral').setDescription('Whether to display the clips only for you (includes a send button)')
+    option
+      .setName('ephemeral')
+      .setDescription('Whether to display the clips only for you (includes a send button)')
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -177,7 +194,11 @@ const shortestUniqueSubstrings: ReadonlySlashCommandOptionsOnlyBuilder = new Sla
   .setName(SLASH_COMMAND_NAMES.shortestUniqueSubstrings)
   .setDescription('Get the shortest unique substring(s) of emote(s)')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('emotes').setDescription('Emote name(s). Separated by space').setRequired(true).setAutocomplete(true)
+    option
+      .setName('emotes')
+      .setDescription('Emote name(s). Separated by space')
+      .setRequired(true)
+      .setAutocomplete(true)
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
     option
@@ -186,7 +207,9 @@ const shortestUniqueSubstrings: ReadonlySlashCommandOptionsOnlyBuilder = new Sla
       .setChoices([{ name: 'Emote browser', value: 'emoteBrowser' }])
   )
   .addBooleanOption((option: ReadonlySlashCommandBooleanOption) =>
-    option.setName('ephemeral').setDescription('whether to output the result so only you can see it')
+    option
+      .setName('ephemeral')
+      .setDescription('whether to output the result so only you can see it')
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -200,7 +223,9 @@ const transient: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
     option.setName('attachment').setDescription('The attachment to send')
   )
   .addIntegerOption((option: ReadonlySlashCommandIntegerOption) =>
-    option.setName('duration').setDescription('The duration in seconds before deletion. Default: 3, maximum: 600')
+    option
+      .setName('duration')
+      .setDescription('The duration in seconds before deletion. Default: 3, maximum: 600')
   );
 
 const findTheEmoji: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
@@ -210,7 +235,9 @@ const findTheEmoji: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBui
     option.setName('emoji').setDescription('The emoji to find. Non-animated server emoji')
   )
   .addIntegerOption((option: ReadonlySlashCommandIntegerOption) =>
-    option.setName('size').setDescription('The size of the grid. Default: 5x5, minimum: 3x3, maximum: 7x7')
+    option
+      .setName('size')
+      .setDescription('The size of the grid. Default: 5x5, minimum: 3x3, maximum: 7x7')
   );
 
 const pingMe: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
@@ -235,7 +262,9 @@ const poe2: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
 
 const settings: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
   .setName(SLASH_COMMAND_NAMES.settings)
-  .setDescription('Settings for configuring the behavior of the bot in this server. Permission required')
+  .setDescription(
+    'Settings for configuring the behavior of the bot in this server. Permission required'
+  )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
 const pingList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
@@ -245,17 +274,27 @@ const pingList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder
     option
       .setName('type')
       .setDescription('Show either only own pings or every ping')
-      .addChoices({ name: 'Own', value: PING_LIST.type.own }, { name: 'Every', value: PING_LIST.type.every })
+      .addChoices(
+        { name: 'Own', value: PING_LIST.type.own },
+        { name: 'Every', value: PING_LIST.type.every }
+      )
   )
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName(PING_LIST.timezone).setDescription('The timezone to display the ping date in').setAutocomplete(true)
+    option
+      .setName(PING_LIST.timezone)
+      .setDescription('The timezone to display the ping date in')
+      .setAutocomplete(true)
   );
 
 const media: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
   .setName(SLASH_COMMAND_NAMES.media)
   .setDescription('Get a media')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('name').setDescription("The media's name").setRequired(true).setAutocomplete(true)
+    option
+      .setName('name')
+      .setDescription("The media's name")
+      .setRequired(true)
+      .setAutocomplete(true)
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -263,10 +302,10 @@ const mediaList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
   .setName(SLASH_COMMAND_NAMES.mediaList)
   .setDescription('Media list')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option
-      .setName('sortby')
-      .setDescription('Sort. Default: date added (newest first)')
-      .addChoices({ name: 'Alphabetical Order', value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical })
+    option.setName('sortby').setDescription('Sort. Default: date added (newest first)').addChoices({
+      name: 'Alphabetical Order',
+      value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical
+    })
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -274,7 +313,11 @@ const quote: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
   .setName(SLASH_COMMAND_NAMES.quote)
   .setDescription('Get a quote')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('name').setDescription("The quote's name").setRequired(true).setAutocomplete(true)
+    option
+      .setName('name')
+      .setDescription("The quote's name")
+      .setRequired(true)
+      .setAutocomplete(true)
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -282,10 +325,10 @@ const quoteList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
   .setName(SLASH_COMMAND_NAMES.quoteList)
   .setDescription('Quote list')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option
-      .setName('sortby')
-      .setDescription('Sort. Default: date added (newest first)')
-      .addChoices({ name: 'Alphabetical Order', value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical })
+    option.setName('sortby').setDescription('Sort. Default: date added (newest first)').addChoices({
+      name: 'Alphabetical Order',
+      value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical
+    })
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -304,10 +347,11 @@ const removeMedia: ReadonlyContextMenuCommandBuilder = new ContextMenuCommandBui
   .setType(ApplicationCommandType.Message)
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
-const translateContextMenuCommand: ReadonlyContextMenuCommandBuilder = new ContextMenuCommandBuilder()
-  .setName(CONTEXT_MENU_COMMAND_NAMES.translate)
-  .setType(ApplicationCommandType.Message)
-  .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
+const translateContextMenuCommand: ReadonlyContextMenuCommandBuilder =
+  new ContextMenuCommandBuilder()
+    .setName(CONTEXT_MENU_COMMAND_NAMES.translate)
+    .setType(ApplicationCommandType.Message)
+    .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
 const addQuote: ReadonlyContextMenuCommandBuilder = new ContextMenuCommandBuilder()
   .setName(CONTEXT_MENU_COMMAND_NAMES.addQuote)

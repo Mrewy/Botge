@@ -3,7 +3,11 @@
 export type Config = {
   readonly discord: { readonly token: string };
   readonly bot: { readonly name: string };
-  readonly ollama: { readonly baseUrl: string; readonly model: string; readonly embeddingModel: string };
+  readonly ollama: {
+    readonly baseUrl: string;
+    readonly model: string;
+    readonly embeddingModel: string;
+  };
   readonly chroma: { readonly url: string };
   readonly behavior: {
     readonly replyScoreThreshold: number;

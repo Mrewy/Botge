@@ -56,11 +56,13 @@ export function modalSubmitHandler(
   return async (interaction: ModalSubmitInteraction): Promise<void> => {
     const { customId } = interaction;
     const deferReply =
-      customId === ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID ||
-      customId === ASSIGN_GUILD_MODAL_CUSTOM_ID ||
-      customId === EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID
-        ? interaction.deferReply({ flags: MessageFlags.Ephemeral })
-        : undefined;
+      (
+        customId === ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID
+        || customId === ASSIGN_GUILD_MODAL_CUSTOM_ID
+        || customId === EMOTE_BORDER_CONFIGURATION_MODAL_CUSTOM_ID
+      ) ?
+        interaction.deferReply({ flags: MessageFlags.Ephemeral })
+      : undefined;
 
     try {
       if (customId === ASSIGN_GUILD_MODAL_CUSTOM_ID) {
@@ -72,7 +74,9 @@ export function modalSubmitHandler(
         const guild_ = guilds.find((guildge) => guildge.id === guildId);
         if (guild_ === undefined) {
           await deferReply;
-          await interaction.editReply('There is no server with this ID in the database. Previous settings unchanged.');
+          await interaction.editReply(
+            'There is no server with this ID in the database. Previous settings unchanged.'
+          );
           return;
         }
 
@@ -108,7 +112,9 @@ export function modalSubmitHandler(
         let broadcasterName: string | null = interaction.fields
           .getTextInputValue(BROADCASTER_NAME_TEXT_INPUT_CUSTOM_ID)
           .trim();
-        let sevenTv: string | null = interaction.fields.getTextInputValue(SEVEN_TV_TEXT_INPUT_CUSTOM_ID).trim();
+        let sevenTv: string | null = interaction.fields
+          .getTextInputValue(SEVEN_TV_TEXT_INPUT_CUSTOM_ID)
+          .trim();
         let bttv: string | null = null;
         let ffz: string | null = null;
         let reply = '';
@@ -123,12 +129,14 @@ export function modalSubmitHandler(
             const { ownerUsername } = sevenTvApiUrlMessage;
 
             if (
-              broadcasterName !== null &&
-              ownerUsername !== undefined &&
-              broadcasterName.toLowerCase() !== ownerUsername.toLowerCase()
+              broadcasterName !== null
+              && ownerUsername !== undefined
+              && broadcasterName.toLowerCase() !== ownerUsername.toLowerCase()
             ) {
               await deferReply;
-              await interaction.editReply('Broadcaster name and 7TV emote set owner does not match.');
+              await interaction.editReply(
+                'Broadcaster name and 7TV emote set owner does not match.'
+              );
               return;
             }
 
@@ -143,7 +151,10 @@ export function modalSubmitHandler(
         }
 
         if (broadcasterName !== null) {
-          const bttvApiUrlMessage = await getBttvApiUrlFromBroadcasterName(broadcasterName, twitchApi);
+          const bttvApiUrlMessage = await getBttvApiUrlFromBroadcasterName(
+            broadcasterName,
+            twitchApi
+          );
           const bttvApiUrlMessageType = bttvApiUrlMessage.type;
 
           if (bttvApiUrlMessageType === 'success') {
@@ -181,23 +192,30 @@ export function modalSubmitHandler(
           const oldPersonalEmoteSets = guild.personalEmoteMatcherConstructor.personalEmoteSets;
           const personalEmoteSets = new PersonalEmoteSets(sevenTv, bttv, ffz);
           await guild.changePersonalEmoteSetsAndRefreshEmoteMatcher(personalEmoteSets);
-          broadcasterNameAndPersonalEmoteSetsDatabase.changePersonalEmoteSets(id, personalEmoteSets);
+          broadcasterNameAndPersonalEmoteSetsDatabase.changePersonalEmoteSets(
+            id,
+            personalEmoteSets
+          );
 
           if (
-            (sevenTv !== null && oldPersonalEmoteSets !== undefined && oldPersonalEmoteSets.sevenTv !== sevenTv) ||
-            (oldPersonalEmoteSets === undefined && sevenTv !== null)
+            (sevenTv !== null
+              && oldPersonalEmoteSets !== undefined
+              && oldPersonalEmoteSets.sevenTv !== sevenTv)
+            || (oldPersonalEmoteSets === undefined && sevenTv !== null)
           )
             reply += '\nChanged 7TV Emote set.';
 
           if (
-            (bttv !== null && oldPersonalEmoteSets !== undefined && oldPersonalEmoteSets.bttv !== bttv) ||
-            (oldPersonalEmoteSets === undefined && bttv !== null)
+            (bttv !== null
+              && oldPersonalEmoteSets !== undefined
+              && oldPersonalEmoteSets.bttv !== bttv)
+            || (oldPersonalEmoteSets === undefined && bttv !== null)
           )
             reply += '\nFound BTTV Emote set from broadcaster name and changed to it.';
 
           if (
-            (ffz !== null && oldPersonalEmoteSets !== undefined && oldPersonalEmoteSets.ffz !== ffz) ||
-            (oldPersonalEmoteSets === undefined && ffz !== null)
+            (ffz !== null && oldPersonalEmoteSets !== undefined && oldPersonalEmoteSets.ffz !== ffz)
+            || (oldPersonalEmoteSets === undefined && ffz !== null)
           )
             reply += '\nFound FFZ Emote set from broadcaster name and changed to it.';
         }
@@ -217,7 +235,9 @@ export function modalSubmitHandler(
 
         let reply = '';
 
-        const emoteBorderEnabled = interaction.fields.getCheckbox(EMOTE_BORDER_ENABLED_CHECKBOX_CUSTOM_ID);
+        const emoteBorderEnabled = interaction.fields.getCheckbox(
+          EMOTE_BORDER_ENABLED_CHECKBOX_CUSTOM_ID
+        );
 
         const emoteBorderColor = ((): string | undefined => {
           const emoteBorderColor_ = interaction.fields
@@ -346,22 +366,28 @@ export function modalSubmitHandler(
       if (baseCustomId !== JUMP_TO_MODAL_BASE_CUSTOM_ID) return;
 
       const jumpToTextInputValue = interaction.fields
-        .getTextInputValue(getCustomId(JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID, messageBuilderType, messageBuilder.counter))
+        .getTextInputValue(
+          getCustomId(JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID, messageBuilderType, messageBuilder.counter)
+        )
         .trim();
 
       let jumpToIdentifierTextInputValue: string | undefined = undefined;
       try {
         jumpToIdentifierTextInputValue = interaction.fields
           .getTextInputValue(
-            getCustomId(JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID, messageBuilderType, messageBuilder.counter)
+            getCustomId(
+              JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID,
+              messageBuilderType,
+              messageBuilder.counter
+            )
           )
           .trim();
       } catch {}
 
       if (
-        jumpToTextInputValue !== '' &&
-        jumpToIdentifierTextInputValue !== undefined &&
-        jumpToIdentifierTextInputValue !== ''
+        jumpToTextInputValue !== ''
+        && jumpToIdentifierTextInputValue !== undefined
+        && jumpToIdentifierTextInputValue !== ''
       ) {
         // can't set both
         await defer;

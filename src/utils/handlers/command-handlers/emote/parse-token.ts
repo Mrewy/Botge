@@ -70,14 +70,17 @@ function parseEmoji(emoji: string): string | undefined {
   return parsedEmoji;
 }
 
-export async function parseToken(url: string, highestSize: boolean): Promise<AssetInfo | string | undefined> {
+export async function parseToken(
+  url: string,
+  highestSize: boolean
+): Promise<AssetInfo | string | undefined> {
   const sevenTVUrlToSevenTVNotInSet_ = await sevenTVUrlToSevenTVNotInSet(url);
   const sevenTVNotInSetToAsset_ =
-    sevenTVUrlToSevenTVNotInSet_ !== undefined
-      ? highestSize
-        ? sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_, maxPlatformSize('sevenNotInSet'))
-        : sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_)
-      : undefined;
+    sevenTVUrlToSevenTVNotInSet_ !== undefined ?
+      highestSize ?
+        sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_, maxPlatformSize('sevenNotInSet'))
+      : sevenTVNotInSetToAsset(sevenTVUrlToSevenTVNotInSet_)
+    : undefined;
 
   if (sevenTVNotInSetToAsset_ !== undefined) return sevenTVNotInSetToAsset_;
 

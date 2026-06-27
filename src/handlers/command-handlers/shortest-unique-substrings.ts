@@ -2,7 +2,10 @@
 
 import type { ChatInputCommandInteraction } from 'discord.js';
 
-import { getOptionValue, getOptionValueWithoutUndefined } from '../../utils/public/get-option-value.ts';
+import {
+  getOptionValue,
+  getOptionValueWithoutUndefined
+} from '../../utils/public/get-option-value.ts';
 import { logError } from '../../utils/public/log-error.ts';
 import { EmoteMessageBuilder } from '../../modules/message-builders/emote-message-builder.ts';
 import type { EmoteMatcher } from '../../modules/emote-matcher/emote-matcher.ts';
@@ -41,29 +44,42 @@ export function getShortestUniqueSubstrings(
     .filter((s) => s !== undefined);
 
   const shortestUniqueSubstringLength =
-    uniqueSubstrings.length !== 0 ? uniqueSubstrings.reduce((a, b) => (a.length < b.length ? a : b)).length : undefined;
+    uniqueSubstrings.length !== 0 ?
+      uniqueSubstrings.reduce((a, b) => (a.length < b.length ? a : b)).length
+    : undefined;
 
   const shortestUniqueSubstrings: readonly string[] | undefined =
-    shortestUniqueSubstringLength !== undefined
-      ? uniqueSubstrings.filter((s) => s.length === shortestUniqueSubstringLength)
-      : undefined;
+    shortestUniqueSubstringLength !== undefined ?
+      uniqueSubstrings.filter((s) => s.length === shortestUniqueSubstringLength)
+    : undefined;
 
   return [original, shortestUniqueSubstrings];
 }
 
-export function shortestUniqueSubstringsHandler(emoteMessageBuilders: Readonly<EmoteMessageBuilder>[]) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+export function shortestUniqueSubstringsHandler(
+  emoteMessageBuilders: Readonly<EmoteMessageBuilder>[]
+) {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const { emoteMatcher } = guild;
     const ephemeral = getOptionValue(interaction, 'ephemeral', Boolean) ?? false;
-    const defer = ephemeral ? interaction.deferReply({ flags: 'Ephemeral' }) : interaction.deferReply();
+    const defer =
+      ephemeral ? interaction.deferReply({ flags: 'Ephemeral' }) : interaction.deferReply();
     try {
-      const emotesOption: readonly string[] = getOptionValueWithoutUndefined<string>(interaction, 'emotes').split(
-        /\s+/
-      );
+      const emotesOption: readonly string[] = getOptionValueWithoutUndefined<string>(
+        interaction,
+        'emotes'
+      ).split(/\s+/);
       const format = getOptionValue<string>(interaction, 'format');
 
-      const getShortestUniqueSubstrings_: readonly (readonly [string | undefined, readonly string[] | undefined])[] =
-        emotesOption.map((emoteOption) => getShortestUniqueSubstrings(emoteMatcher, emoteOption));
+      const getShortestUniqueSubstrings_: readonly (readonly [
+        string | undefined,
+        readonly string[] | undefined
+      ])[] = emotesOption.map((emoteOption) =>
+        getShortestUniqueSubstrings(emoteMatcher, emoteOption)
+      );
 
       if (format !== undefined) {
         const emotes = emotesOption
@@ -91,22 +107,25 @@ export function shortestUniqueSubstringsHandler(emoteMessageBuilders: Readonly<E
       }
 
       let message = '';
-      getShortestUniqueSubstrings_.forEach((i: readonly [string | undefined, readonly string[] | undefined], j) => {
-        const [original, shortestUniqueSubstrings] = i;
-        if (original === undefined) {
-          message += `Could not find emote '${emotesOption[j]}'.\n`;
+      getShortestUniqueSubstrings_.forEach(
+        (i: readonly [string | undefined, readonly string[] | undefined], j) => {
+          const [original, shortestUniqueSubstrings] = i;
+          if (original === undefined) {
+            message += `Could not find emote '${emotesOption[j]}'.\n`;
+            return;
+          }
+
+          if (shortestUniqueSubstrings !== undefined) {
+            if (shortestUniqueSubstrings.length === 1)
+              message += `${original}: ${shortestUniqueSubstrings[0]}\n`;
+            else message += `${original}: ${shortestUniqueSubstrings.join(', ')}\n`;
+          } else {
+            message += `${original}: -\n`;
+          }
+
           return;
         }
-
-        if (shortestUniqueSubstrings !== undefined) {
-          if (shortestUniqueSubstrings.length === 1) message += `${original}: ${shortestUniqueSubstrings[0]}\n`;
-          else message += `${original}: ${shortestUniqueSubstrings.join(', ')}\n`;
-        } else {
-          message += `${original}: -\n`;
-        }
-
-        return;
-      });
+      );
 
       await defer;
       await interaction.editReply(message.trim());

@@ -28,10 +28,10 @@ export async function downloadAsset(
     }
 
     const hasWidthAndHeight = width !== undefined && height !== undefined;
-    let duration: Promise<number | undefined> | number | undefined = animated
-      ? getDuration(filename)
-      : DEFAULT_DURATION;
-    let widthAndHeight: Promise<readonly [number, number] | undefined> | readonly [number, number] | undefined =
+    let duration: Promise<number | undefined> | number | undefined =
+      animated ? getDuration(filename) : DEFAULT_DURATION;
+    let widthAndHeight:
+      Promise<readonly [number, number] | undefined> | readonly [number, number] | undefined =
       hasWidthAndHeight ? [width, height] : getDimension(filename);
 
     duration = await duration;

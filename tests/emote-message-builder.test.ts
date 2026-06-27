@@ -20,13 +20,22 @@ describe('EmoteMessageBuilder', () => {
     const emotes_: AssetInfo[] = [];
 
     for (let i = 0; i < EMOTES_LENGTH; i++) {
-      const emote = { name: getTestName(i), platform: 'sevenNotInSet', zeroWidth: false } as AssetInfo;
+      const emote = {
+        name: getTestName(i),
+        platform: 'sevenNotInSet',
+        zeroWidth: false
+      } as AssetInfo;
       emotes_.push(emote);
     }
 
     return emotes_;
   })();
-  const emoteMessageBuilder = new EmoteMessageBuilder(chatInputCommandInteraction, emotes, undefined, true);
+  const emoteMessageBuilder = new EmoteMessageBuilder(
+    chatInputCommandInteraction,
+    emotes,
+    undefined,
+    true
+  );
 
   test('general', () => {
     expect(emoteMessageBuilder.counter).toBe(0);

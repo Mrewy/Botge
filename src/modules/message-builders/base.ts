@@ -99,7 +99,11 @@ export function getCounterFromCustomId(customId: string): number {
  * @param counter - The counter of the Builder
  * @returns The full custom ID
  */
-export function getCustomId(baseCustomId: string, messageBuilderType: string, counter: number): string {
+export function getCustomId(
+  baseCustomId: string,
+  messageBuilderType: string,
+  counter: number
+): string {
   return `${baseCustomId}${BUTTON_CUSTOM_ID_SPLITTER}${messageBuilderType}${BUTTON_CUSTOM_ID_SPLITTER}${counter}`;
 }
 
@@ -183,7 +187,9 @@ export class BaseMessageBuilder<
           .setDescription('If empty it jumps to a random index.')
           .setTextInputComponent(
             new TextInputBuilder()
-              .setCustomId(getCustomId(JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID, messageBuilderType, this.#counter))
+              .setCustomId(
+                getCustomId(JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID, messageBuilderType, this.#counter)
+              )
               .setMaxLength(6)
               .setStyle(TextInputStyle.Short)
               .setPlaceholder('random')
@@ -198,7 +204,13 @@ export class BaseMessageBuilder<
           .setDescription(`The ${identifierName} of the item you wish to jump to.`)
           .setTextInputComponent(
             new TextInputBuilder()
-              .setCustomId(getCustomId(JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID, messageBuilderType, this.#counter))
+              .setCustomId(
+                getCustomId(
+                  JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID,
+                  messageBuilderType,
+                  this.#counter
+                )
+              )
               .setMaxLength(20)
               .setStyle(TextInputStyle.Short)
               .setRequired(false)
@@ -263,7 +275,8 @@ export class BaseMessageBuilder<
 
     const randomNumberInInterval_ = ((): number => {
       let randomNumber = randomNumberInInterval(0, this.#array.length - 1);
-      while (randomNumber === this.#currentIndex) randomNumber = randomNumberInInterval(0, this.#array.length - 1);
+      while (randomNumber === this.#currentIndex)
+        randomNumber = randomNumberInInterval(0, this.#array.length - 1);
 
       return randomNumber;
     })();

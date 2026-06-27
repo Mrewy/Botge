@@ -28,17 +28,23 @@ export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
       );
       statement.run(sevenTv, bttv, ffz, guildId);
     } else {
-      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      const statement = this.databaseSync.prepare(
+        `INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`
+      );
       statement.run(guildId, null, sevenTv, bttv, ffz);
     }
   }
 
   public changeBroadcasterName(guildId: string, broadcasterName: string): void {
     if (this.#rowExists(guildId)) {
-      const statement = this.databaseSync.prepare(`UPDATE ${TABLE_NAME} SET broadcasterName = (?) WHERE guildId = (?)`);
+      const statement = this.databaseSync.prepare(
+        `UPDATE ${TABLE_NAME} SET broadcasterName = (?) WHERE guildId = (?)`
+      );
       statement.run(broadcasterName, guildId);
     } else {
-      const statement = this.databaseSync.prepare(`INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`);
+      const statement = this.databaseSync.prepare(
+        `INSERT INTO ${TABLE_NAME} VALUES (?, ?, ?, ?, ?)`
+      );
       statement.run(guildId, broadcasterName, null, null, null);
     }
   }
@@ -72,16 +78,18 @@ export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
       statement.all() as DatabaseBroadcasterNamesAndPersonalEmoteSets[];
     const map = new Map<string, readonly [string | null, PersonalEmoteSets]>();
 
-    databaseBroadcasterNamesAndPersonalEmoteSetsArray.forEach((databaseBroadcasterNamesAndPersonalEmoteSets) => {
-      map.set(databaseBroadcasterNamesAndPersonalEmoteSets.guildId, [
-        databaseBroadcasterNamesAndPersonalEmoteSets.broadcasterName,
-        new PersonalEmoteSets(
-          databaseBroadcasterNamesAndPersonalEmoteSets.sevenTv,
-          databaseBroadcasterNamesAndPersonalEmoteSets.bttv,
-          databaseBroadcasterNamesAndPersonalEmoteSets.ffz
-        )
-      ]);
-    });
+    databaseBroadcasterNamesAndPersonalEmoteSetsArray.forEach(
+      (databaseBroadcasterNamesAndPersonalEmoteSets) => {
+        map.set(databaseBroadcasterNamesAndPersonalEmoteSets.guildId, [
+          databaseBroadcasterNamesAndPersonalEmoteSets.broadcasterName,
+          new PersonalEmoteSets(
+            databaseBroadcasterNamesAndPersonalEmoteSets.sevenTv,
+            databaseBroadcasterNamesAndPersonalEmoteSets.bttv,
+            databaseBroadcasterNamesAndPersonalEmoteSets.ffz
+          )
+        ]);
+      }
+    );
 
     return map;
   }
@@ -99,7 +107,9 @@ export class BroadcasterNameAndPersonalEmoteSetsDatabase extends BaseDatabase {
   }
 
   #rowExists(guildId: string): boolean {
-    const statement = this.databaseSync.prepare(`SELECT guildId FROM ${TABLE_NAME} WHERE guildId = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT guildId FROM ${TABLE_NAME} WHERE guildId = (?)`
+    );
     const row = statement.get(guildId);
 
     if (row !== undefined) return true;

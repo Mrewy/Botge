@@ -26,7 +26,10 @@ export async function newGuild(
   const addEmotePermittedRoleIds = permittedRoleIdsDatabase.getAddEmotePermittedRoleIds(guildId);
   const addEmotePermitNoRole = permittedRoleIdsDatabase.getAddEmotePermitNoRole(guildId);
 
-  const personalEmoteMatcherConstructor = PersonalEmoteMatcherConstructor.create(guildId, personalEmoteSets);
+  const personalEmoteMatcherConstructor = PersonalEmoteMatcherConstructor.create(
+    guildId,
+    personalEmoteSets
+  );
   const emoteMatcher = (await personalEmoteMatcherConstructor).constructEmoteMatcher();
   const twitchClipsMeilisearchIndex = twitchClipsMeilisearch?.getOrCreateIndex(guildId);
 

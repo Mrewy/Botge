@@ -9,7 +9,10 @@ import { logError } from '../../utils/public/log-error.ts';
 import type { Guild } from '../../modules/discord/guild.ts';
 import type { User } from '../../modules/discord/user.ts';
 
-import { MEDIA_COMMAND_IDENTIFIER, mediaMessageCreateHandler } from './media-message-create-handler.ts';
+import {
+  MEDIA_COMMAND_IDENTIFIER,
+  mediaMessageCreateHandler
+} from './media-message-create-handler.ts';
 import { ollamaMessageCreateHandler } from './ollama-message-create-handler.ts';
 
 export function messageCreateHandler(clientUserId: string | null) {

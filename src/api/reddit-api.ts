@@ -3,7 +3,10 @@
 import fetch from 'node-fetch';
 import { writeFileSync } from 'node:fs';
 
-import { REDDIT_API_ENDPOINTS, getRedditAccessToken } from '../utils/api/get-reddit-access-token.ts';
+import {
+  REDDIT_API_ENDPOINTS,
+  getRedditAccessToken
+} from '../utils/api/get-reddit-access-token.ts';
 import { fetchAndJson } from '../utils/public/fetch-and-json.ts';
 
 import { DATABASE_DIR } from '../directory-paths.ts';
@@ -26,7 +29,8 @@ type RedditLivestreamFails = {
   };
 };
 
-export const REDDIT_ACCESS_TOKEN_PATH: 'data/redditAccessToken.txt' = `${DATABASE_DIR}/redditAccessToken.txt` as const;
+export const REDDIT_ACCESS_TOKEN_PATH: 'data/redditAccessToken.txt' =
+  `${DATABASE_DIR}/redditAccessToken.txt` as const;
 
 export class RedditApi {
   readonly #clientId: string;

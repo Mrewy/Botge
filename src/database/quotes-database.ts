@@ -22,7 +22,9 @@ export class QuotesDatabase extends BaseDatabase {
     if (!this.#tableExists(tableName)) this.#createTable(userId);
 
     const { content, name, dateAdded } = quote;
-    const statement = this.databaseSync.prepare(`INSERT INTO ${tableName} (name, content, dateAdded) VALUES (?, ?, ?)`);
+    const statement = this.databaseSync.prepare(
+      `INSERT INTO ${tableName} (name, content, dateAdded) VALUES (?, ?, ?)`
+    );
     statement.run(name, content, dateAdded.getTime());
   }
 
@@ -31,7 +33,9 @@ export class QuotesDatabase extends BaseDatabase {
     if (!this.#tableExists(tableName)) return;
 
     const { content, name } = quote;
-    const statement = this.databaseSync.prepare(`DELETE FROM ${tableName} WHERE content = (?) AND name = (?)`);
+    const statement = this.databaseSync.prepare(
+      `DELETE FROM ${tableName} WHERE content = (?) AND name = (?)`
+    );
     statement.run(content, name);
   }
 
@@ -39,7 +43,9 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return;
 
-    const statement = this.databaseSync.prepare(`UPDATE ${tableName} SET name = (?) WHERE content = (?)`);
+    const statement = this.databaseSync.prepare(
+      `UPDATE ${tableName} SET name = (?) WHERE content = (?)`
+    );
     statement.run(name, content);
   }
 
@@ -47,7 +53,9 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return undefined;
 
-    const statement = this.databaseSync.prepare(`SELECT name FROM ${tableName} WHERE content = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT name FROM ${tableName} WHERE content = (?)`
+    );
     const row = statement.get(content) as
       | {
           readonly name: string;
@@ -75,11 +83,17 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return [];
 
-    const statement = this.databaseSync.prepare(`SELECT name, content, dateAdded FROM ${tableName}`);
+    const statement = this.databaseSync.prepare(
+      `SELECT name, content, dateAdded FROM ${tableName}`
+    );
     const databaseQuoteArray = statement.all() as DatabaseQuote[];
 
     const quoteArray: Quote[] = databaseQuoteArray.map((databaseQuote) => {
-      return { name: databaseQuote.name, content: databaseQuote.content, dateAdded: new Date(databaseQuote.dateAdded) };
+      return {
+        name: databaseQuote.name,
+        content: databaseQuote.content,
+        dateAdded: new Date(databaseQuote.dateAdded)
+      };
     });
     return [...quoteArray].sort((a, b) => b.dateAdded.getTime() - a.dateAdded.getTime());
   }
@@ -88,7 +102,9 @@ export class QuotesDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return false;
 
-    const statement = this.databaseSync.prepare(`SELECT content FROM ${tableName} WHERE content = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT content FROM ${tableName} WHERE content = (?)`
+    );
     const row = statement.get(content);
 
     if (row !== undefined) return true;
@@ -119,7 +135,9 @@ export class QuotesDatabase extends BaseDatabase {
   }
 
   #tableExists(tableName: string): boolean {
-    const statement = this.databaseSync.prepare(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT name FROM sqlite_master WHERE type = 'table' AND name = (?)`
+    );
     const row = statement.get(tableName);
 
     if (row !== undefined) return true;

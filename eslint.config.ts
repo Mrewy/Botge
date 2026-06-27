@@ -56,7 +56,12 @@ const config: readonly Readonly<Config>[] = defineConfig([
     languageOptions: {
       parser: parser
     },
-    extends: [js.configs.recommended, configs.all, configs.stylisticTypeChecked, configs.strictTypeChecked], // later entries take precedence over earlier ones
+    extends: [
+      js.configs.recommended,
+      configs.all,
+      configs.stylisticTypeChecked,
+      configs.strictTypeChecked
+    ], // later entries take precedence over earlier ones
 
     rules: {
       '@typescript-eslint/adjacent-overload-signatures': 'off',

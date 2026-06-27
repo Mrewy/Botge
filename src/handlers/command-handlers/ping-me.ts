@@ -1,6 +1,11 @@
 /** @format */
 
-import type { PermissionsBitField, Client, ChatInputCommandInteraction, TextChannel } from 'discord.js';
+import type {
+  PermissionsBitField,
+  Client,
+  ChatInputCommandInteraction,
+  TextChannel
+} from 'discord.js';
 
 import { getOptionValue } from '../../utils/public/get-option-value.ts';
 import { logError } from '../../utils/public/log-error.ts';
@@ -10,7 +15,11 @@ import type { Guild } from '../../modules/discord/guild.ts';
 import type { Ping } from '../../types.ts';
 import type { Job } from 'node-schedule';
 
-export function daysAndHoursAndMinutesToMilliseconds(days: number, hours: number, minutes: number): number {
+export function daysAndHoursAndMinutesToMilliseconds(
+  days: number,
+  hours: number,
+  minutes: number
+): number {
   return ((days * 24 + hours) * 60 + minutes) * 60 * 1000;
 }
 
@@ -20,7 +29,10 @@ export function pingMeHandler(
   client: Client,
   scheduledJobs: Readonly<Job>[]
 ) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const defer = interaction.deferReply();
     try {
       const days = getOptionValue(interaction, 'days', Number);
@@ -31,7 +43,9 @@ export function pingMeHandler(
       const interactionGuild = interaction.guild;
       if (interactionGuild === null) {
         await defer;
-        await interaction.editReply('The bot had to have been added as a server bot for this command to work.');
+        await interaction.editReply(
+          'The bot had to have been added as a server bot for this command to work.'
+        );
         return;
       }
 
@@ -66,7 +80,9 @@ export function pingMeHandler(
       }
 
       const timeNow = Date.now();
-      const pingDate = new Date(timeNow + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0));
+      const pingDate = new Date(
+        timeNow + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0)
+      );
 
       const { channelId } = interaction;
       let channel: TextChannel | undefined = undefined;
@@ -91,7 +107,10 @@ export function pingMeHandler(
         return botPermissionsInChannel_;
       })();
 
-      if (!botPermissionsInChannel.has('ViewChannel') || !botPermissionsInChannel.has('SendMessages')) {
+      if (
+        !botPermissionsInChannel.has('ViewChannel')
+        || !botPermissionsInChannel.has('SendMessages')
+      ) {
         await defer;
         await interaction.editReply(
           'The bot does not have the permissions to either view this channel or to send messages in this channel.\n(Replying to command is different from sending messages.)'

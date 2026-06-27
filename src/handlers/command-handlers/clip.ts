@@ -23,10 +23,16 @@ const MAX_TWITCH_CLIP_MESSAGE_BUILDERS_LENGTH = 15 as const;
 const { EMBED_SERVER_TWITCH } = process.env;
 
 export function clipHandler(twitchClipMessageBuilders: Readonly<TwitchClipMessageBuilder>[]) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const ephemeral = getOptionValue(interaction, 'ephemeral', Boolean) ?? false;
     if (ephemeral && interaction.guild === null) {
-      await interaction.reply({ content: 'Ephemeral cannot be used in DMs.', flags: MessageFlags.Ephemeral });
+      await interaction.reply({
+        content: 'Ephemeral cannot be used in DMs.',
+        flags: MessageFlags.Ephemeral
+      });
       return;
     }
 
@@ -42,7 +48,10 @@ export function clipHandler(twitchClipMessageBuilders: Readonly<TwitchClipMessag
       return;
     }
 
-    const defer = ephemeral ? interaction.deferReply({ flags: MessageFlags.Ephemeral }) : interaction.deferReply();
+    const defer =
+      ephemeral ?
+        interaction.deferReply({ flags: MessageFlags.Ephemeral })
+      : interaction.deferReply();
     try {
       const title = getOptionValue<string>(interaction, 'title')?.toLowerCase();
       const clipper = getOptionValue<string>(interaction, 'clipper');
@@ -68,7 +77,8 @@ export function clipHandler(twitchClipMessageBuilders: Readonly<TwitchClipMessag
       })();
 
       const { maxTotalHits } = await twitchClipsMeilisearchIndex.getPagination();
-      if (maxTotalHits === null || maxTotalHits === undefined) throw new Error('pagination max total hits not set');
+      if (maxTotalHits === null || maxTotalHits === undefined)
+        throw new Error('pagination max total hits not set');
 
       const search = await twitchClipsMeilisearchIndex.search(title ?? null, {
         filter: filter,
@@ -85,7 +95,8 @@ export function clipHandler(twitchClipMessageBuilders: Readonly<TwitchClipMessag
         return;
       } else if (hits.length === 1) {
         const [hit] = hits;
-        const reply = EMBED_SERVER_TWITCH !== undefined ? `${EMBED_SERVER_TWITCH}${hit.id}` : hit.url;
+        const reply =
+          EMBED_SERVER_TWITCH !== undefined ? `${EMBED_SERVER_TWITCH}${hit.id}` : hit.url;
 
         await defer;
         await interaction.editReply(reply);

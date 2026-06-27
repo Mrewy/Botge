@@ -3,7 +3,10 @@
 import fetch from 'node-fetch';
 import { writeFileSync } from 'node:fs';
 
-import { TWITCH_API_ENDPOINTS, getTwitchAccessToken } from '../utils/api/get-twitch-access-token.ts';
+import {
+  TWITCH_API_ENDPOINTS,
+  getTwitchAccessToken
+} from '../utils/api/get-twitch-access-token.ts';
 import { fetchAndJson } from '../utils/public/fetch-and-json.ts';
 
 import type { TwitchClips, TwitchGlobalEmotes } from '../types.ts';
@@ -33,7 +36,8 @@ type TwitchUsers = {
   readonly data: readonly TwitchUser[];
 };
 
-export const TWITCH_ACCESS_TOKEN_PATH: 'data/twitchAccessToken.txt' = `${DATABASE_DIR}/twitchAccessToken.txt` as const;
+export const TWITCH_ACCESS_TOKEN_PATH: 'data/twitchAccessToken.txt' =
+  `${DATABASE_DIR}/twitchAccessToken.txt` as const;
 
 export class TwitchApi {
   readonly #clientId: string;
@@ -77,10 +81,16 @@ export class TwitchApi {
     if (idsArray.length > 100) throw new Error('Cannot get more than 100 users at once');
 
     const query: string = idsArray.map((id) => `id=${id}`).join('&');
-    return (await fetchAndJson(`${TWITCH_API_ENDPOINTS.clips}?${query}`, this.#apiRequestOptions)) as TwitchClips;
+    return (await fetchAndJson(
+      `${TWITCH_API_ENDPOINTS.clips}?${query}`,
+      this.#apiRequestOptions
+    )) as TwitchClips;
   }
 
-  public async clipsFromBroadcasterId(broadcasterId: string, cursor?: string): Promise<TwitchClips> {
+  public async clipsFromBroadcasterId(
+    broadcasterId: string,
+    cursor?: string
+  ): Promise<TwitchClips> {
     const query = `broadcaster_id=${broadcasterId}`;
     const query2 = cursor !== undefined ? `&after=${cursor}` : '';
 
@@ -95,7 +105,10 @@ export class TwitchApi {
     if (idsArray.length > 100) throw new Error('Cannot get more than 100 users at once');
 
     const query: string = idsArray.map((id) => `id=${id}`).join('&');
-    return (await fetchAndJson(`${TWITCH_API_ENDPOINTS.games}?${query}`, this.#apiRequestOptions)) as TwitchGames;
+    return (await fetchAndJson(
+      `${TWITCH_API_ENDPOINTS.games}?${query}`,
+      this.#apiRequestOptions
+    )) as TwitchGames;
   }
 
   public async users(ids: Readonly<Iterable<string>>): Promise<TwitchUsers> {
@@ -103,10 +116,16 @@ export class TwitchApi {
     if (idsArray.length > 100) throw new Error('Cannot get more than 100 users at once');
 
     const query: string = idsArray.map((id) => `login=${id}`).join('&');
-    return (await fetchAndJson(`${TWITCH_API_ENDPOINTS.users}?${query}`, this.#apiRequestOptions)) as TwitchUsers;
+    return (await fetchAndJson(
+      `${TWITCH_API_ENDPOINTS.users}?${query}`,
+      this.#apiRequestOptions
+    )) as TwitchUsers;
   }
 
   public async emotesGlobal(): Promise<TwitchGlobalEmotes> {
-    return (await fetchAndJson(TWITCH_API_ENDPOINTS.emotesGlobal, this.#apiRequestOptions)) as TwitchGlobalEmotes;
+    return (await fetchAndJson(
+      TWITCH_API_ENDPOINTS.emotesGlobal,
+      this.#apiRequestOptions
+    )) as TwitchGlobalEmotes;
   }
 }

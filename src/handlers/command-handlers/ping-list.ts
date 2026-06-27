@@ -19,7 +19,10 @@ export function pingListHandler(
   client: Client,
   scheduledJobs: Readonly<Job>[]
 ) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const defer = interaction.deferReply();
     try {
       const type = getOptionValue<string>(interaction, 'type');
@@ -30,9 +33,13 @@ export function pingListHandler(
         if (interactionChannels === undefined) return [];
 
         const pings = ((): readonly Ping[] => {
-          const pings_ = pingsDataBase.getAll().filter((ping) => interactionChannels.has(ping.channelId));
+          const pings_ = pingsDataBase
+            .getAll()
+            .filter((ping) => interactionChannels.has(ping.channelId));
 
-          return type === PING_LIST.type.own ? pings_.filter((ping) => ping.userId === interaction.user.id) : pings_;
+          return type === PING_LIST.type.own ?
+              pings_.filter((ping) => ping.userId === interaction.user.id)
+            : pings_;
         })();
 
         const pings2: readonly (PingForPingMeMessageBuilder | undefined)[] = pings.map((ping) => {
@@ -46,7 +53,8 @@ export function pingListHandler(
             return undefined;
           }
 
-          const timeMilliseconds = time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0);
+          const timeMilliseconds =
+            time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0);
           const pingDate = new Date(timeMilliseconds);
 
           return new PingForPingMeMessageBuilder(
@@ -69,9 +77,9 @@ export function pingListHandler(
 
       if (pingForPingMeMessageBuilders.length === 0) {
         const reply =
-          type === PING_LIST.type.own
-            ? "You didn't register any pings yet."
-            : 'There are no pings registered for this server.';
+          type === PING_LIST.type.own ?
+            "You didn't register any pings yet."
+          : 'There are no pings registered for this server.';
 
         await defer;
         await interaction.editReply(reply);
@@ -83,9 +91,11 @@ export function pingListHandler(
         pingForPingMeMessageBuilders,
         timezone
       );
-      pingForPingMeMessageBuilders.forEach((pingForPingMeMessageBuilder_: Readonly<PingForPingMeMessageBuilder>) => {
-        pingForPingMeMessageBuilder_.registerPing(pingsDataBase);
-      });
+      pingForPingMeMessageBuilders.forEach(
+        (pingForPingMeMessageBuilder_: Readonly<PingForPingMeMessageBuilder>) => {
+          pingForPingMeMessageBuilder_.registerPing(pingsDataBase);
+        }
+      );
       const reply = pingForPingListMessageBuilder.first();
       await defer;
 

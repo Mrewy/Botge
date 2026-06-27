@@ -83,7 +83,8 @@ import type { Guild } from '../../modules/discord/guild.ts';
 
 import type { User } from '../../modules/discord/user.ts';
 
-export const SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID = 'selectSettingsPermittedRolesRoleSelectMenu';
+export const SELECT_SETTINGS_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID =
+  'selectSettingsPermittedRolesRoleSelectMenu';
 export const SELECT_ADD_EMOTE_PERMITTED_ROLES_ROLE_SELECT_MENU_CUSTOM_ID =
   'selectAddEmotePermittedRolesRoleSelectMenu' as const;
 export const ASSIGN_EMOTE_SETS_MODAL_CUSTOM_ID = 'assignEmoteSetsModal' as const;
@@ -146,8 +147,8 @@ export function buttonHandler(
       if (guild === undefined) return undefined;
 
       if (
-        customId === SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID ||
-        customId === ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID
+        customId === SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID
+        || customId === ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID
       ) {
         const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
@@ -168,7 +169,9 @@ export function buttonHandler(
           .setMaxValues(MAX_ROLE_SELECT_MENU_VALUES);
         if (permittedRoles !== null) roleSelectMenuBuilder.setDefaultRoles([...permittedRoles]);
 
-        const row = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(roleSelectMenuBuilder);
+        const row = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+          roleSelectMenuBuilder
+        );
 
         await defer;
         await interaction.editReply({
@@ -181,7 +184,10 @@ export function buttonHandler(
 
         guild.toggleAllowEveryoneToAddEmote();
         const { allowEveryoneToAddEmote } = guild;
-        databaseManager.permittedRoleIdsDatabase.changeAllowEveryoneToAddEmote(guild.id, allowEveryoneToAddEmote);
+        databaseManager.permittedRoleIdsDatabase.changeAllowEveryoneToAddEmote(
+          guild.id,
+          allowEveryoneToAddEmote
+        );
 
         await defer;
         await interaction.editReply(
@@ -236,12 +242,15 @@ export function buttonHandler(
           .setTitle('Configuration')
           .addLabelComponents(BROADCASTER_NAME_TEXT_INPUT_LABEL, SEVEN_TV_TEXT_INPUT_LABEL);
 
-        if (guild.broadcasterName !== null) BROADCASTER_NAME_TEXT_INPUT.setValue(guild.broadcasterName);
+        if (guild.broadcasterName !== null)
+          BROADCASTER_NAME_TEXT_INPUT.setValue(guild.broadcasterName);
 
         const { personalEmoteSets } = guild.personalEmoteMatcherConstructor;
         if (personalEmoteSets !== undefined) {
           if (personalEmoteSets.sevenTv !== null)
-            SEVEN_TV_TEXT_INPUT.setValue(getSevenTvEmoteSetLinkFromSevenTvApiUlr(personalEmoteSets.sevenTv));
+            SEVEN_TV_TEXT_INPUT.setValue(
+              getSevenTvEmoteSetLinkFromSevenTvApiUlr(personalEmoteSets.sevenTv)
+            );
         }
 
         await interaction.showModal(ASSIGN_EMOTE_SETS_MODAL);
@@ -258,7 +267,8 @@ export function buttonHandler(
           .setLabel('Emote Border Enabled')
           .setDescription('Whether the emote border is enabled.')
           .setCheckboxComponent(EMOTE_BORDER_ENABLED_CHECKBOX);
-        if (enableEmoteBorder !== undefined) EMOTE_BORDER_ENABLED_CHECKBOX.setDefault(enableEmoteBorder);
+        if (enableEmoteBorder !== undefined)
+          EMOTE_BORDER_ENABLED_CHECKBOX.setDefault(enableEmoteBorder);
 
         const EMOTE_BORDER_COLOR_TEXT_INPUT = new TextInputBuilder()
           .setCustomId(EMOTE_BORDER_COLOR_TEXT_INPUT_CUSTOM_ID)
@@ -269,7 +279,8 @@ export function buttonHandler(
           .setLabel('Emote Border Color')
           .setDescription('The HEX code or name of the color of the emote border.')
           .setTextInputComponent(EMOTE_BORDER_COLOR_TEXT_INPUT);
-        if (emoteBorderColor !== undefined) EMOTE_BORDER_COLOR_TEXT_INPUT.setValue(emoteBorderColor);
+        if (emoteBorderColor !== undefined)
+          EMOTE_BORDER_COLOR_TEXT_INPUT.setValue(emoteBorderColor);
 
         /*
         const EMOTE_BORDER_OPACITY_TEXT_INPUT = new TextInputBuilder()
@@ -299,10 +310,11 @@ export function buttonHandler(
       const interactionUserId = interaction.user.id;
 
       if (
-        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingList ||
-        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe
+        messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingList
+        || messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe
       ) {
-        const { pingForPingListMessageBuilders, pingForPingMeMessageBuilders } = messageBuilderManager;
+        const { pingForPingListMessageBuilders, pingForPingMeMessageBuilders } =
+          messageBuilderManager;
 
         const messageBuilders = (():
           | readonly Readonly<PingForPingListMessageBuilder>[]
@@ -317,8 +329,10 @@ export function buttonHandler(
           return undefined;
         }
         const messageBuilderIndex = messageBuilders.findIndex(
-          (messageBuilder_: Readonly<PingForPingMeMessageBuilder> | Readonly<PingForPingListMessageBuilder>) =>
-            messageBuilder_.counter === counter
+          (
+            messageBuilder_:
+              Readonly<PingForPingMeMessageBuilder> | Readonly<PingForPingListMessageBuilder>
+          ) => messageBuilder_.counter === counter
         );
         if (messageBuilderIndex === -1) {
           await interaction.deferUpdate();
@@ -326,9 +340,9 @@ export function buttonHandler(
         }
 
         const pingMessageBuilder =
-          messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe
-            ? pingForPingMeMessageBuilders[messageBuilderIndex]
-            : pingForPingListMessageBuilders[messageBuilderIndex].currentPingForPingMeMessageBuilder;
+          messageBuilderType === PingForPingMeMessageBuilder.messageBuilderTypeForPingMe ?
+            pingForPingMeMessageBuilders[messageBuilderIndex]
+          : pingForPingListMessageBuilders[messageBuilderIndex].currentPingForPingMeMessageBuilder;
         if (pingMessageBuilder === undefined) {
           await interaction.deferUpdate();
           return undefined;
@@ -338,9 +352,15 @@ export function buttonHandler(
         const { pingsDatabase } = databaseManager;
         let pingMessageBuilderReplies: PingForPingMeMessageBuilderReplies | undefined = undefined;
         if (baseCustomId === PING_ME_AS_WELL_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID) {
-          pingMessageBuilderReplies = pingMessageBuilder.addUserId(pingsDatabase, interactionUserId);
+          pingMessageBuilderReplies = pingMessageBuilder.addUserId(
+            pingsDatabase,
+            interactionUserId
+          );
         } else if (baseCustomId === REMOVE_ME_FROM_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID) {
-          pingMessageBuilderReplies = pingMessageBuilder.removeUserId(pingsDatabase, interactionUserId);
+          pingMessageBuilderReplies = pingMessageBuilder.removeUserId(
+            pingsDatabase,
+            interactionUserId
+          );
         } else if (baseCustomId === DELETE_PING_BUTTON_FOR_PING_ME_BASE_CUSTOM_ID) {
           if (pingMessageBuilderInteraction.user.id !== interactionUserId) {
             await interaction.deferUpdate();
@@ -468,12 +488,18 @@ export function buttonHandler(
           return botPermissionsInChannel_;
         })();
 
-        if (!botPermissionsInChannel.has('ViewChannel') || !botPermissionsInChannel.has('SendMessages')) {
+        if (
+          !botPermissionsInChannel.has('ViewChannel')
+          || !botPermissionsInChannel.has('SendMessages')
+        ) {
           await interaction.deferUpdate();
           return undefined;
         }
 
-        await channel.send({ ...messageBuilder_.currentWithSentBy(), allowedMentions: { repliedUser: false } });
+        await channel.send({
+          ...messageBuilder_.currentWithSentBy(),
+          allowedMentions: { repliedUser: false }
+        });
         reply = undefined;
       } else if (baseCustomId === DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID) {
         const messageBuilder_ = messageBuilder as Readonly<EmoteMessageBuilder>;
@@ -543,7 +569,9 @@ export function buttonHandler(
         if (modalSubmitInteraction === undefined) return undefined;
 
         const userId = modalSubmitInteraction.user.id;
-        const mediaName = modalSubmitInteraction.fields.getTextInputValue(RENAME_MEDIA_MODAL_NAME_TEXT_INPUT_CUSTOM_ID);
+        const mediaName = modalSubmitInteraction.fields.getTextInputValue(
+          RENAME_MEDIA_MODAL_NAME_TEXT_INPUT_CUSTOM_ID
+        );
         if (mediaDatabase.mediaNameExists(userId, mediaName)) {
           await modalSubmitInteraction.reply({
             content: 'There already is a media added with this name.',
@@ -594,7 +622,9 @@ export function buttonHandler(
         if (modalSubmitInteraction === undefined) return undefined;
 
         const userId = modalSubmitInteraction.user.id;
-        const quoteName = modalSubmitInteraction.fields.getTextInputValue(RENAME_QUOTE_MODAL_NAME_TEXT_INPUT_CUSTOM_ID);
+        const quoteName = modalSubmitInteraction.fields.getTextInputValue(
+          RENAME_QUOTE_MODAL_NAME_TEXT_INPUT_CUSTOM_ID
+        );
         if (quoteDatabase.quoteNameExists(userId, quoteName)) {
           await modalSubmitInteraction.reply({
             content: 'There already is a quote added with this name.',

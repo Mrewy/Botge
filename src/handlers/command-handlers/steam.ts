@@ -33,11 +33,15 @@ function numberWithCommas(x: number): string {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-const RECENT_REVIEW_REGEX = /([0-9]+)% of the ([0-9,]+) user reviews in the last 30 days are positive\./;
+const RECENT_REVIEW_REGEX =
+  /([0-9]+)% of the ([0-9,]+) user reviews in the last 30 days are positive\./;
 const ALL_REVIEWS_REGEX = /([0-9]+)% of the ([0-9,]+) user reviews for this game are positive\./;
 
 export function steamHandler(gameId: string) {
-  return async function (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> {
+  return async function (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> {
     const defer = interaction.deferReply();
     try {
       const store = (async (): Promise<Response> => {
@@ -51,13 +55,16 @@ export function steamHandler(gameId: string) {
       })();
 
       const numberOfCurrentPlayers = (async (): Promise<Response> => {
-        return fetch(`https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${gameId}`, {
-          headers: {
-            'User-Agent':
-              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept-Language': 'en-US,en;q=0.9'
+        return fetch(
+          `https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/?appid=${gameId}`,
+          {
+            headers: {
+              'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+              'Accept-Language': 'en-US,en;q=0.9'
+            }
           }
-        });
+        );
       })();
 
       if (!(await store).ok) {
@@ -74,8 +81,8 @@ export function steamHandler(gameId: string) {
       const storeHtml = await (await store).text();
       const recentReviewsMatch = RECENT_REVIEW_REGEX.exec(storeHtml);
       const allReviewsMatch = ALL_REVIEWS_REGEX.exec(storeHtml);
-      const playerCount = ((await (await numberOfCurrentPlayers).json()) as NumberOfCurrentPlayers).response
-        .player_count;
+      const playerCount = ((await (await numberOfCurrentPlayers).json()) as NumberOfCurrentPlayers)
+        .response.player_count;
 
       if (recentReviewsMatch === null) throw new Error('null recentReviewsMatch');
       if (allReviewsMatch === null) throw new Error('null allReviewsMatch');
@@ -92,14 +99,14 @@ export function steamHandler(gameId: string) {
       const reset = '\u001b[0m';
 
       const replyText =
-        '```ansi\n' +
-        `RECENT REVIEWS: \u001b[1m${recentReviewsColor}${recentReviewsPercent}% ${recentReviewsLabel}\u001b[0m ${reset} (${recentReviewsMatch[2]})\n` +
-        `ALL REVIEWS: \u001b[1m${allReviewsColor}${allReviewsPercent}% ${allReviewsLabel}\u001b[0m ${reset} (${allReviewsMatch[2]})\n` +
-        `PLAYERS RIGHT NOW: \u001b[1m\u001b[32m${numberWithCommas(playerCount)}\u001b[0m\n` + // Player count bold and green
-        '```' +
-        (guild.id === GUILD_ID_CUTEDOG
-          ? "\n-# Disclaimer: This CuteDog_ server is filled with a bunch of sad man-children who would rather waste time bot-checking a game's Steam rating than actually getting better at the game itself."
-          : '');
+        '```ansi\n'
+        + `RECENT REVIEWS: \u001b[1m${recentReviewsColor}${recentReviewsPercent}% ${recentReviewsLabel}\u001b[0m ${reset} (${recentReviewsMatch[2]})\n`
+        + `ALL REVIEWS: \u001b[1m${allReviewsColor}${allReviewsPercent}% ${allReviewsLabel}\u001b[0m ${reset} (${allReviewsMatch[2]})\n`
+        + `PLAYERS RIGHT NOW: \u001b[1m\u001b[32m${numberWithCommas(playerCount)}\u001b[0m\n` // Player count bold and green
+        + '```'
+        + (guild.id === GUILD_ID_CUTEDOG ?
+          "\n-# Disclaimer: This CuteDog_ server is filled with a bunch of sad man-children who would rather waste time bot-checking a game's Steam rating than actually getting better at the game itself."
+        : '');
 
       await defer;
       await interaction.editReply(replyText);

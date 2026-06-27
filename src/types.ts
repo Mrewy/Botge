@@ -38,7 +38,9 @@ export type ReadonlyActionRowBuilderMessageActionRowComponentBuilder = DeepReado
   ActionRowBuilder<MessageActionRowComponentBuilder>
 >;
 export type ReadonlyModalBuilder = DeepReadonly<ModalBuilder>;
-export type ReadonlyApplicationCommandOptionChoiceDataString = DeepReadonly<ApplicationCommandOptionChoiceData<string>>;
+export type ReadonlyApplicationCommandOptionChoiceDataString = DeepReadonly<
+  ApplicationCommandOptionChoiceData<string>
+>;
 
 export type ReadonlyEmbed = DeepReadonly<Embed>;
 export type ReadonlyAttachment = DeepReadonly<Attachment>;

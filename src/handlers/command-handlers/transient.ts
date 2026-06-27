@@ -46,7 +46,8 @@ export function transientHandler() {
 
       let reply = text;
       if (attachment !== undefined) reply = attachment.url;
-      if (reply === undefined) throw new Error('Either text or attachment must have been not undefined.');
+      if (reply === undefined)
+        throw new Error('Either text or attachment must have been not undefined.');
 
       await interaction.reply(reply);
       await setTimeout(duration * 1000);

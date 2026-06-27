@@ -28,10 +28,14 @@ import { BaseMessageBuilder, getCustomId } from './base.ts';
 
 export const DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID = 'deleteEmoteButton' as const;
 
-export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMessageBuilderTransformFunctionReturnType> {
+export class EmoteMessageBuilder extends BaseMessageBuilder<
+  AssetInfo,
+  EmoteMessageBuilderTransformFunctionReturnType
+> {
   static readonly #messageBuilderType = 'Emote' as const;
   static #staticCounter = 0;
-  readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder | undefined = undefined;
+  readonly #extraRow: ReadonlyActionRowBuilderMessageActionRowComponentBuilder | undefined =
+    undefined;
   readonly #shortestUniqueSubstrings: readonly string[] | undefined;
   readonly #markedAsDeletedArray: number[] | undefined = undefined;
 
@@ -41,7 +45,9 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMess
     shortestUniqueSubstrings?: readonly string[],
     isAddedEmoteDeleteMode = false
   ) {
-    const transformFunction = (assetInfo: AssetInfo): EmoteMessageBuilderTransformFunctionReturnType => {
+    const transformFunction = (
+      assetInfo: AssetInfo
+    ): EmoteMessageBuilderTransformFunctionReturnType => {
       const { name, url, zeroWidth, platform, width, height } = assetInfo;
 
       const embed = new EmbedBuilder();
@@ -52,7 +58,10 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMess
           value: this.#shortestUniqueSubstrings[this.currentIndex]
         });
 
-      if (this.#markedAsDeletedArray !== undefined && this.#markedAsDeletedArray.includes(this.currentIndex))
+      if (
+        this.#markedAsDeletedArray !== undefined
+        && this.#markedAsDeletedArray.includes(this.currentIndex)
+      )
         embed.setDescription('❌ DELETED ❌');
 
       embed
@@ -67,7 +76,11 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMess
         )
         .setImage(url)
         .setFooter({
-          text: `${this.currentIndex + 1}/${this.arrayLength}.${isAddedEmoteDeleteMode ? ' Sorted alphabetically.' : shortestUniqueSubstrings === undefined ? ' Sorted by date added(newest first).' : ''}`
+          text: `${this.currentIndex + 1}/${this.arrayLength}.${
+            isAddedEmoteDeleteMode ? ' Sorted alphabetically.'
+            : shortestUniqueSubstrings === undefined ? ' Sorted by date added(newest first).'
+            : ''
+          }`
         });
 
       return {
@@ -94,7 +107,11 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<AssetInfo, EmoteMess
       this.#extraRow = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
         new ButtonBuilder()
           .setCustomId(
-            getCustomId(DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID, EmoteMessageBuilder.messageBuilderType, this.counter)
+            getCustomId(
+              DELETE_EMOTE_BUTTON_BASE_CUSTOM_ID,
+              EmoteMessageBuilder.messageBuilderType,
+              this.counter
+            )
           )
           .setLabel('Delete')
           .setStyle(ButtonStyle.Danger)

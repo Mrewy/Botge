@@ -118,14 +118,20 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
 
   //client
   const client: Client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent
+    ]
   });
 
   //apiManager
   const twitchClipsMeiliSearch: Readonly<TwitchClipsMeilisearch> | undefined =
-    MEILISEARCH_HOST !== undefined && MEILI_MASTER_KEY !== undefined
-      ? new TwitchClipsMeilisearch(new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY }))
-      : undefined;
+    MEILISEARCH_HOST !== undefined && MEILI_MASTER_KEY !== undefined ?
+      new TwitchClipsMeilisearch(
+        new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY })
+      )
+    : undefined;
 
   /*
   const redditApi =
@@ -134,9 +140,9 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
       : undefined;
   */
   const twitchApi =
-    TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined
-      ? newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
-      : undefined;
+    TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined ?
+      newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
+    : undefined;
 
   const cachedUrl: Readonly<CachedUrl> = new CachedUrl(LOCAL_CACHE_BASE);
 
@@ -156,11 +162,15 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
 
   //databaseManager
   const broadcasterNameAndPersonalEmoteSetsDatabase: Readonly<BroadcasterNameAndPersonalEmoteSetsDatabase> =
-    new BroadcasterNameAndPersonalEmoteSetsDatabase(DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets);
+    new BroadcasterNameAndPersonalEmoteSetsDatabase(
+      DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets
+    );
   const permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase> = new PermittedRoleIdsDatabase(
     DATABASE_PATHS.permitRoleIds
   );
-  const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(DATABASE_PATHS.addedEmotes);
+  const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(
+    DATABASE_PATHS.addedEmotes
+  );
 
   const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_PATHS.media);
   const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_PATHS.users);
@@ -204,7 +214,8 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     const emoteBorderColor = databaseUser.emoteBorderColor ?? undefined;
     // const emoteBorderOpacity = databaseUser.emoteBorderOpacity ?? undefined;
 
-    if (guildId === null) return new User(databaseUser.userId, undefined, enableEmoteBorder, emoteBorderColor);
+    if (guildId === null)
+      return new User(databaseUser.userId, undefined, enableEmoteBorder, emoteBorderColor);
 
     const guild = guilds.find((guild_) => guild_.id === guildId);
     if (guild === undefined) throw new Error('Undefined guild while searching for guild for user.');
@@ -268,9 +279,9 @@ process.on('unhandledRejection', (error): void => {
 });
 
 const refreshClipsOrRefreshUniqueCreatorNamesAndGameIds: readonly Promise<void>[] =
-  process.env['UPDATE_CLIPS_ON_STARTUP'] === 'true'
-    ? bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi))
-    : bot.guilds.map(async (guild) => guild.refreshUniqueCreatorNamesAndGameIds());
+  process.env['UPDATE_CLIPS_ON_STARTUP'] === 'true' ?
+    bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi))
+  : bot.guilds.map(async (guild) => guild.refreshUniqueCreatorNamesAndGameIds());
 delete process.env['UPDATE_CLIPS_ON_STARTUP'];
 
 scheduleJob('0 */4 * * * *', () => {
@@ -298,7 +309,9 @@ scheduleJob('0 */2 * * *', async () => {
 
 scheduleJob('6 */6 * * *', async () => {
   await Promise.all(
-    bot.guilds.map(async (guild) => guild.personalEmoteMatcherConstructor.refreshBTTVAndFFZPersonalEmotes())
+    bot.guilds.map(async (guild) =>
+      guild.personalEmoteMatcherConstructor.refreshBTTVAndFFZPersonalEmotes()
+    )
   );
 });
 

@@ -4,7 +4,9 @@ import { exec, type ExecException } from 'node:child_process';
 
 export const DEFAULT_DURATION = 0 as const;
 
-export async function getDimension(filename: string): Promise<readonly [number, number] | undefined> {
+export async function getDimension(
+  filename: string
+): Promise<readonly [number, number] | undefined> {
   return new Promise((resolve) => {
     exec(
       `ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 ${filename}`,
@@ -31,7 +33,8 @@ export async function getDimension(filename: string): Promise<readonly [number, 
 
 export async function getDuration(filename: string): Promise<number | undefined> {
   let filename_ = filename;
-  if (filename.startsWith('http://') || filename.startsWith('https://')) filename_ = `cache:${filename}`;
+  if (filename.startsWith('http://') || filename.startsWith('https://'))
+    filename_ = `cache:${filename}`;
 
   return new Promise((resolve) => {
     exec(

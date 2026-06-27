@@ -112,12 +112,18 @@ export class Guild {
     await this.refreshClips(twitchApi, true);
   }
 
-  public async changePersonalEmoteSetsAndRefreshEmoteMatcher(personalEmoteSets: PersonalEmoteSets): Promise<void> {
-    const emoteMatcher_ = await this.#personalEmoteMatcherConstructor.changePersonalEmoteSets(personalEmoteSets);
+  public async changePersonalEmoteSetsAndRefreshEmoteMatcher(
+    personalEmoteSets: PersonalEmoteSets
+  ): Promise<void> {
+    const emoteMatcher_ =
+      await this.#personalEmoteMatcherConstructor.changePersonalEmoteSets(personalEmoteSets);
     if (emoteMatcher_ !== undefined) this.#emoteMatcher = emoteMatcher_;
   }
 
-  public async refreshClips(twitchApi: Readonly<TwitchApi> | undefined, deleteOld?: boolean): Promise<void> {
+  public async refreshClips(
+    twitchApi: Readonly<TwitchApi> | undefined,
+    deleteOld?: boolean
+  ): Promise<void> {
     if (this.#twitchClipsMeilisearchIndex === undefined || twitchApi === undefined) return;
     if (this.#broadcasterName === null) return;
 
@@ -127,7 +133,8 @@ export class Guild {
     const updateDocumentsQueue: Readonly<EnqueuedTaskPromise>[] = [];
     let updated = 0;
 
-    if (deleteOld !== undefined && deleteOld) await this.#twitchClipsMeilisearchIndex.deleteAllDocuments().waitTask();
+    if (deleteOld !== undefined && deleteOld)
+      await this.#twitchClipsMeilisearchIndex.deleteAllDocuments().waitTask();
 
     if (this.#id === GUILD_ID_CUTEDOG) {
       // custom clips
@@ -135,7 +142,9 @@ export class Guild {
       const clipIds = await listCutedogClipIds();
 
       for (let i = 0; i < clipIds.length; i += increment) {
-        const clips = (await getClipsWithGameNameFromIds(twitchApi, clipIds.slice(i, i + increment))).map((clip) => {
+        const clips = (
+          await getClipsWithGameNameFromIds(twitchApi, clipIds.slice(i, i + increment))
+        ).map((clip) => {
           if (clip.game_id === '') return { ...clip, game_id: 'N/A' };
           else return clip;
         });
@@ -177,7 +186,9 @@ export class Guild {
       }
     }
 
-    await Promise.all(updateDocumentsQueue.map(async (updateDocuments) => updateDocuments.waitTask()));
+    await Promise.all(
+      updateDocumentsQueue.map(async (updateDocuments) => updateDocuments.waitTask())
+    );
     await this.refreshUniqueCreatorNamesAndGameIds();
     console.log(`Updated ${updated} clips.`);
   }
@@ -186,7 +197,8 @@ export class Guild {
     if (this.#twitchClipsMeilisearchIndex === undefined) return;
 
     const { maxTotalHits } = await this.#twitchClipsMeilisearchIndex.getPagination();
-    if (maxTotalHits === null || maxTotalHits === undefined) throw new Error('pagination max total hits not set');
+    if (maxTotalHits === null || maxTotalHits === undefined)
+      throw new Error('pagination max total hits not set');
 
     const clipsge: readonly TwitchClip[] = (
       await this.#twitchClipsMeilisearchIndex.getDocuments({ limit: maxTotalHits })

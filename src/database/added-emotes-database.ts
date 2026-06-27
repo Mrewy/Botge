@@ -17,7 +17,9 @@ export class AddedEmotesDatabase extends BaseDatabase {
   public insert(addedEmote: AddedEmote, guildId: string): void {
     const { url, alias } = addedEmote;
 
-    const statement = this.databaseSync.prepare(`INSERT INTO ${getTableName(guildId)} (url, alias) VALUES (?, ?)`);
+    const statement = this.databaseSync.prepare(
+      `INSERT INTO ${getTableName(guildId)} (url, alias) VALUES (?, ?)`
+    );
     statement.run(url, alias);
   }
 

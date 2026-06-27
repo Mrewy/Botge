@@ -23,15 +23,20 @@ import type { Guild } from '../../modules/discord/guild.ts';
 
 export const SETTINGS_PERMITTED_ROLES_BUTTON_CUSTOM_ID = 'settingsPermittedRolesButton' as const;
 export const ADD_EMOTE_PERMITTED_ROLES_BUTTON_CUSTOM_ID = 'addEmotePermittedRolesButton' as const;
-export const ALLOW_EVERYONE_TO_ADD_EMOTE_BUTTON_CUSTOM_ID = 'allowEveryoneToAddEmoteButton' as const;
+export const ALLOW_EVERYONE_TO_ADD_EMOTE_BUTTON_CUSTOM_ID =
+  'allowEveryoneToAddEmoteButton' as const;
 export const ADDED_EMOTE_DELETION_MENU_BUTTON_CUSTOM_ID = 'addedEmoteDeletionMenuButton' as const;
 export const CONFIGURATION_GUILD_BUTTON_CUSTOM_ID = 'configurationGuildButton' as const;
 export const CONFIGURATION_USER_BUTTON_CUSTOM_ID = 'configurationUserButton' as const;
 
-export const EMOTE_BORDER_CONFIGURATION_BUTTON_CUSTOM_ID = 'borderOnEmotesConfigurationButton' as const;
+export const EMOTE_BORDER_CONFIGURATION_BUTTON_CUSTOM_ID =
+  'borderOnEmotesConfigurationButton' as const;
 
 export function settingsHandler() {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild> | undefined): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild> | undefined
+  ): Promise<void> => {
     const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
     try {
       const { member } = interaction;
@@ -51,14 +56,19 @@ export function settingsHandler() {
         return;
       }
 
-      let guildSettingsRow: ActionRowBuilder<MessageActionRowComponentBuilder> | undefined = undefined;
+      let guildSettingsRow: ActionRowBuilder<MessageActionRowComponentBuilder> | undefined =
+        undefined;
 
       const member_ = member as GuildMember;
       const memberRolesCache: readonly (readonly [string, Role])[] = [...member_.roles.cache];
       const owner_ = owner(member_, interactionGuild);
       const globalAdministrator_ = globalAdministrator(member_);
 
-      if (permitted(memberRolesCache, guild.settingsPermittedRoleIds) || owner_ || globalAdministrator_) {
+      if (
+        permitted(memberRolesCache, guild.settingsPermittedRoleIds)
+        || owner_
+        || globalAdministrator_
+      ) {
         guildSettingsRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
 
         if (administrator(memberRolesCache) || owner_ || globalAdministrator_) {
@@ -81,7 +91,9 @@ export function settingsHandler() {
             .setStyle(ButtonStyle.Success),
           new ButtonBuilder()
             .setCustomId(ALLOW_EVERYONE_TO_ADD_EMOTE_BUTTON_CUSTOM_ID)
-            .setLabel(`Allow everyone to add emote (Currently: ${booleanToAllowed(guild.allowEveryoneToAddEmote)})`)
+            .setLabel(
+              `Allow everyone to add emote (Currently: ${booleanToAllowed(guild.allowEveryoneToAddEmote)})`
+            )
             .setStyle(ButtonStyle.Success),
           new ButtonBuilder()
             .setCustomId(ADDED_EMOTE_DELETION_MENU_BUTTON_CUSTOM_ID)
@@ -101,7 +113,8 @@ export function settingsHandler() {
 
       await defer;
       await interaction.editReply({
-        components: guildSettingsRow !== undefined ? [guildSettingsRow, userSettingsRow] : [userSettingsRow]
+        components:
+          guildSettingsRow !== undefined ? [guildSettingsRow, userSettingsRow] : [userSettingsRow]
       });
     } catch (error) {
       logError(error, 'Error at settingsHandler');

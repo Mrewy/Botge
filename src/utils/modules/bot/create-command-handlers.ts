@@ -27,7 +27,10 @@ import type { ApiManager } from '../../../modules/bot/api-manager.ts';
 import { SLASH_COMMAND_NAMES } from '../../../modules/discord/commands.ts';
 import type { Guild } from '../../../modules/discord/guild.ts';
 
-export type CommandHandler = (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>) => Promise<void>;
+export type CommandHandler = (
+  interaction: ChatInputCommandInteraction,
+  guild: Readonly<Guild>
+) => Promise<void>;
 
 export function createCommandHandlers(
   scheduledJobs: Readonly<Job>[],
@@ -41,7 +44,10 @@ export function createCommandHandlers(
       SLASH_COMMAND_NAMES.shortestUniqueSubstrings,
       shortestUniqueSubstringsHandler(messageBuilderManager.emoteMessageBuilders)
     ],
-    [SLASH_COMMAND_NAMES.addEmote, addEmoteHandlerSevenTVNotInSet(databaseManager.addedEmotesDatabase)],
+    [
+      SLASH_COMMAND_NAMES.addEmote,
+      addEmoteHandlerSevenTVNotInSet(databaseManager.addedEmotesDatabase)
+    ],
     [SLASH_COMMAND_NAMES.emote, emoteHandler()],
     [SLASH_COMMAND_NAMES.emoteList, emoteListHandler(messageBuilderManager.emoteMessageBuilders)],
     [SLASH_COMMAND_NAMES.findTheEmoji, findTheEmojiHandler()],

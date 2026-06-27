@@ -34,7 +34,9 @@ export async function assetSizeChange(asset: AssetInfo, size: number): Promise<A
     const sevenUrl = `https://7tv.app/emotes/${emoteId}`;
     const sevenUrlToSevenNotInSet_ = await sevenTVUrlToSevenTVNotInSet(sevenUrl);
     const sevenNotInSetToAsset_ =
-      sevenUrlToSevenNotInSet_ !== undefined ? sevenTVNotInSetToAsset(sevenUrlToSevenNotInSet_, size) : undefined;
+      sevenUrlToSevenNotInSet_ !== undefined ?
+        sevenTVNotInSetToAsset(sevenUrlToSevenNotInSet_, size)
+      : undefined;
 
     return sevenNotInSetToAsset_ ?? asset;
   }

@@ -22,7 +22,9 @@ export class MediaDatabase extends BaseDatabase {
     if (!this.#tableExists(tableName)) this.#createTable(userId);
 
     const { url, name, dateAdded } = media;
-    const statement = this.databaseSync.prepare(`INSERT INTO ${tableName} (name, url, dateAdded) VALUES (?, ?, ?)`);
+    const statement = this.databaseSync.prepare(
+      `INSERT INTO ${tableName} (name, url, dateAdded) VALUES (?, ?, ?)`
+    );
     statement.run(name, url, dateAdded.getTime());
   }
 
@@ -31,7 +33,9 @@ export class MediaDatabase extends BaseDatabase {
     if (!this.#tableExists(tableName)) return;
 
     const { url, name } = media;
-    const statement = this.databaseSync.prepare(`DELETE FROM ${tableName} WHERE url = (?) AND name = (?)`);
+    const statement = this.databaseSync.prepare(
+      `DELETE FROM ${tableName} WHERE url = (?) AND name = (?)`
+    );
     statement.run(url, name);
   }
 
@@ -39,7 +43,9 @@ export class MediaDatabase extends BaseDatabase {
     const tableName = getTableName(userId);
     if (!this.#tableExists(tableName)) return;
 
-    const statement = this.databaseSync.prepare(`UPDATE ${tableName} SET name = (?) WHERE url = (?)`);
+    const statement = this.databaseSync.prepare(
+      `UPDATE ${tableName} SET name = (?) WHERE url = (?)`
+    );
     statement.run(name, url);
   }
 
@@ -79,7 +85,11 @@ export class MediaDatabase extends BaseDatabase {
     const databaseMediaArray = statement.all() as DatabaseMedia[];
 
     const mediaArray: Media[] = databaseMediaArray.map((databaseMedia) => {
-      return { name: databaseMedia.name, url: databaseMedia.url, dateAdded: new Date(databaseMedia.dateAdded) };
+      return {
+        name: databaseMedia.name,
+        url: databaseMedia.url,
+        dateAdded: new Date(databaseMedia.dateAdded)
+      };
     });
     return [...mediaArray].sort((a, b) => b.dateAdded.getTime() - a.dateAdded.getTime());
   }
@@ -119,7 +129,9 @@ export class MediaDatabase extends BaseDatabase {
   }
 
   #tableExists(tableName: string): boolean {
-    const statement = this.databaseSync.prepare(`SELECT name FROM sqlite_master WHERE type = 'table' AND name = (?)`);
+    const statement = this.databaseSync.prepare(
+      `SELECT name FROM sqlite_master WHERE type = 'table' AND name = (?)`
+    );
     const row = statement.get(tableName);
 
     if (row !== undefined) return true;

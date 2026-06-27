@@ -13,7 +13,10 @@ export function quoteListHandler(
   quoteDataBase: Readonly<QuotesDatabase>,
   quoteMessageBuilders: Readonly<QuoteMessageBuilder>[]
 ) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const defer = interaction.deferReply({ flags: MessageFlags.Ephemeral });
     try {
       const sortBy = getOptionValue<string>(interaction, 'sortby');
@@ -21,7 +24,8 @@ export function quoteListHandler(
       const allQuote = ((): readonly Quote[] => {
         const allQuote_ = quoteDataBase.getAllQuote(userId);
 
-        if (sortBy === 'alphabetical') return [...allQuote_].sort((a, b) => a.name.localeCompare(b.name));
+        if (sortBy === 'alphabetical')
+          return [...allQuote_].sort((a, b) => a.name.localeCompare(b.name));
         return allQuote_;
       })();
 

@@ -53,7 +53,8 @@ let ADD_QUOTE_MODAL_COUNTER = 0;
 let REMOVE_QUOTE_MODAL_COUNTER = 0;
 
 type getMediaUrlFromMessageReturnType =
-  { readonly type: 'success'; readonly mediaUrl: string } | { readonly type: 'feedback'; readonly message: string };
+  | { readonly type: 'success'; readonly mediaUrl: string }
+  | { readonly type: 'feedback'; readonly message: string };
 
 function getMediaUrlFromMessage(message: Message): getMediaUrlFromMessageReturnType {
   const { embeds } = message;
@@ -61,13 +62,19 @@ function getMediaUrlFromMessage(message: Message): getMediaUrlFromMessageReturnT
 
   if (embeds.length === 0) {
     if (attachments.size === 0) {
-      return { type: 'feedback', message: 'There are no embeds/attachments in the target message.' };
+      return {
+        type: 'feedback',
+        message: 'There are no embeds/attachments in the target message.'
+      };
     }
   }
 
   if (embeds.length !== 1) {
     if (attachments.size === 0)
-      return { type: 'feedback', message: 'There are no embeds/attachments in the target message.' };
+      return {
+        type: 'feedback',
+        message: 'There are no embeds/attachments in the target message.'
+      };
     else if (attachments.size > 1)
       return { type: 'feedback', message: 'Target message has more than one embeds/attachments.' };
 
@@ -82,11 +89,14 @@ function getMediaUrlFromMessage(message: Message): getMediaUrlFromMessageReturnT
     if (embedUrl === null) return { type: 'feedback', message: "Target message's url is empty." };
 
     if (
-      !embedUrl.startsWith('https://tenor.com/view/') &&
-      !embedUrl.startsWith('https://cdn.discordapp.com/attachments/') &&
-      !embedUrl.startsWith('https://media.discordapp.com/attachments/')
+      !embedUrl.startsWith('https://tenor.com/view/')
+      && !embedUrl.startsWith('https://cdn.discordapp.com/attachments/')
+      && !embedUrl.startsWith('https://media.discordapp.com/attachments/')
     ) {
-      return { type: 'feedback', message: 'Currently the only supported media are Tenor links and attachments.' };
+      return {
+        type: 'feedback',
+        message: 'Currently the only supported media are Tenor links and attachments.'
+      };
     }
 
     return { type: 'success', mediaUrl: embedUrl };
@@ -99,12 +109,14 @@ export function messageContextMenuCommandHandler(
 ) {
   return async (interaction: MessageContextMenuCommandInteraction): Promise<void> => {
     const defer =
-      interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.addMedia &&
-      interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.removeMedia &&
-      interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.addQuote &&
-      interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.removeQuote
-        ? interaction.deferReply()
-        : undefined;
+      (
+        interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.addMedia
+        && interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.removeMedia
+        && interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.addQuote
+        && interaction.commandName !== CONTEXT_MENU_COMMAND_NAMES.removeQuote
+      ) ?
+        interaction.deferReply()
+      : undefined;
 
     try {
       if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.chatGptExplain) {
@@ -135,17 +147,21 @@ export function messageContextMenuCommandHandler(
           const inputImages = ((): OpenAIResponseInput | undefined => {
             const { embeds, attachments } = interaction.targetMessage;
 
-            const embeds_ = embeds.map((embed: ReadonlyEmbed) => embed.url).filter((embedUrl) => embedUrl !== null);
+            const embeds_ = embeds
+              .map((embed: ReadonlyEmbed) => embed.url)
+              .filter((embedUrl) => embedUrl !== null);
             const imageUrls =
-              embeds_.length > 0 ? embeds_ : attachments.map((attachment: ReadonlyAttachment) => attachment.url);
+              embeds_.length > 0 ?
+                embeds_
+              : attachments.map((attachment: ReadonlyAttachment) => attachment.url);
             const images: OpenAIResponseInputImage[] = imageUrls.map((imageUrl) => ({
               type: 'input_image',
               image_url: imageUrl,
               detail: 'low'
             }));
 
-            return images.length > 0
-              ? [
+            return images.length > 0 ?
+                [
                   { role: 'user', content: inputText },
                   {
                     role: 'user',
@@ -168,9 +184,9 @@ export function messageContextMenuCommandHandler(
 
         const messageContent = response.output_text;
         const reply =
-          messageContent.length > MAX_DISCORD_MESSAGE_LENGTH
-            ? messageContent.slice(0, MAX_DISCORD_MESSAGE_LENGTH - 5) + ' ...'
-            : messageContent;
+          messageContent.length > MAX_DISCORD_MESSAGE_LENGTH ?
+            messageContent.slice(0, MAX_DISCORD_MESSAGE_LENGTH - 5) + ' ...'
+          : messageContent;
 
         await defer;
         await interaction.editReply(reply);
@@ -225,7 +241,9 @@ export function messageContextMenuCommandHandler(
           .catch(() => undefined); //timeout catch
         if (modalSubmitInteraction === undefined) return;
 
-        const mediaName = modalSubmitInteraction.fields.getTextInputValue(ADD_MEDIA_MODAL_NAME_TEXT_INPUT_CUSTOM_ID);
+        const mediaName = modalSubmitInteraction.fields.getTextInputValue(
+          ADD_MEDIA_MODAL_NAME_TEXT_INPUT_CUSTOM_ID
+        );
         if (mediaDatabase.mediaNameExists(userId, mediaName)) {
           await modalSubmitInteraction.reply({
             content: 'There already is a media added with this name.',
@@ -268,7 +286,9 @@ export function messageContextMenuCommandHandler(
         const modal = new ModalBuilder()
           .setCustomId(modalCustomId)
           .setTitle('Are you sure?')
-          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`You are about to delete '${mediaName}'.`));
+          .addTextDisplayComponents(
+            new TextDisplayBuilder().setContent(`You are about to delete '${mediaName}'.`)
+          );
         await interaction.showModal(modal);
 
         const modalSubmitInteraction = await interaction
@@ -281,7 +301,10 @@ export function messageContextMenuCommandHandler(
         if (modalSubmitInteraction === undefined) return;
 
         mediaDatabase.delete(userId, { name: mediaName, url: mediaUrl });
-        await modalSubmitInteraction.reply({ content: `Removed media ${mediaName}.`, flags: MessageFlags.Ephemeral });
+        await modalSubmitInteraction.reply({
+          content: `Removed media ${mediaName}.`,
+          flags: MessageFlags.Ephemeral
+        });
       } else if (interaction.commandName === CONTEXT_MENU_COMMAND_NAMES.translate) {
         const { translator } = apiManager;
 
@@ -342,7 +365,9 @@ export function messageContextMenuCommandHandler(
           .catch(() => undefined); //timeout catch
         if (modalSubmitInteraction === undefined) return;
 
-        const quoteName = modalSubmitInteraction.fields.getTextInputValue(ADD_QUOTE_MODAL_NAME_TEXT_INPUT_CUSTOM_ID);
+        const quoteName = modalSubmitInteraction.fields.getTextInputValue(
+          ADD_QUOTE_MODAL_NAME_TEXT_INPUT_CUSTOM_ID
+        );
         if (quoteDatabase.quoteNameExists(userId, quoteName)) {
           await modalSubmitInteraction.reply({
             content: 'There already is a quote added with this name.',
@@ -376,7 +401,9 @@ export function messageContextMenuCommandHandler(
         const modal = new ModalBuilder()
           .setCustomId(modalCustomId)
           .setTitle('Are you sure?')
-          .addTextDisplayComponents(new TextDisplayBuilder().setContent(`You are about to delete '${quoteName}'.`));
+          .addTextDisplayComponents(
+            new TextDisplayBuilder().setContent(`You are about to delete '${quoteName}'.`)
+          );
         await interaction.showModal(modal);
 
         const modalSubmitInteraction = await interaction
@@ -389,7 +416,10 @@ export function messageContextMenuCommandHandler(
         if (modalSubmitInteraction === undefined) return;
 
         quoteDatabase.delete(userId, { name: quoteName, content: content });
-        await modalSubmitInteraction.reply({ content: `Removed quote ${quoteName}.`, flags: MessageFlags.Ephemeral });
+        await modalSubmitInteraction.reply({
+          content: `Removed quote ${quoteName}.`,
+          flags: MessageFlags.Ephemeral
+        });
       }
     } catch (error) {
       logError(error, 'Error at contextMenuCommandHandler');

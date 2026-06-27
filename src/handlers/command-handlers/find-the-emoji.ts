@@ -9,7 +9,10 @@ import type { Guild } from '../../modules/discord/guild.ts';
 const DEFAULT_SIZE = 5 as const;
 
 export function findTheEmojiHandler() {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     const defer = interaction.deferReply();
     try {
       const emoji = getOptionValue<string>(interaction, 'emoji');

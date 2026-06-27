@@ -8,7 +8,10 @@ import type { QuotesDatabase } from '../../database/quotes-database.ts';
 import { GUILD_ID_CUTEDOG, type Guild } from '../../modules/discord/guild.ts';
 
 export function quoteHandler(quoteDataBase: Readonly<QuotesDatabase>) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     try {
       const name = getOptionValueWithoutUndefined<string>(interaction, 'name');
       const quoteContent = ((): string | undefined => {
@@ -18,7 +21,8 @@ export function quoteHandler(quoteDataBase: Readonly<QuotesDatabase>) {
         return quoteDataBase.getQuoteContent(interaction.user.id, name.toLowerCase());
       })();
 
-      const quoteNotFoundReply = interaction.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'Quote not found.';
+      const quoteNotFoundReply =
+        interaction.guildId === GUILD_ID_CUTEDOG ? 'jij' : 'Quote not found.';
 
       if (quoteContent === undefined) {
         await interaction.reply({ content: quoteNotFoundReply, flags: MessageFlags.Ephemeral });

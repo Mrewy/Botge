@@ -4,7 +4,9 @@ import type { TwitchApi } from '../../../api/twitch-api.ts';
 import type { BTTVPersonalEmotes, FFZPersonalEmotes, SevenTVEmotes } from '../../../types.ts';
 import { fetchAndJson } from '../../public/fetch-and-json.ts';
 
-const regExpSevenTvEmoteSetLink: Readonly<RegExp> = new RegExp(/^https:\/\/7tv\.app\/emote-sets\/[A-Za-z0-9]{26}$/);
+const regExpSevenTvEmoteSetLink: Readonly<RegExp> = new RegExp(
+  /^https:\/\/7tv\.app\/emote-sets\/[A-Za-z0-9]{26}$/
+);
 
 export type ApiUrlMessage =
   | { readonly type: 'success'; readonly url: string; readonly ownerUsername?: string }
@@ -16,7 +18,9 @@ export function getSevenTvEmoteSetLinkFromSevenTvApiUlr(sevenTvEmoteSetApiUrl: s
   return `https://7tv.app/emote-sets/${emoteSetId}`;
 }
 
-export async function getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLink: string): Promise<ApiUrlMessage> {
+export async function getSevenTvApiUrlFromSevenTvEmoteSetLink(
+  sevenTvEmoteSetLink: string
+): Promise<ApiUrlMessage> {
   const test = regExpSevenTvEmoteSetLink.test(sevenTvEmoteSetLink);
   if (!test)
     return {
@@ -29,7 +33,8 @@ export async function getSevenTvApiUrlFromSevenTvEmoteSetLink(sevenTvEmoteSetLin
   const sevenTvApiUrl = `https://7tv.io/v3/emote-sets/${emoteSetId}`;
 
   const fetched = await fetchAndJson(sevenTvApiUrl).catch(() => undefined);
-  if (fetched === undefined) return { type: 'error', message: 'Unknown error at getting 7TV emote set.' };
+  if (fetched === undefined)
+    return { type: 'error', message: 'Unknown error at getting 7TV emote set.' };
 
   const sevenTVEmotes = fetched as SevenTVEmotes;
   if (sevenTVEmotes.error !== undefined) return { type: 'error', message: sevenTVEmotes.error };
@@ -45,10 +50,14 @@ export async function getBttvApiUrlFromBroadcasterName(
   twitchApi: Readonly<TwitchApi> | undefined
 ): Promise<ApiUrlMessage> {
   if (twitchApi === undefined)
-    return { type: 'error', message: 'The bot is unable to get broadcaster name from Twitch at this time.' };
+    return {
+      type: 'error',
+      message: 'The bot is unable to get broadcaster name from Twitch at this time.'
+    };
 
   const users = await twitchApi.users([broadcasterName]).catch(() => undefined);
-  if (users === undefined) return { type: 'error', message: 'Unknown error at getting broadcaster id from Twitch.' };
+  if (users === undefined)
+    return { type: 'error', message: 'Unknown error at getting broadcaster id from Twitch.' };
 
   if (users.data.length === 0) return { type: 'error', message: 'No such broadcaster' };
 
@@ -56,7 +65,8 @@ export async function getBttvApiUrlFromBroadcasterName(
   const apiUrl = `https://api.betterttv.net/3/cached/users/twitch/${userId}`;
 
   const fetched = await fetchAndJson(apiUrl).catch(() => undefined);
-  if (fetched === undefined) return { type: 'error', message: 'Unknown error at getting BTTV emote set.' };
+  if (fetched === undefined)
+    return { type: 'error', message: 'Unknown error at getting BTTV emote set.' };
 
   const bttvPersonalEmotes = fetched as BTTVPersonalEmotes;
   if (bttvPersonalEmotes.message !== undefined)
@@ -64,11 +74,14 @@ export async function getBttvApiUrlFromBroadcasterName(
   return { type: 'success', url: apiUrl };
 }
 
-export async function getFfzApiUrlFromBroadcasterName(broadcasterName: string): Promise<ApiUrlMessage> {
+export async function getFfzApiUrlFromBroadcasterName(
+  broadcasterName: string
+): Promise<ApiUrlMessage> {
   const apiUrl = `https://api.frankerfacez.com/v1/room/${broadcasterName.toLowerCase()}`;
 
   const fetched = await fetchAndJson(apiUrl).catch(() => undefined);
-  if (fetched === undefined) return { type: 'error', message: 'Unknown error at getting FFZ emote set.' };
+  if (fetched === undefined)
+    return { type: 'error', message: 'Unknown error at getting FFZ emote set.' };
 
   const ffzPersonalEmotes = fetched as FFZPersonalEmotes;
   if (ffzPersonalEmotes.error !== undefined)

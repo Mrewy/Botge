@@ -8,7 +8,10 @@ import type { ReadonlyTranslator } from '../../types.ts';
 import type { Guild } from '../../modules/discord/guild.ts';
 
 export function translateHandler(translator: ReadonlyTranslator | undefined) {
-  return async (interaction: ChatInputCommandInteraction, guild: Readonly<Guild>): Promise<void> => {
+  return async (
+    interaction: ChatInputCommandInteraction,
+    guild: Readonly<Guild>
+  ): Promise<void> => {
     if (translator === undefined) {
       void interaction.reply('Translate command is not available right now.');
       return;

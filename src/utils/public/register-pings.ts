@@ -29,7 +29,8 @@ export async function registerPings(
   for (const ping of pings) {
     const { time, days, hours, minutes, channelId } = ping;
 
-    const timeMilliseconds = time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0);
+    const timeMilliseconds =
+      time + daysAndHoursAndMinutesToMilliseconds(days ?? 0, hours ?? 0, minutes ?? 0);
     const pingDate = new Date(timeMilliseconds);
 
     let channel: TextChannel | undefined = undefined;

@@ -5,7 +5,11 @@ import timezones, { type TimeZone } from 'timezones-list';
 import type { Index } from 'meilisearch';
 import type { AutocompleteInteraction, ApplicationCommandOptionChoiceData } from 'discord.js';
 
-import { platformStrings, platformToString, stringToPlatform } from '../../utils/public/platform-to-string.ts';
+import {
+  platformStrings,
+  platformToString,
+  stringToPlatform
+} from '../../utils/public/platform-to-string.ts';
 import { booleanToString, stringToBoolean } from '../../utils/public/boolean-to-string.ts';
 import { getOptionValue } from '../../utils/public/get-option-value.ts';
 import { logError } from '../../utils/public/log-error.ts';
@@ -31,7 +35,8 @@ async function getHitsFromTwitchClipsMeilisearchIndex(
   query: string
 ): Promise<readonly TwitchClip[]> {
   const { maxTotalHits } = await twitchClipsMeilisearchIndex.getPagination();
-  if (maxTotalHits === null || maxTotalHits === undefined) throw new Error('pagination max total hits not set');
+  if (maxTotalHits === null || maxTotalHits === undefined)
+    throw new Error('pagination max total hits not set');
 
   const hits: readonly TwitchClip[] = (
     await twitchClipsMeilisearchIndex.search(query.trim(), {
@@ -75,27 +80,29 @@ export function autocompleteHandler(
               MAX_OPTIONS_LENGTH,
               true
             ) ?? [];
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map((match) => {
-            return {
-              name: match.name,
-              value: match.name
-            };
-          });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map(
+            (match) => {
+              return {
+                name: match.name,
+                value: match.name
+              };
+            }
+          );
 
           await interaction.respond(options);
         } else if (focusedOptionName === 'size') {
           const emote = getOptionValue<string>(interaction, 'emote') ?? '';
           const match = emote !== '' ? emoteMatcher.matchSingle(emote) : undefined;
-          const applicableSizes_ = match !== undefined ? applicableSizes(match.platform) : applicableSizes(undefined);
+          const applicableSizes_ =
+            match !== undefined ? applicableSizes(match.platform) : applicableSizes(undefined);
 
-          const options: readonly ApplicationCommandOptionChoiceData<number>[] = applicableSizes_.map(
-            (applicableSize) => {
+          const options: readonly ApplicationCommandOptionChoiceData<number>[] =
+            applicableSizes_.map((applicableSize) => {
               return {
                 name: applicableSize.toString(),
                 value: applicableSize
               };
-            }
-          );
+            });
 
           await interaction.respond(options);
         }
@@ -114,12 +121,14 @@ export function autocompleteHandler(
               MAX_OPTIONS_LENGTH,
               true
             ) ?? [];
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map((match) => {
-            return {
-              name: match.name.trim(),
-              value: match.name.trim()
-            };
-          });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map(
+            (match) => {
+              return {
+                name: match.name.trim(),
+                value: match.name.trim()
+              };
+            }
+          );
 
           await interaction.respond(options);
         } else if (focusedOptionName === 'platform') {
@@ -128,18 +137,21 @@ export function autocompleteHandler(
           const overlaying = getOptionValue(interaction, 'overlaying', stringToBoolean);
 
           const matches =
-            emoteMatcher.matchSingleArray(query, undefined, animated, overlaying) ?? emoteMatcher.matchSingleArray('');
+            emoteMatcher.matchSingleArray(query, undefined, animated, overlaying)
+            ?? emoteMatcher.matchSingleArray('');
           const platforms: readonly string[] =
-            matches !== undefined
-              ? [...new Set(matches.map((match) => platformToString(match.platform))).keys()]
-              : platformStrings();
+            matches !== undefined ?
+              [...new Set(matches.map((match) => platformToString(match.platform))).keys()]
+            : platformStrings();
 
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = platforms.map((platform) => {
-            return {
-              name: platform,
-              value: platform
-            };
-          });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = platforms.map(
+            (platform) => {
+              return {
+                name: platform,
+                value: platform
+              };
+            }
+          );
 
           await interaction.respond(options);
         } else if (focusedOptionName === 'animated' || focusedOptionName === 'overlaying') {
@@ -159,28 +171,30 @@ export function autocompleteHandler(
           })();
           const bools = [
             ...new Set(
-              matches !== undefined
-                ? focusedOptionName === 'animated'
-                  ? matches.map((match) => match.animated)
-                  : matches.map((match) => match.zeroWidth)
-                : []
+              matches !== undefined ?
+                focusedOptionName === 'animated' ?
+                  matches.map((match) => match.animated)
+                : matches.map((match) => match.zeroWidth)
+              : []
             ).keys()
           ];
 
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = bools.map((bool) => {
-            return {
-              name: booleanToString(bool),
-              value: booleanToString(bool)
-            };
-          });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = bools.map(
+            (bool) => {
+              return {
+                name: booleanToString(bool),
+                value: booleanToString(bool)
+              };
+            }
+          );
 
           await interaction.respond(options);
         }
       } else if (interactionCommandName === SLASH_COMMAND_NAMES.clip) {
         if (
-          twitchClipsMeilisearchIndex === undefined ||
-          uniqueCreatorNames === undefined ||
-          uniqueGameIds === undefined
+          twitchClipsMeilisearchIndex === undefined
+          || uniqueCreatorNames === undefined
+          || uniqueGameIds === undefined
         )
           return;
         if (focusedOptionName === 'title') {
@@ -199,9 +213,11 @@ export function autocompleteHandler(
             return hits_;
           })();
 
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = hits.map((clip) => {
-            return { name: clip.title, value: clip.title };
-          });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = hits.map(
+            (clip) => {
+              return { name: clip.title, value: clip.title };
+            }
+          );
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         } else if (focusedOptionName === 'clipper') {
@@ -211,20 +227,29 @@ export function autocompleteHandler(
           const currentUniqueCreatorNames = await (async (): Promise<readonly string[]> => {
             if (title === '' && category === undefined) return uniqueCreatorNames;
 
-            const hits = await getHitsFromTwitchClipsMeilisearchIndex(twitchClipsMeilisearchIndex, title);
-            const hitsFiltered = category !== undefined ? hits.filter((hit) => hit.game_id === category) : hits;
-            const currentUniqueCreatorNames_ = new Set(hitsFiltered.map((hit) => hit.creator_name)).keys().toArray();
+            const hits = await getHitsFromTwitchClipsMeilisearchIndex(
+              twitchClipsMeilisearchIndex,
+              title
+            );
+            const hitsFiltered =
+              category !== undefined ? hits.filter((hit) => hit.game_id === category) : hits;
+            const currentUniqueCreatorNames_ = new Set(hitsFiltered.map((hit) => hit.creator_name))
+              .keys()
+              .toArray();
             return currentUniqueCreatorNames_;
           })();
 
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = currentUniqueCreatorNames
-            .filter((uniqueCreatorName) => uniqueCreatorName.toLowerCase().includes(focusedOptionValue.trim()))
-            .map((uniqueCreatorName) => {
-              return {
-                name: uniqueCreatorName,
-                value: uniqueCreatorName
-              };
-            });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] =
+            currentUniqueCreatorNames
+              .filter((uniqueCreatorName) =>
+                uniqueCreatorName.toLowerCase().includes(focusedOptionValue.trim())
+              )
+              .map((uniqueCreatorName) => {
+                return {
+                  name: uniqueCreatorName,
+                  value: uniqueCreatorName
+                };
+              });
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         } else if (focusedOptionName === 'category') {
@@ -234,20 +259,29 @@ export function autocompleteHandler(
           const currentUniqueGameIds = await (async (): Promise<readonly string[]> => {
             if (title === '' && clipper === undefined) return uniqueGameIds;
 
-            const hits = await getHitsFromTwitchClipsMeilisearchIndex(twitchClipsMeilisearchIndex, title);
-            const hitsFiltered = clipper !== undefined ? hits.filter((hit) => hit.creator_name === clipper) : hits;
-            const currentUniqueGameIds_ = new Set(hitsFiltered.map((hit) => hit.game_id)).keys().toArray();
+            const hits = await getHitsFromTwitchClipsMeilisearchIndex(
+              twitchClipsMeilisearchIndex,
+              title
+            );
+            const hitsFiltered =
+              clipper !== undefined ? hits.filter((hit) => hit.creator_name === clipper) : hits;
+            const currentUniqueGameIds_ = new Set(hitsFiltered.map((hit) => hit.game_id))
+              .keys()
+              .toArray();
             return currentUniqueGameIds_;
           })();
 
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = currentUniqueGameIds
-            .filter((uniqueGameId) => uniqueGameId.toLowerCase().includes(focusedOptionValue.trim()))
-            .map((uniqueGameId) => {
-              return {
-                name: uniqueGameId,
-                value: uniqueGameId
-              };
-            });
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] =
+            currentUniqueGameIds
+              .filter((uniqueGameId) =>
+                uniqueGameId.toLowerCase().includes(focusedOptionValue.trim())
+              )
+              .map((uniqueGameId) => {
+                return {
+                  name: uniqueGameId,
+                  value: uniqueGameId
+                };
+              });
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
@@ -273,18 +307,27 @@ export function autocompleteHandler(
               MAX_OPTIONS_LENGTH,
               true
             ) ?? [];
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map((match) => {
-            const [, shortestUniqueSubstrings] = getShortestUniqueSubstrings(emoteMatcher, match.name);
-            const shortestUniqueSubstring =
-              shortestUniqueSubstrings !== undefined ? shortestUniqueSubstrings[0] : match.name;
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map(
+            (match) => {
+              const [, shortestUniqueSubstrings] = getShortestUniqueSubstrings(
+                emoteMatcher,
+                match.name
+              );
+              const shortestUniqueSubstring =
+                shortestUniqueSubstrings !== undefined ? shortestUniqueSubstrings[0] : match.name;
 
-            return {
-              name: `${focusedOptionValueEverythingButLast} ${match.name}`.trim(),
-              value: `${focusedOptionValueEverythingButLast} ${shortestUniqueSubstring}`.trim()
-            };
-          });
+              return {
+                name: `${focusedOptionValueEverythingButLast} ${match.name}`.trim(),
+                value: `${focusedOptionValueEverythingButLast} ${shortestUniqueSubstring}`.trim()
+              };
+            }
+          );
 
-          if (options.some((option: ReadonlyApplicationCommandOptionChoiceDataString) => option.name.length > 100))
+          if (
+            options.some(
+              (option: ReadonlyApplicationCommandOptionChoiceDataString) => option.name.length > 100
+            )
+          )
             return;
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
@@ -311,13 +354,17 @@ export function autocompleteHandler(
           const mediaNames: readonly string[] = databaseManager.mediaDatabase
             .getAllMedia(interaction.user.id)
             .map((media) => media.name)
-            .filter((mediaName) => mediaName.includes(focusedOptionValue.trim().toLocaleLowerCase()));
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = mediaNames.map((mediaName) => {
-            return {
-              name: mediaName,
-              value: mediaName
-            };
-          });
+            .filter((mediaName) =>
+              mediaName.includes(focusedOptionValue.trim().toLocaleLowerCase())
+            );
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = mediaNames.map(
+            (mediaName) => {
+              return {
+                name: mediaName,
+                value: mediaName
+              };
+            }
+          );
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }
@@ -326,13 +373,17 @@ export function autocompleteHandler(
           const quoteNames: readonly string[] = databaseManager.quoteDatabase
             .getAllQuote(interaction.user.id)
             .map((quote) => quote.name)
-            .filter((quoteName) => quoteName.includes(focusedOptionValue.trim().toLocaleLowerCase()));
-          const options: readonly ApplicationCommandOptionChoiceData<string>[] = quoteNames.map((quoteName) => {
-            return {
-              name: quoteName,
-              value: quoteName
-            };
-          });
+            .filter((quoteName) =>
+              quoteName.includes(focusedOptionValue.trim().toLocaleLowerCase())
+            );
+          const options: readonly ApplicationCommandOptionChoiceData<string>[] = quoteNames.map(
+            (quoteName) => {
+              return {
+                name: quoteName,
+                value: quoteName
+              };
+            }
+          );
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
         }

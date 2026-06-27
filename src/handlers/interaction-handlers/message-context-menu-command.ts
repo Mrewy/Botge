@@ -53,8 +53,7 @@ let ADD_QUOTE_MODAL_COUNTER = 0;
 let REMOVE_QUOTE_MODAL_COUNTER = 0;
 
 type getMediaUrlFromMessageReturnType =
-  | { readonly type: 'success'; readonly mediaUrl: string }
-  | { readonly type: 'feedback'; readonly message: string };
+  { readonly type: 'success'; readonly mediaUrl: string } | { readonly type: 'feedback'; readonly message: string };
 
 function getMediaUrlFromMessage(message: Message): getMediaUrlFromMessageReturnType {
   const { embeds } = message;

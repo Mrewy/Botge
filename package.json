@@ -34,18 +34,14 @@
     "build": "tsgo --build src",
     "build:clean": "tsgo --build --clean src",
     "build:production": "tsgo --project src/tsconfig.production.json",
-    "commitlint": "commitlint --edit",
     "cspell": "cspell . --verbose",
-    "cspell:commit-msg": "cspell --no-summary --no-progress --language-id commit-msg",
-    "cspell:pre-commit": "git diff --cached --name-only | cspell --no-summary --no-progress --no-must-find-files --file-list stdin",
-    "eslint": "eslint . --flag unstable_native_nodejs_ts_config --concurrency=auto",
+    "eslint": "eslint \"**/*.ts\" --flag unstable_native_nodejs_ts_config --concurrency=auto",
     "markdownlint": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
     "prepare": "node .husky/install.ts",
     "prettier": "prettier . --write",
     "start": "docker image prune --force && docker compose up --build",
     "stop": "docker compose stop",
-    "test": "vitest tests",
-    "test:pre-commit": "vitest tests --no-color"
+    "test": "vitest tests"
   },
   "dependencies": {
     "@discordjs/voice": "^0.19.2",
@@ -76,6 +72,7 @@
     "eslint": "^10.6.0",
     "eslint-plugin-tsdoc": "^0.5.2",
     "husky": "^9.1.7",
+    "lint-staged": "^17.0.8",
     "markdownlint-cli2": "^0.23.0",
     "prettier": "^3.9.4",
     "prettier-plugin-sh": "^0.18.1",

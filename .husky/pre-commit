@@ -1,7 +1,4 @@
 npm install
 npm run prettier
-npm run eslint
+npx lint-staged --no-stash
 npm run build
-npm run cspell:pre-commit
-npm run markdownlint
-npm run test:pre-commit

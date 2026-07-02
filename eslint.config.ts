@@ -22,21 +22,7 @@ const globalConfig: readonly Readonly<Config>[] = defineConfig([
       noInlineConfig: true
     }
   },
-  globalIgnores(
-    [
-      '.github/',
-      '.husky/_/',
-      'assets/',
-      'data/',
-      'dist/',
-      'docs/',
-      'chroma-data/',
-      'meili-data/',
-      'nginx/cache/',
-      'tmp/'
-    ],
-    'globalIgnores'
-  )
+  globalIgnores(['dist/'], 'globalIgnores')
 ]);
 
 import { plugin, parser, configs } from 'typescript-eslint';

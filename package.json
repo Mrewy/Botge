@@ -76,7 +76,7 @@
     "eslint": "^10.6.0",
     "eslint-plugin-tsdoc": "^0.5.2",
     "husky": "^9.1.7",
-    "markdownlint-cli2": "^0.22.1",
+    "markdownlint-cli2": "^0.23.0",
     "prettier": "^3.9.4",
     "prettier-plugin-sh": "^0.18.1",
     "ts-essentials": "^10.2.1",

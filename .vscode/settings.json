@@ -59,6 +59,11 @@
   "files.encoding": "utf8",
   "files.eol": "\n",
 
+  "files.associations": {
+    "commit-msg": "shellscript",
+    "pre-commit": "shellscript"
+  },
+
   "[markdown]": {
     "files.trimTrailingWhitespace": false
   },

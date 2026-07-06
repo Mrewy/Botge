@@ -90,7 +90,6 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'chromadb',
     'CNTREC',
     'RRGGBB',
-    'tsgo',
     'tsdoc',
     'vitest',
     'nvmrc'

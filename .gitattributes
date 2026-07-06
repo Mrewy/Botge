@@ -4,3 +4,4 @@
 
 *.json linguist-detectable=true
 package-lock.json linguist-detectable=false
+.devcontainer/devcontainer-lock.json linguist-detectable=false

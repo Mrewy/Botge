@@ -2,9 +2,6 @@
   "extends": "../tsconfig.base",
   "references": [],
   "compilerOptions": {
-    // Modules
-    "types": ["fs-extra", "node", "node-schedule"],
-
     // Language and Environment
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

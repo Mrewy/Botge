@@ -1,5 +1,5 @@
 {
-  "$schema": "https://nodejs.org/docs/v26.4.0/node-config-schema.json",
+  "$schema": "https://nodejs.org/docs/v26.5.0/node-config-schema.json",
   "nodeOptions": {
     "disable-proto": "delete",
     "disable-sigusr1": true,

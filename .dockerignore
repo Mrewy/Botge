@@ -19,7 +19,6 @@ src/tsdoc.json
 tests
 tmp
 
-.cspell.json
 .dockerignore
 .editorconfig
 .env
@@ -27,11 +26,14 @@ tmp
 .gitattributes
 .gitignore
 .markdownlint.json
+.nvmrc
 .prettierignore
 commitlint.config.ts
 compose.yaml
+cspell.config.ts
 Dockerfile
 eslint.config.ts
+lint-staged.config.ts
 prettier.config.ts
 tsconfig.json
 tsdoc.json

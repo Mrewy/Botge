@@ -5,9 +5,7 @@
 ```text
 npm install
 npm run prettier
-npm run eslint
+npx lint-staged --no-stash
 npm run build
-npm run cspell
-npm run markdownlint
 npm test
 ```

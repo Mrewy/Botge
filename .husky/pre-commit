@@ -1,4 +1,4 @@
-npm install -g npm
+bash scripts/global-install-npm.sh
 npm install
 npm run prettier
 npx lint-staged --no-stash

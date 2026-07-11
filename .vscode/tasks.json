@@ -15,8 +15,8 @@
       "type": "shell",
 
       //
-      "command": "npm",
-      "args": ["install", "-g", "npm"]
+      "command": "bash",
+      "args": ["scripts/global-install-npm.sh"]
     },
 
     // ! 1
@@ -39,6 +39,11 @@
 
     // * 1-2
     {
+      // *
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+
       //
       "label": "Build",
       "detail": "Runs npm run build.",
@@ -50,12 +55,7 @@
 
       //
       "dependsOn": ["Install"],
-      "dependsOrder": "sequence",
-
-      // *
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
+      "dependsOrder": "sequence"
     },
 
     // ! 2
@@ -68,8 +68,8 @@
       "type": "shell",
 
       //
-      "command": "npm",
-      "args": ["install", "-g", "npm-check-updates"],
+      "command": "bash",
+      "args": ["scripts/global-install-npm-check-updates.sh"],
 
       //
       "dependsOn": ["Global: Install NPM"],
@@ -78,6 +78,11 @@
 
     // * 2-2
     {
+      // *
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+
       //
       "label": "NPM Check Updates",
       "detail": "Runs npm-check-updates.",
@@ -88,12 +93,7 @@
 
       //
       "dependsOn": ["Global: Install NPM Check Updates"],
-      "dependsOrder": "sequence",
-
-      // *
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
+      "dependsOrder": "sequence"
     }
   ]
 }

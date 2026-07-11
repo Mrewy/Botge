@@ -1,0 +1,93 @@
+{
+  // * Version
+  "version": "2.0.0",
+
+  // * Tasks
+  "tasks": [
+    // ! Public
+
+    // * Install Global NPM
+    {
+      // Label & Type
+      "label": "Install Global NPM",
+      "type": "shell",
+
+      // npm
+      "command": "npm",
+      "args": ["install", "-g", "npm"]
+    },
+
+    // ! 1
+
+    // * Install
+    {
+      // Label & Type
+      "label": "Install",
+      "type": "shell",
+
+      // npm
+      "command": "npm",
+      "args": ["install"],
+
+      // Depends On
+      "dependsOn": ["Install Global NPM"],
+      "dependsOrder": "sequence"
+    },
+
+    // * Build
+    {
+      // Label & Type
+      "label": "Build",
+      "type": "shell",
+
+      // Build
+      "command": "npm",
+      "args": ["run", "build"],
+
+      // Depends On
+      "dependsOn": ["Install"],
+      "dependsOrder": "sequence",
+
+      // Run
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+
+    // ! 2
+
+    // * Install Global NPM Check Updates
+    {
+      // Label & Type
+      "label": "Install Global NPM Check Updates",
+      "type": "shell",
+
+      // Install Global NPM Check Updates
+      "command": "npm",
+      "args": ["install", "-g", "npm-check-updates"],
+
+      // Depends On
+      "dependsOn": ["Install Global NPM"],
+      "dependsOrder": "sequence"
+    },
+
+    // * NPM Check Updates
+    {
+      // Label & Type
+      "label": "NPM Check Updates",
+      "type": "shell",
+
+      // NPM Check Updates
+      "command": "ncu",
+
+      // Depends On
+      "dependsOn": ["Install Global NPM Check Updates"],
+      "dependsOrder": "sequence",
+
+      // Run
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}

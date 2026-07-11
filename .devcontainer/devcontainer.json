@@ -33,6 +33,7 @@
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
         "GitHub.copilot-chat",
+        "actboy168.tasks",
         "docker.docker",
 
         // Syntax

@@ -1,54 +1,58 @@
 {
-  // * Version
+  // *
   "version": "2.0.0",
+  "type": "shell",
 
-  // * Tasks
+  // *
   "tasks": [
     // ! Public
 
-    // * Install Global NPM
+    // * Public-1
     {
-      // Label & Type
-      "label": "Install Global NPM",
+      //
+      "label": "Global: Install NPM",
+      "detail": "Installs NPM globally.",
       "type": "shell",
 
-      // npm
+      //
       "command": "npm",
       "args": ["install", "-g", "npm"]
     },
 
     // ! 1
 
-    // * Install
+    // * 1-1
     {
-      // Label & Type
+      //
       "label": "Install",
+      "detail": "Runs npm install.",
       "type": "shell",
 
-      // npm
+      //
       "command": "npm",
       "args": ["install"],
 
-      // Depends On
-      "dependsOn": ["Install Global NPM"],
+      //
+      "dependsOn": ["Global: Install NPM"],
       "dependsOrder": "sequence"
     },
 
-    // * Build
+    // * 1-2
     {
-      // Label & Type
+      //
       "label": "Build",
+      "detail": "Runs npm run build.",
       "type": "shell",
 
-      // Build
+      //
       "command": "npm",
       "args": ["run", "build"],
 
-      // Depends On
+      //
       "dependsOn": ["Install"],
       "dependsOrder": "sequence",
 
-      // Run
+      // *
       "runOptions": {
         "runOn": "folderOpen"
       }
@@ -56,35 +60,37 @@
 
     // ! 2
 
-    // * Install Global NPM Check Updates
+    // * 2-1
     {
-      // Label & Type
-      "label": "Install Global NPM Check Updates",
+      //
+      "label": "Global: Install NPM Check Updates",
+      "detail": "Installs npm-check-updates globally.",
       "type": "shell",
 
-      // Install Global NPM Check Updates
+      //
       "command": "npm",
       "args": ["install", "-g", "npm-check-updates"],
 
-      // Depends On
-      "dependsOn": ["Install Global NPM"],
+      //
+      "dependsOn": ["Global: Install NPM"],
       "dependsOrder": "sequence"
     },
 
-    // * NPM Check Updates
+    // * 2-2
     {
-      // Label & Type
+      //
       "label": "NPM Check Updates",
+      "detail": "Runs npm-check-updates.",
       "type": "shell",
 
-      // NPM Check Updates
-      "command": "ncu",
+      //
+      "command": "npm-check-updates",
 
-      // Depends On
-      "dependsOn": ["Install Global NPM Check Updates"],
+      //
+      "dependsOn": ["Global: Install NPM Check Updates"],
       "dependsOrder": "sequence",
 
-      // Run
+      // *
       "runOptions": {
         "runOn": "folderOpen"
       }

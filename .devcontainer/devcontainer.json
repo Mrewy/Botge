@@ -12,12 +12,12 @@
       "azureDnsAutoDetection": false,
       "installDockerComposeSwitch": true
     },
-    "ghcr.io/devcontainers/features/node:": { "version": "v26.5.0", "nodeGypDependencies": false },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:": {},
+    "ghcr.io/devcontainers/features/node:": { "version": "v26.5.0", "nodeGypDependencies": false }
   },
 
   "postCreateCommand": {
-    "global-npm-packages": "npm install -g npm-check-updates && npm install -g sort-package-json",
+    "global-npm-packages": "npm install -g npm && npm install -g npm-check-updates && npm install -g sort-package-json",
     "install-and-build": "npm install && npm run build",
     "directories": "mkdir -p data tmp nginx/cache/tmp && sudo chmod -R a+rwx data && sudo chmod -R a+rwx tmp && sudo chmod -R a+rx nginx/cache"
   },

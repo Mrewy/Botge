@@ -1,5 +1,9 @@
-bash scripts/global-install-npm.sh
+bash scripts/global-install-package.sh npm
+bash scripts/global-install-package.sh sort-package-json
+
+sort-package-json
 npm install
+
 npm run prettier
 npx lint-staged --no-stash
 npm run build

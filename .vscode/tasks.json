@@ -9,6 +9,10 @@
 
     // * Public-1
     {
+      "options": {
+        "statusbar": { "hide": true }
+      },
+
       //
       "label": "Global: Install NPM",
       "detail": "Installs NPM globally.",
@@ -16,7 +20,7 @@
 
       //
       "command": "bash",
-      "args": ["scripts/global-install-npm.sh"]
+      "args": ["scripts/global-install-package.sh", "npm"]
     },
 
     // ! 1
@@ -62,6 +66,10 @@
 
     // * 2-1
     {
+      "options": {
+        "statusbar": { "hide": true }
+      },
+
       //
       "label": "Global: Install NPM Check Updates",
       "detail": "Installs npm-check-updates globally.",
@@ -69,7 +77,7 @@
 
       //
       "command": "bash",
-      "args": ["scripts/global-install-npm-check-updates.sh"],
+      "args": ["scripts/global-install-package.sh", "npm-check-updates"],
 
       //
       "dependsOn": ["Global: Install NPM"],
@@ -93,6 +101,48 @@
 
       //
       "dependsOn": ["Global: Install NPM Check Updates"],
+      "dependsOrder": "sequence"
+    },
+
+    // ! 3
+
+    // * 3-1
+    {
+      "options": {
+        "statusbar": { "hide": true }
+      },
+
+      //
+      "label": "Global: Install Sort Package Json",
+      "detail": "Installs sort-package-json globally.",
+      "type": "shell",
+
+      //
+      "command": "bash",
+      "args": ["scripts/global-install-package.sh", "sort-package-json"],
+
+      //
+      "dependsOn": ["Global: Install NPM"],
+      "dependsOrder": "sequence"
+    },
+
+    // * 3-2
+    {
+      // *
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+
+      //
+      "label": "Sort Package Json",
+      "detail": "Runs sort-package-json.",
+      "type": "shell",
+
+      //
+      "command": "sort-package-json",
+
+      //
+      "dependsOn": ["Global: Install Sort Package Json"],
       "dependsOrder": "sequence"
     }
   ]

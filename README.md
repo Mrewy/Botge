@@ -59,6 +59,7 @@ Configure the bot in the `/settings` command.
 ## Documentation
 
 ![Docker docks](docs/Docker.png)
+![Git](docs/Git.png)
 
 More documentation is available in the [docs](docs) folder.
 

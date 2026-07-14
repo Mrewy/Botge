@@ -12,16 +12,16 @@ updates:
     open-pull-requests-limit: 8
     directory: '/'
     schedule:
-      interval: weekly
+      interval: daily
 
   - package-ecosystem: devcontainers
     open-pull-requests-limit: 3
     directory: '/'
     schedule:
-      interval: weekly
+      interval: daily
 
   - package-ecosystem: docker
     open-pull-requests-limit: 1
     directory: '/'
     schedule:
-      interval: weekly
+      interval: daily

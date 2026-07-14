@@ -1,7 +1,7 @@
-sh scripts/global-install-package npm
-sh scripts/global-install-package sort-package-json
+# sh scripts/global-install-package npm
+# sh scripts/global-install-package sort-package-json
 
-sort-package-json
+# sort-package-json
 npm install
 
 npm run prettier

@@ -19,7 +19,7 @@
       "type": "shell",
 
       //
-      "command": "bash",
+      "command": "sh",
       "args": ["scripts/global-install-package", "npm"]
     },
 
@@ -76,7 +76,7 @@
       "type": "shell",
 
       //
-      "command": "bash",
+      "command": "sh",
       "args": ["scripts/global-install-package", "npm-check-updates"],
 
       //
@@ -118,7 +118,7 @@
       "type": "shell",
 
       //
-      "command": "bash",
+      "command": "sh",
       "args": ["scripts/global-install-package", "sort-package-json"],
 
       //

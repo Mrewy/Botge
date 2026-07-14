@@ -1,5 +1,5 @@
-bash scripts/global-install-package.sh npm
-bash scripts/global-install-package.sh sort-package-json
+bash scripts/global-install-package npm
+bash scripts/global-install-package sort-package-json
 
 sort-package-json
 npm install

@@ -13,7 +13,6 @@ import {
 
 import {
   permitted,
-  administrator,
   owner,
   globalAdministrator
 } from '../../utils/handlers/command-handlers/permitted.ts';
@@ -71,7 +70,7 @@ export function settingsHandler() {
       ) {
         guildSettingsRow = new ActionRowBuilder<MessageActionRowComponentBuilder>();
 
-        if (administrator(memberRolesCache) || owner_ || globalAdministrator_) {
+        if (owner_ || globalAdministrator_) {
           guildSettingsRow.addComponents(
             new ButtonBuilder()
               .setCustomId(CONFIGURATION_GUILD_BUTTON_CUSTOM_ID)

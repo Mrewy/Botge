@@ -36,7 +36,8 @@ export const SLASH_COMMAND_NAMES = {
   media: 'media',
   mediaList: 'medialist',
   quote: 'quote',
-  quoteList: 'quotelist'
+  quoteList: 'quotelist',
+  clear: 'clear'
 } as const;
 
 export const CONTEXT_MENU_COMMAND_NAMES = {
@@ -332,6 +333,11 @@ const quoteList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
+const clear: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
+  .setName(SLASH_COMMAND_NAMES.clear)
+  .setDescription('Clear messages in this channel.')
+  .setContexts(InteractionContextType.Guild);
+
 const chatGptExplain: ReadonlyContextMenuCommandBuilder = new ContextMenuCommandBuilder()
   .setName(CONTEXT_MENU_COMMAND_NAMES.chatGptExplain)
   .setType(ApplicationCommandType.Message)
@@ -385,7 +391,8 @@ export const commands: readonly (
     media.toJSON(),
     mediaList.toJSON(),
     quote.toJSON(),
-    quoteList.toJSON()
+    quoteList.toJSON(),
+    clear.toJSON()
   ],
   ...[
     chatGptExplain.toJSON(),

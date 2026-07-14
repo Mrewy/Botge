@@ -18,6 +18,7 @@ import { pingMeHandler } from '../../../handlers/command-handlers/ping-me.ts';
 import { mediaHandler } from '../../../handlers/command-handlers/media.ts';
 import { quoteHandler } from '../../../handlers/command-handlers/quote.ts';
 import { steamHandler } from '../../../handlers/command-handlers/steam.ts';
+import { clearHandler } from '../../../handlers/command-handlers/clear.ts';
 import { clipHandler } from '../../../handlers/command-handlers/clip.ts';
 
 import type { MessageBuilderManager } from '../../../modules/bot/message-builder-manager.ts';
@@ -83,6 +84,7 @@ export function createCommandHandlers(
     [SLASH_COMMAND_NAMES.media, mediaHandler(databaseManager.mediaDatabase)],
     [SLASH_COMMAND_NAMES.quote, quoteHandler(databaseManager.quoteDatabase)],
     [SLASH_COMMAND_NAMES.poe2, steamHandler('2694490')],
-    [SLASH_COMMAND_NAMES.clip, clipHandler(messageBuilderManager.twitchClipMessageBuilders)]
+    [SLASH_COMMAND_NAMES.clip, clipHandler(messageBuilderManager.twitchClipMessageBuilders)],
+    [SLASH_COMMAND_NAMES.clear, clearHandler(client)]
   ]);
 }

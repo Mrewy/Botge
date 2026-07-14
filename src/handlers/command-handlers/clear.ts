@@ -73,10 +73,11 @@ export function clearHandler(client: Client) {
         !botPermissionsInChannel.has('ViewChannel')
         || !botPermissionsInChannel.has('SendMessages')
         || !botPermissionsInChannel.has('ManageMessages')
+        || !botPermissionsInChannel.has('ReadMessageHistory')
       ) {
         await defer;
         await interaction.editReply(
-          'The bot does not have the permissions to either: view channel, send messages or manage messages.\n(Replying to command is different from sending messages.)'
+          'The bot does not have the permissions to either: view channel, send messages, manage messages or read message history.\n(Replying to command is different from sending messages.)'
         );
         return;
       }

@@ -48,13 +48,13 @@
     "@twemoji/api": "^17.0.3",
     "chromadb": "^3.5.0",
     "deepl-node": "^1.27.0",
-    "discord.js": "^14.26.5",
+    "discord.js": "^14.27.0",
     "fs-extra": "^11.3.6",
     "helpful-decorators": "^2.1.0",
     "meilisearch": "^0.59.0",
     "node-fetch": "^3.3.2",
     "node-schedule": "^2.1.1",
-    "openai": "^6.46.0",
+    "openai": "^6.47.0",
     "timezones-list": "^3.1.0"
   },
   "devDependencies": {

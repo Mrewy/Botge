@@ -12,10 +12,10 @@ updates:
     open-pull-requests-limit: 8
     directory: '/'
     schedule:
-      interval: daily
+      interval: weekly
 
   - package-ecosystem: devcontainers
     open-pull-requests-limit: 3
     directory: '/'
     schedule:
-      interval: daily
+      interval: weekly

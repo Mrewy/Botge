@@ -1,149 +1,99 @@
 {
-  // *
   "version": "2.0.0",
   "type": "shell",
 
-  // *
   "tasks": [
-    // ! Public
-
-    // * Public-1
+    // Public
     {
-      "options": {
-        "statusbar": { "hide": true }
+      "label": "Check NPM Version",
+      "detail": "Checks NPM version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm"],
+
+      "runOptions": {
+        "runOn": "folderOpen"
       },
 
-      //
-      "label": "Global: Install NPM",
-      "detail": "Installs NPM globally.",
-      "type": "shell",
-
-      //
-      "command": "sh",
-      "args": ["scripts/global-install-package", "npm"]
+      "options": {
+        "statusbar": { "hide": true }
+      }
     },
 
-    // ! 1
-
-    // * 1-1
+    // 1-1
     {
-      //
       "label": "Install",
       "detail": "Runs npm install.",
+
+      "dependsOn": ["Check NPM Version"],
+      "dependsOrder": "sequence",
+
       "type": "shell",
-
-      //
       "command": "npm",
-      "args": ["install"],
-
-      //
-      "dependsOn": ["Global: Install NPM"],
-      "dependsOrder": "sequence"
+      "args": ["install"]
     },
 
-    // * 1-2
+    // 1-2
     {
-      // *
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
-
-      //
       "label": "Build",
       "detail": "Runs npm run build.",
-      "type": "shell",
 
-      //
+      "type": "shell",
       "command": "npm",
-      "args": ["run", "build"],
-
-      //
-      "dependsOn": ["Install"],
-      "dependsOrder": "sequence"
+      "args": ["run", "build"]
     },
 
-    // ! 2
-
-    // * 2-1
+    // 2-1
     {
+      "label": "Check npm-check-updates version",
+      "detail": "Checks npm-check-updates version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm-check-updates"],
+
       "options": {
         "statusbar": { "hide": true }
-      },
-
-      //
-      "label": "Global: Install NPM Check Updates",
-      "detail": "Installs npm-check-updates globally.",
-      "type": "shell",
-
-      //
-      "command": "sh",
-      "args": ["scripts/global-install-package", "npm-check-updates"],
-
-      //
-      "dependsOn": ["Global: Install NPM"],
-      "dependsOrder": "sequence"
+      }
     },
 
-    // * 2-2
+    // 2-2
     {
-      // *
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
-
-      //
-      "label": "NPM Check Updates",
+      "label": "npm-check-updates",
       "detail": "Runs npm-check-updates.",
+
+      "dependsOn": ["Check npm-check-updates version"],
+      "dependsOrder": "sequence",
+
       "type": "shell",
-
-      //
-      "command": "npm-check-updates",
-
-      //
-      "dependsOn": ["Global: Install NPM Check Updates"],
-      "dependsOrder": "sequence"
+      "command": "npm-check-updates"
     },
 
-    // ! 3
-
-    // * 3-1
+    // 3-1
     {
+      "label": "Check sort-package-json version",
+      "detail": "Checks sort-package-json version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "sort-package-json"],
+
       "options": {
         "statusbar": { "hide": true }
-      },
-
-      //
-      "label": "Global: Install Sort Package Json",
-      "detail": "Installs sort-package-json globally.",
-      "type": "shell",
-
-      //
-      "command": "sh",
-      "args": ["scripts/global-install-package", "sort-package-json"],
-
-      //
-      "dependsOn": ["Global: Install NPM"],
-      "dependsOrder": "sequence"
+      }
     },
 
-    // * 3-2
+    // 3-2
     {
-      // *
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
-
-      //
-      "label": "Sort Package Json",
+      "label": "sort-package-json",
       "detail": "Runs sort-package-json.",
+
+      "dependsOn": ["Check sort-package-json version"],
+      "dependsOrder": "sequence",
+
       "type": "shell",
-
-      //
-      "command": "sort-package-json",
-
-      //
-      "dependsOn": ["Global: Install Sort Package Json"],
-      "dependsOrder": "sequence"
+      "command": "sort-package-json"
     }
   ]
 }

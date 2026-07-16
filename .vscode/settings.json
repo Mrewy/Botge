@@ -63,8 +63,7 @@
 
   "files.associations": {
     "commit-msg": "shellscript",
-    "pre-commit": "shellscript",
-    "check-package-version": "shellscript"
+    "pre-commit": "shellscript"
   },
 
   "[markdown]": {

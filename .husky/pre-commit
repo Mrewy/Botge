@@ -1,5 +1,5 @@
-# sh scripts/check-package-version npm
-# sh scripts/check-package-version sort-package-json
+# sh scripts/check-package-version.sh npm
+# sh scripts/check-package-version.sh sort-package-json
 
 # sort-package-json
 npm install

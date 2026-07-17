@@ -7,7 +7,7 @@ const config: Readonly<Config> = {
   experimentalOperatorPosition: 'start',
   experimentalTernaries: true,
   insertPragma: true,
-  objectWrap: 'preserve',
+  objectWrap: 'collapse',
   plugins: ['prettier-plugin-sh'],
   printWidth: 100,
   quoteProps: 'consistent',

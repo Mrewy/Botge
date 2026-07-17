@@ -19,9 +19,7 @@ type StoreMessageParams = {
   readonly seqNum?: number;
 };
 
-type OllamaEmbeddingsResponse = {
-  readonly embedding?: readonly number[];
-};
+type OllamaEmbeddingsResponse = { readonly embedding?: readonly number[] };
 
 type SeqNums = Record<string, number>;
 
@@ -42,10 +40,7 @@ async function embed(text: string): Promise<readonly number[]> {
   const res = await fetch(`${baseUrl}/api/embeddings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: embeddingModel,
-      prompt: text
-    })
+    body: JSON.stringify({ model: embeddingModel, prompt: text })
   });
   if (!res.ok) throw new Error(`Ollama embeddings error ${res.status}: ${await res.text()}`);
 

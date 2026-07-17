@@ -12,13 +12,9 @@
       "command": "bash",
       "args": ["scripts/check-package-version", "npm"],
 
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
+      "runOptions": { "runOn": "folderOpen" },
 
-      "options": {
-        "statusbar": { "hide": true }
-      }
+      "options": { "statusbar": { "hide": true } }
     },
 
     // 1-1
@@ -53,9 +49,7 @@
       "command": "bash",
       "args": ["scripts/check-package-version", "npm-check-updates"],
 
-      "options": {
-        "statusbar": { "hide": true }
-      }
+      "options": { "statusbar": { "hide": true } }
     },
 
     // 2-2
@@ -79,9 +73,7 @@
       "command": "bash",
       "args": ["scripts/check-package-version", "sort-package-json"],
 
-      "options": {
-        "statusbar": { "hide": true }
-      }
+      "options": { "statusbar": { "hide": true } }
     },
 
     // 3-2

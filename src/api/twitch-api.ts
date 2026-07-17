@@ -15,26 +15,14 @@ import { DATABASE_DIR } from '../directory-paths.ts';
 
 type TwitchGlobalOptions = {
   readonly method: string;
-  readonly headers: {
-    readonly 'Authorization': string;
-    readonly 'Client-Id': string;
-  };
+  readonly headers: { readonly 'Authorization': string; readonly 'Client-Id': string };
 };
 
-type TwitchGame = {
-  readonly id: string;
-  readonly name: string;
-};
-type TwitchGames = {
-  readonly data: readonly TwitchGame[];
-};
+type TwitchGame = { readonly id: string; readonly name: string };
+type TwitchGames = { readonly data: readonly TwitchGame[] };
 
-type TwitchUser = {
-  readonly id: string;
-};
-type TwitchUsers = {
-  readonly data: readonly TwitchUser[];
-};
+type TwitchUser = { readonly id: string };
+type TwitchUsers = { readonly data: readonly TwitchUser[] };
 
 export const TWITCH_ACCESS_TOKEN_PATH: 'data/twitchAccessToken.txt' =
   `${DATABASE_DIR}/twitchAccessToken.txt` as const;
@@ -53,10 +41,7 @@ export class TwitchApi {
   get #apiRequestOptions(): TwitchGlobalOptions {
     const optionsTwitchGlobal: TwitchGlobalOptions = {
       method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${this.#accessToken}`,
-        'Client-Id': this.#clientId
-      }
+      headers: { 'Authorization': `Bearer ${this.#accessToken}`, 'Client-Id': this.#clientId }
     };
 
     return optionsTwitchGlobal;
@@ -65,9 +50,7 @@ export class TwitchApi {
   public async validateAndGetNewAccessTokenIfInvalid(): Promise<void> {
     const resp = await fetch(TWITCH_API_ENDPOINTS.accessTokenValidate, {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${this.#accessToken}`
-      }
+      headers: { Authorization: `Bearer ${this.#accessToken}` }
     });
 
     if (resp.status === 401) {

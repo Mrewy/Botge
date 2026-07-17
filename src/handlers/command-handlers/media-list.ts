@@ -13,9 +13,7 @@ import type { Media } from '../../types.ts';
 
 type TenorResponse = {
   readonly results: readonly {
-    readonly media_formats: {
-      readonly tinygif: { readonly url: string };
-    };
+    readonly media_formats: { readonly tinygif: { readonly url: string } };
   }[];
 };
 

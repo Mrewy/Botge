@@ -163,10 +163,7 @@ export function messageContextMenuCommandHandler(
             return images.length > 0 ?
                 [
                   { role: 'user', content: inputText },
-                  {
-                    role: 'user',
-                    content: images
-                  }
+                  { role: 'user', content: images }
                 ]
               : undefined;
           })();

@@ -23,9 +23,7 @@
   },
 
   "customizations": {
-    "codespaces": {
-      "openFiles": ["package.json", "tsconfig.json", "src/index.ts"]
-    },
+    "codespaces": { "openFiles": ["package.json", "tsconfig.json", "src/index.ts"] },
     "vscode": {
       "extensions": [
         // Project

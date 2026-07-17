@@ -64,10 +64,7 @@ export type SevenTVEmoteInSet = {
   readonly timestamp: number;
   readonly data: {
     readonly animated: boolean;
-    readonly host: {
-      readonly url: string;
-      readonly files: readonly SevenTVEmoteFile[];
-    };
+    readonly host: { readonly url: string; readonly files: readonly SevenTVEmoteFile[] };
   };
 };
 export type SevenTVEmoteNotInSet = {
@@ -75,18 +72,11 @@ export type SevenTVEmoteNotInSet = {
   readonly name: string;
   readonly flags: number;
   readonly animated: boolean;
-  readonly host: {
-    readonly url: string;
-    readonly files: readonly SevenTVEmoteFile[];
-  };
+  readonly host: { readonly url: string; readonly files: readonly SevenTVEmoteFile[] };
   readonly error?: string;
 };
 
-export type BTTVEmote = {
-  readonly id: string;
-  readonly code: string;
-  readonly animated: boolean;
-};
+export type BTTVEmote = { readonly id: string; readonly code: string; readonly animated: boolean };
 export type FFZEmote = {
   readonly id: string;
   readonly name: string;
@@ -102,9 +92,7 @@ export type TwitchEmote = {
 export type SevenTVEmotes = {
   readonly error?: string;
   readonly emotes: readonly SevenTVEmoteInSet[];
-  readonly owner: {
-    readonly username: string;
-  };
+  readonly owner: { readonly username: string };
 };
 export type BTTVPersonalEmotes = {
   readonly message?: string;
@@ -113,36 +101,15 @@ export type BTTVPersonalEmotes = {
 };
 export type FFZPersonalEmotes = {
   readonly error?: string;
-  readonly room: {
-    readonly set: number;
-  };
-  readonly sets: Readonly<
-    Record<
-      string,
-      {
-        readonly emoticons: readonly FFZEmote[];
-      }
-    >
-  >;
+  readonly room: { readonly set: number };
+  readonly sets: Readonly<Record<string, { readonly emoticons: readonly FFZEmote[] }>>;
 };
 export type FFZGlobalEmotes = {
-  readonly sets: Readonly<
-    Record<
-      string,
-      {
-        readonly emoticons: readonly FFZEmote[];
-      }
-    >
-  >;
+  readonly sets: Readonly<Record<string, { readonly emoticons: readonly FFZEmote[] }>>;
 };
-export type TwitchGlobalEmotes = {
-  readonly data: readonly TwitchEmote[];
-};
+export type TwitchGlobalEmotes = { readonly data: readonly TwitchEmote[] };
 
-export type AddedEmote = {
-  readonly url: string;
-  readonly alias: string | null;
-};
+export type AddedEmote = { readonly url: string; readonly alias: string | null };
 
 export type AssetInfo = {
   readonly id: string;
@@ -176,9 +143,7 @@ export type TwitchClip = {
 
 export type TwitchClips = {
   readonly data: readonly TwitchClip[];
-  readonly pagination: {
-    readonly cursor?: string;
-  };
+  readonly pagination: { readonly cursor?: string };
 };
 
 export type Ping = {

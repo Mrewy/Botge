@@ -49,19 +49,9 @@ export const CONTEXT_MENU_COMMAND_NAMES = {
   removeQuote: 'Remove Quote'
 } as const;
 
-export const PING_LIST = {
-  type: {
-    own: 'own',
-    every: 'every'
-  },
-  timezone: 'timezone'
-} as const;
+export const PING_LIST = { type: { own: 'own', every: 'every' }, timezone: 'timezone' } as const;
 
-export const MEDIA_LIST_AND_QUOTE_LIST = {
-  sortBy: {
-    alphabetical: 'alphabetical'
-  }
-} as const;
+export const MEDIA_LIST_AND_QUOTE_LIST = { sortBy: { alphabetical: 'alphabetical' } } as const;
 
 const emote: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilder()
   .setName(SLASH_COMMAND_NAMES.emote)
@@ -303,10 +293,13 @@ const mediaList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
   .setName(SLASH_COMMAND_NAMES.mediaList)
   .setDescription('Media list')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('sortby').setDescription('Sort. Default: date added (newest first)').addChoices({
-      name: 'Alphabetical Order',
-      value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical
-    })
+    option
+      .setName('sortby')
+      .setDescription('Sort. Default: date added (newest first)')
+      .addChoices({
+        name: 'Alphabetical Order',
+        value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical
+      })
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 
@@ -326,10 +319,13 @@ const quoteList: ReadonlySlashCommandOptionsOnlyBuilder = new SlashCommandBuilde
   .setName(SLASH_COMMAND_NAMES.quoteList)
   .setDescription('Quote list')
   .addStringOption((option: ReadonlySlashCommandStringOption) =>
-    option.setName('sortby').setDescription('Sort. Default: date added (newest first)').addChoices({
-      name: 'Alphabetical Order',
-      value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical
-    })
+    option
+      .setName('sortby')
+      .setDescription('Sort. Default: date added (newest first)')
+      .addChoices({
+        name: 'Alphabetical Order',
+        value: MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical
+      })
   )
   .setContexts(InteractionContextType.Guild, InteractionContextType.PrivateChannel);
 

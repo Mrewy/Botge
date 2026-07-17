@@ -3,8 +3,6 @@
   "references": [{ "path": "../src" }],
   "compilerOptions": {
     // Modules
-    "paths": {
-      "src/*": ["../src/*"]
-    }
+    "paths": { "src/*": ["../src/*"] }
   }
 }

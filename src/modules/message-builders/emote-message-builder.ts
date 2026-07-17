@@ -136,10 +136,7 @@ export class EmoteMessageBuilder extends BaseMessageBuilder<
     const emoteCdnUrlToEmoteApiCdnUrl_ = emoteCdnUrlToEmoteApiCdnUrl(currentEmote);
     if (emoteCdnUrlToEmoteApiCdnUrl_ === undefined) return undefined;
 
-    return {
-      alias: currentEmote.name,
-      url: emoteCdnUrlToEmoteApiCdnUrl_
-    };
+    return { alias: currentEmote.name, url: emoteCdnUrlToEmoteApiCdnUrl_ };
   }
 
   public markCurrentAsDeleted(): EmoteMessageBuilderTransformFunctionReturnType | undefined {

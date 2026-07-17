@@ -45,10 +45,7 @@ function getMaxWidth(layers: readonly DownloadedAsset[], scaleToHeight: number):
   return ret % 2 === 0 ? ret : ret + 1; // rounds up to even number because of ffmpeg
 }
 
-type HorizontalStackElement = {
-  readonly id: number;
-  readonly filterString: () => string;
-};
+type HorizontalStackElement = { readonly id: number; readonly filterString: () => string };
 
 class SimpleElement implements HorizontalStackElement {
   readonly #id: number;

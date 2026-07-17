@@ -54,10 +54,7 @@ export class QuoteMessageBuilder extends BaseMessageBuilder<
           text: `${this.currentIndex + 1}/${this.arrayLength}. ${this.#sortedByText === MEDIA_LIST_AND_QUOTE_LIST.sortBy.alphabetical ? 'Sorted alphabetically' : `Sorted by ${this.#sortedByText}`}.`
         });
 
-      return {
-        embeds: [embed],
-        components: [this.row, this.#extraRow]
-      };
+      return { embeds: [embed], components: [this.row, this.#extraRow] };
     };
 
     const getIdentifierFunction = (quote: Quote): string => {

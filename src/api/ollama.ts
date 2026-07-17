@@ -2,9 +2,7 @@
 
 import { config } from './config/ollama-config.ts';
 
-type OllamaChatResponse = {
-  readonly message?: { readonly content?: string };
-};
+type OllamaChatResponse = { readonly message?: { readonly content?: string } };
 
 type ScoreReplyOpportunityResult = {
   readonly score: number;
@@ -29,11 +27,7 @@ async function ollamaChat(systemPrompt: string, userPrompt: string): Promise<str
     body: JSON.stringify({
       model,
       stream: false,
-      options: {
-        temperature: 0.85,
-        num_ctx: 4096,
-        top_p: 0.9
-      },
+      options: { temperature: 0.85, num_ctx: 4096, top_p: 0.9 },
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }

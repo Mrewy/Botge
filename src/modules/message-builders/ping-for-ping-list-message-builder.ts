@@ -105,14 +105,9 @@ export class PingForPingListMessageBuilder extends BaseMessageBuilder<
             inline: true
           }
         )
-        .setFooter({
-          text: `${this.currentIndex + 1}/${this.arrayLength}.`
-        });
+        .setFooter({ text: `${this.currentIndex + 1}/${this.arrayLength}.` });
 
-      return {
-        embeds: [embed],
-        components: [this.row]
-      };
+      return { embeds: [embed], components: [this.row] };
     };
 
     super(

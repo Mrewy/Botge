@@ -10,18 +10,11 @@ const globalConfig: readonly Readonly<Config>[] = defineConfig([
       parserOptions: {
         projectService: true,
         ecmaVersion: 'latest',
-        ecmaFeatures: {
-          impliedStrict: true
-        }
+        ecmaFeatures: { impliedStrict: true }
       }
     }
   },
-  {
-    name: 'globalLinterOptions',
-    linterOptions: {
-      noInlineConfig: true
-    }
-  },
+  { name: 'globalLinterOptions', linterOptions: { noInlineConfig: true } },
   globalIgnores(['dist/'], 'globalIgnores')
 ]);
 
@@ -34,14 +27,8 @@ const config: readonly Readonly<Config>[] = defineConfig([
   {
     name: 'ts',
     files: ['**/*.ts'],
-    plugins: {
-      'typescript-eslint': plugin,
-      'js': js,
-      'tsdoc': tsdoc
-    },
-    languageOptions: {
-      parser: parser
-    },
+    plugins: { 'typescript-eslint': plugin, 'js': js, 'tsdoc': tsdoc },
+    languageOptions: { parser: parser },
     extends: [
       js.configs.recommended,
       configs.all,

@@ -13,18 +13,13 @@ import { DATABASE_DIR } from '../directory-paths.ts';
 
 type RedditGlobalOptions = {
   readonly method: string;
-  readonly headers: {
-    readonly Authorization: string;
-  };
+  readonly headers: { readonly Authorization: string };
 };
 
 type RedditLivestreamFails = {
   readonly data: {
     readonly children: readonly {
-      readonly data: {
-        readonly permalink: string;
-        readonly over_18: boolean;
-      };
+      readonly data: { readonly permalink: string; readonly over_18: boolean };
     }[];
   };
 };
@@ -46,9 +41,7 @@ export class RedditApi {
   get #apiRequestOptions(): RedditGlobalOptions {
     const optionsTwitchGlobal: RedditGlobalOptions = {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${this.#accessToken}`
-      }
+      headers: { Authorization: `Bearer ${this.#accessToken}` }
     };
 
     return optionsTwitchGlobal;
@@ -57,9 +50,7 @@ export class RedditApi {
   public async validateAndGetNewAccessTokenIfInvalid(): Promise<void> {
     const resp = await fetch(REDDIT_API_ENDPOINTS.accessTokenValidate, {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${this.#accessToken}`
-      }
+      headers: { Authorization: `Bearer ${this.#accessToken}` }
     });
 
     if (resp.status === 403) {

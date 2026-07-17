@@ -224,11 +224,7 @@ export class PingForPingMeMessageBuilder {
 
       this.#updatePing(pingsDataBase, undefined, false);
       this.#pressedPingMeAsWell.set(userId, Date.now());
-      return {
-        reply: this.#transformFunction(),
-        buttonReply: undefined,
-        deletionEvent: false
-      };
+      return { reply: this.#transformFunction(), buttonReply: undefined, deletionEvent: false };
     }
 
     if (this.#pressedPingMeAsWell.has(userId))
@@ -244,11 +240,7 @@ export class PingForPingMeMessageBuilder {
 
     this.#updatePing(pingsDataBase, newUserIds);
     this.#pressedPingMeAsWell.set(userId, Date.now());
-    return {
-      reply: this.#transformFunction(),
-      buttonReply: undefined,
-      deletionEvent: false
-    };
+    return { reply: this.#transformFunction(), buttonReply: undefined, deletionEvent: false };
   }
 
   public removeUserId(
@@ -279,11 +271,7 @@ export class PingForPingMeMessageBuilder {
 
       this.#updatePing(pingsDataBase, undefined, true);
       this.#pressedRemoveMeFromPing.set(userId, Date.now());
-      return {
-        reply: this.#transformFunction(),
-        buttonReply: undefined,
-        deletionEvent: false
-      };
+      return { reply: this.#transformFunction(), buttonReply: undefined, deletionEvent: false };
     }
 
     if (this.#pressedRemoveMeFromPing.has(userId))
@@ -301,11 +289,7 @@ export class PingForPingMeMessageBuilder {
 
     this.#updatePing(pingsDataBase, newUserIds);
     this.#pressedRemoveMeFromPing.set(userId, Date.now());
-    return {
-      reply: this.#transformFunction(),
-      buttonReply: undefined,
-      deletionEvent: false
-    };
+    return { reply: this.#transformFunction(), buttonReply: undefined, deletionEvent: false };
   }
 
   public deletePing(pingsDataBase: Readonly<PingsDatabase>): PingForPingMeMessageBuilderReplies {
@@ -364,11 +348,7 @@ export class PingForPingMeMessageBuilder {
         : null
       : oldUserIds;
     const newUserIdRemoved_ = newUserIdRemoved ?? oldUserIdRemoved;
-    const newPing: Ping = {
-      ...this.#ping,
-      userIds: newUserIds_,
-      userIdRemoved: newUserIdRemoved_
-    };
+    const newPing: Ping = { ...this.#ping, userIds: newUserIds_, userIdRemoved: newUserIdRemoved_ };
     this.#ping = newPing;
 
     this.#job.cancel();
@@ -384,20 +364,14 @@ export class PingForPingMeMessageBuilder {
     pingsDataBase.delete(this.#ping);
 
     return {
-      reply: {
-        content: '❌ This ping has been deleted.',
-        components: []
-      },
+      reply: { content: '❌ This ping has been deleted.', components: [] },
       buttonReply: undefined,
       deletionEvent: true
     };
   }
 
   #transformFunction(): PingForPingMeMessageBuilderTransformFunctionReturnType {
-    return {
-      content: getContent(this.#ping, 'PingRegistered'),
-      components: [this.#row]
-    };
+    return { content: getContent(this.#ping, 'PingRegistered'), components: [this.#row] };
   }
 
   #isCriticalTimeLeftOrIsPassed(): boolean {

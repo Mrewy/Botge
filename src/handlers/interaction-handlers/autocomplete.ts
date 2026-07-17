@@ -82,10 +82,7 @@ export function autocompleteHandler(
             ) ?? [];
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map(
             (match) => {
-              return {
-                name: match.name,
-                value: match.name
-              };
+              return { name: match.name, value: match.name };
             }
           );
 
@@ -98,10 +95,7 @@ export function autocompleteHandler(
 
           const options: readonly ApplicationCommandOptionChoiceData<number>[] =
             applicableSizes_.map((applicableSize) => {
-              return {
-                name: applicableSize.toString(),
-                value: applicableSize
-              };
+              return { name: applicableSize.toString(), value: applicableSize };
             });
 
           await interaction.respond(options);
@@ -123,10 +117,7 @@ export function autocompleteHandler(
             ) ?? [];
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = matches.map(
             (match) => {
-              return {
-                name: match.name.trim(),
-                value: match.name.trim()
-              };
+              return { name: match.name.trim(), value: match.name.trim() };
             }
           );
 
@@ -146,10 +137,7 @@ export function autocompleteHandler(
 
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = platforms.map(
             (platform) => {
-              return {
-                name: platform,
-                value: platform
-              };
+              return { name: platform, value: platform };
             }
           );
 
@@ -181,10 +169,7 @@ export function autocompleteHandler(
 
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = bools.map(
             (bool) => {
-              return {
-                name: booleanToString(bool),
-                value: booleanToString(bool)
-              };
+              return { name: booleanToString(bool), value: booleanToString(bool) };
             }
           );
 
@@ -245,10 +230,7 @@ export function autocompleteHandler(
                 uniqueCreatorName.toLowerCase().includes(focusedOptionValue.trim())
               )
               .map((uniqueCreatorName) => {
-                return {
-                  name: uniqueCreatorName,
-                  value: uniqueCreatorName
-                };
+                return { name: uniqueCreatorName, value: uniqueCreatorName };
               });
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
@@ -277,10 +259,7 @@ export function autocompleteHandler(
                 uniqueGameId.toLowerCase().includes(focusedOptionValue.trim())
               )
               .map((uniqueGameId) => {
-                return {
-                  name: uniqueGameId,
-                  value: uniqueGameId
-                };
+                return { name: uniqueGameId, value: uniqueGameId };
               });
 
           await interaction.respond(options.slice(0, MAX_OPTIONS_LENGTH));
@@ -340,10 +319,7 @@ export function autocompleteHandler(
 
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = timezones_.map(
             (timezone: Readonly<TimeZone>) => {
-              return {
-                name: timezone.name,
-                value: timezone.utc
-              };
+              return { name: timezone.name, value: timezone.utc };
             }
           );
 
@@ -359,10 +335,7 @@ export function autocompleteHandler(
             );
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = mediaNames.map(
             (mediaName) => {
-              return {
-                name: mediaName,
-                value: mediaName
-              };
+              return { name: mediaName, value: mediaName };
             }
           );
 
@@ -378,10 +351,7 @@ export function autocompleteHandler(
             );
           const options: readonly ApplicationCommandOptionChoiceData<string>[] = quoteNames.map(
             (quoteName) => {
-              return {
-                name: quoteName,
-                value: quoteName
-              };
+              return { name: quoteName, value: quoteName };
             }
           );
 

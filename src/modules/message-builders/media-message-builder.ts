@@ -58,10 +58,7 @@ export class MediaMessageBuilder extends BaseMessageBuilder<
       if (tenorUrl !== undefined) embed.setThumbnail(tenorUrl);
       else embed.setThumbnail(url);
 
-      return {
-        embeds: [embed],
-        components: [this.row, this.#extraRow]
-      };
+      return { embeds: [embed], components: [this.row, this.#extraRow] };
     };
 
     const getIdentifierFunction = (media: Media): string => {

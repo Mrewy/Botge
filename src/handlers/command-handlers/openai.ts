@@ -66,10 +66,7 @@ export function chatgptHandler(openai: ReadonlyOpenAI | undefined) {
           image !== undefined ?
             [
               { role: 'user', content: prompt },
-              {
-                role: 'user',
-                content: [{ type: 'input_image', image_url: image, detail: 'auto' }]
-              }
+              { role: 'user', content: [{ type: 'input_image', image_url: image, detail: 'auto' }] }
             ]
           : undefined;
 

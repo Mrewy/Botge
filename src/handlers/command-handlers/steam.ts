@@ -6,11 +6,7 @@ import type { ChatInputCommandInteraction } from 'discord.js';
 import { logError } from '../../utils/public/log-error.ts';
 import { GUILD_ID_CUTEDOG, type Guild } from '../../modules/discord/guild.ts';
 
-type NumberOfCurrentPlayers = {
-  readonly response: {
-    readonly player_count: number;
-  };
-};
+type NumberOfCurrentPlayers = { readonly response: { readonly player_count: number } };
 
 function getColor(percent: number): string {
   if (percent <= 39)

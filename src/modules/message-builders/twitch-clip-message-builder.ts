@@ -90,8 +90,6 @@ export class TwitchClipMessageBuilder extends BaseMessageBuilder<
     const current = this.current();
     const [contentUrl] = current.content.split('\n');
 
-    return {
-      content: `${contentUrl}\nSent by: ${getPingableUserId(this.interaction.user.id)}`
-    };
+    return { content: `${contentUrl}\nSent by: ${getPingableUserId(this.interaction.user.id)}` };
   }
 }

@@ -23,9 +23,7 @@ export async function getTwitchAccessToken(
 ): Promise<string> {
   const response = await fetch(TWITCH_API_ENDPOINTS.accessToken, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `client_id=${clientId}&client_secret=${clientSecret}&grant_type=client_credentials`
   });
 

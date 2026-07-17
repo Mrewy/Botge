@@ -38,11 +38,7 @@ export async function getSevenTvApiUrlFromSevenTvEmoteSetLink(
 
   const sevenTVEmotes = fetched as SevenTVEmotes;
   if (sevenTVEmotes.error !== undefined) return { type: 'error', message: sevenTVEmotes.error };
-  return {
-    type: 'success',
-    url: sevenTvApiUrl,
-    ownerUsername: sevenTVEmotes.owner.username
-  };
+  return { type: 'success', url: sevenTvApiUrl, ownerUsername: sevenTVEmotes.owner.username };
 }
 
 export async function getBttvApiUrlFromBroadcasterName(

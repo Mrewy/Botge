@@ -54,11 +54,7 @@ export class MediaDatabase extends BaseDatabase {
     if (!this.#tableExists(tableName)) return undefined;
 
     const statement = this.databaseSync.prepare(`SELECT name FROM ${tableName} WHERE url = (?)`);
-    const row = statement.get(url) as
-      | {
-          readonly name: string;
-        }
-      | undefined;
+    const row = statement.get(url) as { readonly name: string } | undefined;
 
     if (row !== undefined) return row.name;
     return undefined;

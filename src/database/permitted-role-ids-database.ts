@@ -59,10 +59,7 @@ export class PermittedRoleIdsDatabase extends BaseDatabase {
       `SELECT permitNoRole FROM ${tableName} WHERE idType = (?)`
     );
     const permitNoRole = statement.get(ADD_EMOTE_ID_TYPE) as
-      | {
-          readonly permitNoRole: number;
-        }
-      | undefined;
+      { readonly permitNoRole: number } | undefined;
 
     return Boolean(permitNoRole?.permitNoRole);
   }
@@ -118,11 +115,7 @@ export class PermittedRoleIdsDatabase extends BaseDatabase {
     const statement = this.databaseSync.prepare(
       `SELECT roleIds FROM ${tableName} WHERE idType = (?)`
     );
-    const roleIds = statement.get(idType) as
-      | {
-          readonly roleIds: string | null;
-        }
-      | undefined;
+    const roleIds = statement.get(idType) as { readonly roleIds: string | null } | undefined;
 
     if (roleIds !== undefined && roleIds.roleIds !== null)
       return roleIds.roleIds.split(ROLE_IDS_SEPARATOR);

@@ -56,11 +56,7 @@ export class QuotesDatabase extends BaseDatabase {
     const statement = this.databaseSync.prepare(
       `SELECT name FROM ${tableName} WHERE content = (?)`
     );
-    const row = statement.get(content) as
-      | {
-          readonly name: string;
-        }
-      | undefined;
+    const row = statement.get(content) as { readonly name: string } | undefined;
 
     if (row !== undefined) return row.name;
     return undefined;

@@ -5,8 +5,6 @@
   "windows": {
     "options": { "shell": { "executable": "${env:ProgramFiles}/Git/bin/bash.exe", "args": ["-c"] } }
   },
-  "linux": { "options": { "shell": { "executable": "/bin/bash", "args": ["-c"] } } },
-  "osx": { "options": { "shell": { "executable": "/bin/bash", "args": ["-c"] } } },
 
   "tasks": [
     // Public
@@ -15,8 +13,8 @@
       "detail": "Checks NPM version.",
 
       "type": "shell",
-      "command": "scripts/check-package-version",
-      "args": ["npm"],
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm"],
 
       "runOptions": { "runOn": "folderOpen" },
 
@@ -52,8 +50,8 @@
       "detail": "Checks npm-check-updates version.",
 
       "type": "shell",
-      "command": "scripts/check-package-version",
-      "args": ["npm-check-updates"],
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm-check-updates"],
 
       "options": { "statusbar": { "hide": true } }
     },
@@ -76,8 +74,8 @@
       "detail": "Checks sort-package-json version.",
 
       "type": "shell",
-      "command": "scripts/check-package-version",
-      "args": ["sort-package-json"],
+      "command": "bash",
+      "args": ["scripts/check-package-version", "sort-package-json"],
 
       "options": { "statusbar": { "hide": true } }
     },

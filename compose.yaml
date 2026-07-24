@@ -16,8 +16,6 @@ services:
       test: set -o pipefail;curl -fsS http://localhost:7700/health | grep -q '{"status":"available"}'
       retries: 3
       timeout: 5s
-    volumes:
-      - ./meili-data:/meili-data
     env_file:
       - .env
     environment:
@@ -29,8 +27,6 @@ services:
     image: chromadb/chroma:latest
     mem_limit: 1g
     restart: unless-stopped
-    volumes:
-      - ./chroma-data:/chroma/chroma
     environment:
       - IS_PERSISTENT=TRUE
       - ANONYMIZED_TELEMETRY=FALSE
@@ -48,7 +44,6 @@ services:
     restart: always
     volumes:
       - ./data:/app/data
-      - ./tmp:/app/tmp
     env_file:
       - .env
     environment:

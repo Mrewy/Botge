@@ -46,6 +46,6 @@ COPY LICENSE.txt node.config.json README.md ./
 
 USER node
 
-VOLUME ["/app/data", "/app/tmp"]
+VOLUME ["/app/data"]
 
 CMD ["node", "--experimental-default-config-file", "--title", "botge", "dist/index.js"]

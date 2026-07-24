@@ -20,8 +20,8 @@
   "permission": {
     "allow-addons": true,
     "allow-child-process": true,
-    "allow-fs-read": ["data", "dist", "node_modules", "tmp"],
-    "allow-fs-write": ["data", "tmp"],
+    "allow-fs-read": ["data", "dist", "node_modules"],
+    "allow-fs-write": ["data"],
     "allow-inspector": false,
     "allow-net": true,
     "allow-wasi": false,

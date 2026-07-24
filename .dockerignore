@@ -4,7 +4,6 @@
 .husky
 !.husky/install.ts
 assets
-chroma-data
 data
 dist
 docs
@@ -12,12 +11,10 @@ docs
 !docs/CHANGELOG.md
 !docs/PRIVACY.md
 !docs/TERMS.md
-meili-data
 nginx/cache
 node_modules
 src/tsdoc.json
 tests
-tmp
 
 .dockerignore
 .editorconfig

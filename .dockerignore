@@ -25,6 +25,7 @@ tests
 .markdownlint.json
 .nvmrc
 .prettierignore
+botge.example.config.json
 commitlint.config.ts
 compose.yaml
 cspell.config.ts

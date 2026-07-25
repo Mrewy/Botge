@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Mrewy/Botge/blob/main/botge.config.schema.json",
+
+  "title": "Botge Configuration Schema",
+  "description": "Botge JSON Schema",
+  "readOnly": true,
+
+  "type": "object",
+  "additionalProperties": false,
+
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "default": "botge.config.schema.json",
+
+      "description": "JSON schema reference used by the editor."
+    },
+
+    "UPDATE_CLIPS_ON_STARTUP": {
+      "type": "boolean",
+      "default": false,
+
+      "description": "Refresh Twitch clips on startup instead of refreshing creator names and game IDs."
+    },
+
+    "JOIN_VOICE_CHANNEL": {
+      "type": "boolean",
+      "default": false,
+
+      "description": "Join the configured voice channel when the bot becomes ready."
+    }
+  },
+
+  "required": ["UPDATE_CLIPS_ON_STARTUP", "JOIN_VOICE_CHANNEL"]
+}

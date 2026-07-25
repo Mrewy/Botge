@@ -12,10 +12,7 @@ services:
   meilisearch:
     image: getmeili/meilisearch:latest
     mem_limit: 512m
-    healthcheck:
-      test: set -o pipefail;curl -fsS http://localhost:7700/health | grep -q '{"status":"available"}'
-      retries: 3
-      timeout: 5s
+    restart: always
     env_file:
       - .env
     environment:
@@ -26,7 +23,7 @@ services:
   chromadb:
     image: chromadb/chroma:latest
     mem_limit: 1g
-    restart: unless-stopped
+    restart: always
     environment:
       - IS_PERSISTENT=TRUE
       - ANONYMIZED_TELEMETRY=FALSE
@@ -55,7 +52,3 @@ services:
 
       # NGINX
       - LOCAL_CACHE_BASE=http://nginx:80
-
-      # Miscellaneous
-      - UPDATE_CLIPS_ON_STARTUP=false
-      - JOIN_VOICE_CHANNEL=false

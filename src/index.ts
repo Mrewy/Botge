@@ -13,6 +13,7 @@
  */
 
 import { readdir, rm } from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
 import { scheduleJob } from 'node-schedule';
 import { join } from 'node:path';
 import { ensureDir, type Dirent } from 'fs-extra';
@@ -55,6 +56,24 @@ import { updateCommands } from './utils/modules/discord/update-commands.ts';
 import type { ReadonlyOpenAI, ReadonlyTranslator } from './types.ts';
 
 import { DATABASE_DIR, TMP_DIR } from './directory-paths.ts';
+
+((): void => {
+  type BotgeConfig = {
+    readonly UPDATE_CLIPS_ON_STARTUP: boolean;
+    readonly JOIN_VOICE_CHANNEL: boolean;
+  };
+
+  const botgeConfig = ((): BotgeConfig => {
+    const BOTGE_CONFIG_PATH = 'botge.config.json';
+
+    if (!existsSync(BOTGE_CONFIG_PATH)) throw new Error('No botge.config.json found.');
+
+    return JSON.parse(readFileSync(BOTGE_CONFIG_PATH, 'utf8')) as BotgeConfig;
+  })();
+
+  process.env['UPDATE_CLIPS_ON_STARTUP'] = String(botgeConfig.UPDATE_CLIPS_ON_STARTUP);
+  process.env['JOIN_VOICE_CHANNEL'] = String(botgeConfig.JOIN_VOICE_CHANNEL);
+})();
 
 const DATABASE_PATHS = {
   addedEmotes: `${DATABASE_DIR}/addedEmotes.sqlite`,

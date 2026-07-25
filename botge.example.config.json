@@ -1,0 +1,6 @@
+{
+  "$schema": "botge.config.schema.json",
+
+  "UPDATE_CLIPS_ON_STARTUP": false,
+  "JOIN_VOICE_CHANNEL": false
+}

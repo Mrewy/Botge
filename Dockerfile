@@ -42,7 +42,7 @@ RUN apk add --no-cache ffmpeg
 COPY --from=node-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY docs ./docs
-COPY LICENSE.txt botge.config.json node.config.json README.md ./
+COPY LICENSE.txt botge*.config.json node.config.json README.md ./
 
 USER node
 

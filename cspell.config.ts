@@ -38,6 +38,7 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     // Words
     'metadatas',
     'unforgeable',
+    'gpt',
 
     // Names
     'Botge',

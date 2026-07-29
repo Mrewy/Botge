@@ -54,7 +54,7 @@
     "meilisearch": "^0.60.0",
     "node-fetch": "^3.3.2",
     "node-schedule": "^2.1.1",
-    "openai": "^7.0.0",
+    "openai": "^7.1.0",
     "timezones-list": "^3.1.0"
   },
   "devDependencies": {

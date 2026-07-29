@@ -172,7 +172,7 @@ export function messageContextMenuCommandHandler(
         })();
 
         const response = await openai.responses.create({
-          model: 'gpt-5.2',
+          model: 'gpt-5.6-terra',
           input: input,
           max_output_tokens: 400,
           instructions: instructions,

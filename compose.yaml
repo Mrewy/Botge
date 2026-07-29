@@ -41,6 +41,7 @@ services:
     restart: always
     volumes:
       - ./data:/app/data
+      - ./botge.config.json:/app/botge.config.json
     env_file:
       - .env
     environment:

@@ -13,6 +13,7 @@
  */
 
 import { readdir, rm } from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
 import { scheduleJob } from 'node-schedule';
 import { join } from 'node:path';
 import { ensureDir, type Dirent } from 'fs-extra';
@@ -22,7 +23,6 @@ import { Translator } from 'deepl-node';
 import OpenAI from 'openai';
 import { Client, GatewayIntentBits } from 'discord.js';
 import { getVoiceConnections } from '@discordjs/voice';
-import initSqlJs from 'sql.js';
 
 import { BroadcasterNameAndPersonalEmoteSetsDatabase } from './database/broadcaster-name-and-personal-emote-sets-database.ts';
 import { PermittedRoleIdsDatabase } from './database/permitted-role-ids-database.ts';
@@ -32,30 +32,48 @@ import { PingsDatabase } from './database/pings-database.ts';
 import { QuotesDatabase } from './database/quotes-database.ts';
 import { UsersDatabase } from './database/users-database.ts';
 
-import { newRedditApi } from './utils/constructors/new-reddit-api.ts';
+// import { newRedditApi } from './utils/constructors/new-reddit-api.ts';
 import { newTwitchApi } from './utils/constructors/new-twitch-api.ts';
 import { newGuild } from './utils/constructors/new-guild.ts';
-import { registerPings } from './utils/register-pings.ts';
-import { logError } from './utils/log-error.ts';
+import { registerPings } from './utils/public/register-pings.ts';
+import { logError } from './utils/public/log-error.ts';
 
 import { TwitchClipsMeilisearch } from './api/twitch-clips-meilisearch.ts';
 import { CachedUrl } from './api/cached-url.ts';
 
-import { DatabaseManager } from './bot/database-manager.ts';
-import { ApiManager } from './bot/api-manager.ts';
-import { Bot } from './bot/bot.ts';
+import { DatabaseManager } from './modules/bot/database-manager.ts';
+import { ApiManager } from './modules/bot/api-manager.ts';
+import { Bot } from './modules/bot/bot.ts';
 
-import { GlobalEmoteMatcherConstructor } from './emote-matcher/emote-matcher-constructor.ts';
-import type { PersonalEmoteSets } from './emote-matcher/personal-emote-sets.ts';
+import { GlobalEmoteMatcherConstructor } from './modules/emote-matcher/emote-matcher-constructor.ts';
+import type { PersonalEmoteSets } from './modules/emote-matcher/personal-emote-sets.ts';
 
-import type { Guild } from './discord/guild.ts';
-import { User } from './discord/user.ts';
+import type { Guild } from './modules/discord/guild.ts';
+import { User } from './modules/discord/user.ts';
 
-import { updateCommands } from './utils/discord/update-commands.ts';
+import { updateCommands } from './utils/modules/discord/update-commands.ts';
 
 import type { ReadonlyOpenAI, ReadonlyTranslator } from './types.ts';
 
 import { DATABASE_DIR, TMP_DIR } from './directory-paths.ts';
+
+((): void => {
+  type BotgeConfig = {
+    readonly UPDATE_CLIPS_ON_STARTUP: boolean;
+    readonly JOIN_VOICE_CHANNEL: boolean;
+  };
+
+  const botgeConfig = ((): BotgeConfig => {
+    const BOTGE_CONFIG_PATH = 'botge.config.json';
+
+    if (!existsSync(BOTGE_CONFIG_PATH)) throw new Error('No botge.config.json found.');
+
+    return JSON.parse(readFileSync(BOTGE_CONFIG_PATH, 'utf8')) as BotgeConfig;
+  })();
+
+  process.env['UPDATE_CLIPS_ON_STARTUP'] = String(botgeConfig.UPDATE_CLIPS_ON_STARTUP);
+  process.env['JOIN_VOICE_CHANNEL'] = String(botgeConfig.JOIN_VOICE_CHANNEL);
+})();
 
 const DATABASE_PATHS = {
   addedEmotes: `${DATABASE_DIR}/addedEmotes.sqlite`,
@@ -100,32 +118,50 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     DEEPL_API_KEY,
     TWITCH_CLIENT_ID,
     TWITCH_SECRET,
-    REDDIT_CLIENT_ID,
-    REDDIT_SECRET,
+    // REDDIT_CLIENT_ID,
+    // REDDIT_SECRET,
     MEILISEARCH_HOST,
     MEILI_MASTER_KEY,
     LOCAL_CACHE_BASE
   } = process.env;
 
+  delete process.env['OPENAI_API_KEY'];
+  delete process.env['DEEPL_API_KEY'];
+  delete process.env['TWITCH_CLIENT_ID'];
+  delete process.env['TWITCH_SECRET'];
+  delete process.env['REDDIT_CLIENT_ID'];
+  delete process.env['REDDIT_SECRET'];
+  delete process.env['MEILISEARCH_HOST'];
+  delete process.env['MEILI_MASTER_KEY'];
+  delete process.env['LOCAL_CACHE_BASE'];
+
   //client
   const client: Client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+    intents: [
+      GatewayIntentBits.Guilds,
+      GatewayIntentBits.GuildMessages,
+      GatewayIntentBits.MessageContent
+    ]
   });
 
   //apiManager
   const twitchClipsMeiliSearch: Readonly<TwitchClipsMeilisearch> | undefined =
-    MEILISEARCH_HOST !== undefined && MEILI_MASTER_KEY !== undefined
-      ? new TwitchClipsMeilisearch(new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY }))
-      : undefined;
+    MEILISEARCH_HOST !== undefined && MEILI_MASTER_KEY !== undefined ?
+      new TwitchClipsMeilisearch(
+        new Meilisearch({ host: MEILISEARCH_HOST, apiKey: MEILI_MASTER_KEY })
+      )
+    : undefined;
 
+  /*
   const redditApi =
     REDDIT_CLIENT_ID !== undefined && REDDIT_SECRET !== undefined
       ? newRedditApi(REDDIT_CLIENT_ID, REDDIT_SECRET)
       : undefined;
+  */
   const twitchApi =
-    TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined
-      ? newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
-      : undefined;
+    TWITCH_CLIENT_ID !== undefined && TWITCH_SECRET !== undefined ?
+      newTwitchApi(TWITCH_CLIENT_ID, TWITCH_SECRET)
+    : undefined;
 
   const cachedUrl: Readonly<CachedUrl> = new CachedUrl(LOCAL_CACHE_BASE);
 
@@ -136,7 +172,7 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
 
   const apiManager: Readonly<ApiManager> = new ApiManager(
     twitchClipsMeiliSearch,
-    await redditApi,
+    // await redditApi,
     await twitchApi,
     cachedUrl,
     translator,
@@ -144,23 +180,21 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
   );
 
   //databaseManager
-  const sqlJsStatic = await initSqlJs();
-
   const broadcasterNameAndPersonalEmoteSetsDatabase: Readonly<BroadcasterNameAndPersonalEmoteSetsDatabase> =
-    new BroadcasterNameAndPersonalEmoteSetsDatabase(DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets, sqlJsStatic);
+    new BroadcasterNameAndPersonalEmoteSetsDatabase(
+      DATABASE_PATHS.broadcasterNameAndPersonalEmoteSets
+    );
   const permittedRoleIdsDatabase: Readonly<PermittedRoleIdsDatabase> = new PermittedRoleIdsDatabase(
-    DATABASE_PATHS.permitRoleIds,
-    sqlJsStatic
+    DATABASE_PATHS.permitRoleIds
   );
   const addedEmotesDatabase: Readonly<AddedEmotesDatabase> = new AddedEmotesDatabase(
-    DATABASE_PATHS.addedEmotes,
-    sqlJsStatic
+    DATABASE_PATHS.addedEmotes
   );
 
-  const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_PATHS.media, sqlJsStatic);
-  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_PATHS.users, sqlJsStatic);
-  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_PATHS.pings, sqlJsStatic);
-  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_PATHS.quote, sqlJsStatic);
+  const mediaDatabase: Readonly<MediaDatabase> = new MediaDatabase(DATABASE_PATHS.media);
+  const usersDatabase: Readonly<UsersDatabase> = new UsersDatabase(DATABASE_PATHS.users);
+  const pingsDatabase: Readonly<PingsDatabase> = new PingsDatabase(DATABASE_PATHS.pings);
+  const quoteDatabase: Readonly<QuotesDatabase> = new QuotesDatabase(DATABASE_PATHS.quote);
 
   const databaseManager: Readonly<DatabaseManager> = new DatabaseManager(
     broadcasterNameAndPersonalEmoteSetsDatabase,
@@ -199,7 +233,8 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     const emoteBorderColor = databaseUser.emoteBorderColor ?? undefined;
     // const emoteBorderOpacity = databaseUser.emoteBorderOpacity ?? undefined;
 
-    if (guildId === null) return new User(databaseUser.userId, undefined, enableEmoteBorder, emoteBorderColor);
+    if (guildId === null)
+      return new User(databaseUser.userId, undefined, enableEmoteBorder, emoteBorderColor);
 
     const guild = guilds.find((guild_) => guild_.id === guildId);
     if (guild === undefined) throw new Error('Undefined guild while searching for guild for user.');
@@ -207,7 +242,8 @@ const bot = await (async (): Promise<Readonly<Bot>> => {
     return new User(databaseUser.userId, guild, enableEmoteBorder, emoteBorderColor);
   });
 
-  return new Bot(client, apiManager, databaseManager, guilds, users);
+  Bot.createInstance(client, apiManager, databaseManager, guilds, users);
+  return Bot.instance;
 })();
 
 /**
@@ -254,7 +290,7 @@ process.on('SIGTERM', (): void => {
 });
 
 process.on('uncaughtException', (error: Readonly<Error>): void => {
-  console.log(`uncaughtException: ${error.message}`);
+  logError(error, `uncaughtException`);
 });
 
 process.on('unhandledRejection', (error): void => {
@@ -262,9 +298,10 @@ process.on('unhandledRejection', (error): void => {
 });
 
 const refreshClipsOrRefreshUniqueCreatorNamesAndGameIds: readonly Promise<void>[] =
-  process.env['UPDATE_CLIPS_ON_STARTUP'] === 'true'
-    ? bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi))
-    : bot.guilds.map(async (guild) => guild.refreshUniqueCreatorNamesAndGameIds());
+  process.env['UPDATE_CLIPS_ON_STARTUP'] === 'true' ?
+    bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi))
+  : bot.guilds.map(async (guild) => guild.refreshUniqueCreatorNamesAndGameIds());
+delete process.env['UPDATE_CLIPS_ON_STARTUP'];
 
 scheduleJob('0 */4 * * * *', () => {
   bot.messageBuilderManager.cleanupMessageBuilders();
@@ -279,9 +316,11 @@ scheduleJob('0 */20 * * * *', async () => {
 scheduleJob('0 54 * * * *', async () => {
   await bot.apiManager.twitchApi?.validateAndGetNewAccessTokenIfInvalid();
 });
+/*
 scheduleJob('0 54 * * * *', async () => {
   await bot.apiManager.redditApi?.validateAndGetNewAccessTokenIfInvalid();
 });
+*/
 
 scheduleJob('0 */2 * * *', async () => {
   await Promise.all(bot.guilds.map(async (guild) => guild.refreshClips(bot.apiManager.twitchApi)));
@@ -289,7 +328,9 @@ scheduleJob('0 */2 * * *', async () => {
 
 scheduleJob('6 */6 * * *', async () => {
   await Promise.all(
-    bot.guilds.map(async (guild) => guild.personalEmoteMatcherConstructor.refreshBTTVAndFFZPersonalEmotes())
+    bot.guilds.map(async (guild) =>
+      guild.personalEmoteMatcherConstructor.refreshBTTVAndFFZPersonalEmotes()
+    )
   );
 });
 
@@ -302,4 +343,5 @@ await ensureDirs;
 await updateCommands(COMMANDS_PATH);
 await Promise.all(refreshClipsOrRefreshUniqueCreatorNamesAndGameIds);
 await bot.client.login(process.env['DISCORD_TOKEN']);
+delete process.env['DISCORD_TOKEN'];
 await registerPings(bot.client, bot.dataBaseManager.pingsDatabase, bot.scheduledJobs);

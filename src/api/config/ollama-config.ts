@@ -3,7 +3,11 @@
 export type Config = {
   readonly discord: { readonly token: string };
   readonly bot: { readonly name: string };
-  readonly ollama: { readonly baseUrl: string; readonly model: string; readonly embeddingModel: string };
+  readonly ollama: {
+    readonly baseUrl: string;
+    readonly model: string;
+    readonly embeddingModel: string;
+  };
   readonly chroma: { readonly url: string };
   readonly behavior: {
     readonly replyScoreThreshold: number;
@@ -28,12 +32,8 @@ function optional(key: string, defaultValue: string): string {
 }
 
 export const config: Config = {
-  discord: {
-    token: required('DISCORD_TOKEN')
-  },
-  bot: {
-    name: optional('BOT_NAME', 'Botge')
-  },
+  discord: { token: required('DISCORD_TOKEN') },
+  bot: { name: optional('BOT_NAME', 'Botge') },
   ollama: {
     baseUrl: optional('OLLAMA_BASE_URL', 'http://localhost:11434'),
     model: optional('OLLAMA_MODEL', 'gemma4:26b'),
@@ -41,9 +41,7 @@ export const config: Config = {
     // Changing this requires re-running: node backfill.js reset <channelId>
     embeddingModel: optional('EMBEDDING_MODEL', 'nomic-embed-text')
   },
-  chroma: {
-    url: optional('CHROMA_URL', 'http://chromadb:8000')
-  },
+  chroma: { url: optional('CHROMA_URL', 'http://chromadb:8000') },
   behavior: {
     replyScoreThreshold: Number(optional('REPLY_SCORE_THRESHOLD', '2')),
     contextWindow: Number(optional('CONTEXT_WINDOW', '30')),

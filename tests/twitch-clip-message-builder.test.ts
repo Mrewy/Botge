@@ -4,8 +4,8 @@ import { describe, expect, test } from 'vitest';
 
 import type { ChatInputCommandInteraction } from 'discord.js';
 
-import { getAllSubstrings } from 'src/command-handlers/shortest-unique-substrings.ts';
-import { TwitchClipMessageBuilder } from 'src/message-builders/twitch-clip-message-builder.ts';
+import { getAllSubstrings } from 'src/handlers/command-handlers/shortest-unique-substrings.ts';
+import { TwitchClipMessageBuilder } from 'src/modules/message-builders/twitch-clip-message-builder.ts';
 import type { TwitchClip } from 'src/types.ts';
 
 const TWITCH_CLIPS_LENGTH = 4 as const; //at least 4
@@ -33,7 +33,11 @@ describe('TwitchClipMessageBuilder', () => {
     return twitchClips_;
   })();
 
-  const twitchClipMessageBuilder = new TwitchClipMessageBuilder(chatInputCommandInteraction, twitchClips, false);
+  const twitchClipMessageBuilder = new TwitchClipMessageBuilder(
+    chatInputCommandInteraction,
+    twitchClips,
+    false
+  );
 
   test('jumpToIdentifier exact', () => {
     twitchClipMessageBuilder.first();

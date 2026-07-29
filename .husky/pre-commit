@@ -1,3 +1,9 @@
+# sh scripts/check-package-version npm
+# sh scripts/check-package-version sort-package-json
+
+# sort-package-json
 npm install
+
 npm run prettier
+npx lint-staged --no-stash
 npm run build

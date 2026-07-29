@@ -1,4 +1,4 @@
-FROM node:25.9.0-alpine AS base
+FROM dhi.io/node:26.5.0-alpine3.24-sfw-dev AS base
 
 FROM base AS ci-dependencies
 WORKDIR /app
@@ -11,14 +11,14 @@ FROM ci-dependencies AS node-dependencies
 WORKDIR /app
 COPY --from=ci-dependencies /app/ci-deps ./
 
-RUN npm ci --omit=dev --strict-peer-deps=true
+RUN npm ci --omit=dev
 
 FROM node-dependencies AS build-dependencies
 WORKDIR /app
 COPY --from=ci-dependencies /app/ci-deps ./
 COPY --from=node-dependencies /app/node_modules ./node_modules
 
-RUN npm ci --strict-peer-deps=true
+RUN npm ci
 
 FROM build-dependencies AS build
 WORKDIR /app
@@ -27,10 +27,10 @@ COPY . .
 
 RUN npm run build:production
 
-FROM base AS node
+FROM base AS botge
 WORKDIR /app
 LABEL org.opencontainers.image.title="Botge" \
-  org.opencontainers.image.version="2.9.0" \
+  org.opencontainers.image.version="3.0.1" \
   org.opencontainers.image.description="Search emotes, clips, use zero-width emotes and other such commands." \
   org.opencontainers.image.source="https://github.com/Mrewy/Botge" \
   org.opencontainers.image.licenses="MIT" \
@@ -38,13 +38,14 @@ LABEL org.opencontainers.image.title="Botge" \
   org.opencontainers.image.documentation="https://github.com/Mrewy/Botge/tree/main/docs"
 
 RUN apk add --no-cache ffmpeg
+
 COPY --from=node-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY docs ./docs
-COPY LICENSE.txt README.md ./
+COPY LICENSE.txt botge*.config.json node.config.json README.md ./
 
 USER node
 
-VOLUME ["/app/data", "/app/tmp"]
+VOLUME ["/app/data"]
 
-CMD ["node", "dist/index.js"]
+CMD ["node", "--experimental-default-config-file", "--title", "botge", "dist/index.js"]

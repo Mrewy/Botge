@@ -1,10 +1,8 @@
 .DS_Store
-/data/
+/data
 /dist
-/chroma-data
-/meili-data
 /nginx/cache
 /node_modules
-/tmp
 
 /.env
+/botge.config.json

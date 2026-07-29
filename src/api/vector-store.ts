@@ -19,9 +19,7 @@ type StoreMessageParams = {
   readonly seqNum?: number;
 };
 
-type OllamaEmbeddingsResponse = {
-  readonly embedding?: readonly number[];
-};
+type OllamaEmbeddingsResponse = { readonly embedding?: readonly number[] };
 
 type SeqNums = Record<string, number>;
 
@@ -42,10 +40,7 @@ async function embed(text: string): Promise<readonly number[]> {
   const res = await fetch(`${baseUrl}/api/embeddings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: embeddingModel,
-      prompt: text
-    })
+    body: JSON.stringify({ model: embeddingModel, prompt: text })
   });
   if (!res.ok) throw new Error(`Ollama embeddings error ${res.status}: ${await res.text()}`);
 
@@ -193,7 +188,10 @@ export async function findSimilarWithContext(
       lo: (m?.['seqNum'] as number) - windowSize,
       hi: (m?.['seqNum'] as number) + windowSize
     }))
-    .sort((a: Readonly<{ lo: number; hi: number }>, b: Readonly<{ lo: number; hi: number }>) => a.lo - b.lo);
+    .sort(
+      (a: Readonly<{ lo: number; hi: number }>, b: Readonly<{ lo: number; hi: number }>) =>
+        a.lo - b.lo
+    );
 
   const merged: { lo: number; hi: number }[] = [];
   for (const range of ranges) {
@@ -212,7 +210,11 @@ export async function findSimilarWithContext(
   const windowFetches = merged.map(async ({ lo, hi }: Readonly<{ lo: number; hi: number }>) =>
     collection.get({
       where: {
-        $and: [{ channelId: { $eq: channelId } }, { seqNum: { $gte: lo } }, { seqNum: { $lte: hi } }]
+        $and: [
+          { channelId: { $eq: channelId } },
+          { seqNum: { $gte: lo } },
+          { seqNum: { $lte: hi } }
+        ]
       },
       include: ['documents', 'metadatas']
     })
@@ -228,8 +230,10 @@ export async function findSimilarWithContext(
         seq: (result.metadatas[i]?.['seqNum'] as number | undefined) ?? 0
       }))
       .sort(
-        (a: Readonly<{ doc: string | null; seq: number }>, b: Readonly<{ doc: string | null; seq: number }>) =>
-          a.seq - b.seq
+        (
+          a: Readonly<{ doc: string | null; seq: number }>,
+          b: Readonly<{ doc: string | null; seq: number }>
+        ) => a.seq - b.seq
       );
 
     return pairs.map((p: Readonly<{ doc: string | null; seq: number }>) => p.doc).join('\n');

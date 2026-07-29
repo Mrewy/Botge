@@ -1,0 +1,95 @@
+{
+  "version": "2.0.0",
+  "type": "shell",
+
+  "windows": {
+    "options": { "shell": { "executable": "${env:ProgramFiles}/Git/bin/bash.exe", "args": ["-c"] } }
+  },
+
+  "tasks": [
+    // Public
+    {
+      "label": "Check NPM Version",
+      "detail": "Checks NPM version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm"],
+
+      "runOptions": { "runOn": "folderOpen" },
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 1-1
+    {
+      "label": "Install",
+      "detail": "Runs npm install.",
+
+      "dependsOn": ["Check NPM Version"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "npm",
+      "args": ["install"]
+    },
+
+    // 1-2
+    {
+      "label": "Build",
+      "detail": "Runs npm run build.",
+
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"]
+    },
+
+    // 2-1
+    {
+      "label": "Check npm-check-updates version",
+      "detail": "Checks npm-check-updates version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm-check-updates"],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 2-2
+    {
+      "label": "npm-check-updates",
+      "detail": "Runs npm-check-updates.",
+
+      "dependsOn": ["Check npm-check-updates version"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "npm-check-updates"
+    },
+
+    // 3-1
+    {
+      "label": "Check sort-package-json version",
+      "detail": "Checks sort-package-json version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "sort-package-json"],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 3-2
+    {
+      "label": "sort-package-json",
+      "detail": "Runs sort-package-json.",
+
+      "dependsOn": ["Check sort-package-json version"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "sort-package-json"
+    }
+  ]
+}

@@ -3,10 +3,10 @@
 # PRE-COMMIT
 
 ```text
-git fetch
+npm install -g npm
 npm install
 npm run prettier
-npm run eslint
+npx lint-staged --no-stash
 npm run build
 npm test
 ```

@@ -4,10 +4,9 @@ import { describe, expect, test } from 'vitest';
 
 import type { ChatInputCommandInteraction } from 'discord.js';
 
-import { getAllSubstrings } from 'src/command-handlers/shortest-unique-substrings.ts';
-import { EmoteMessageBuilder } from 'src/message-builders/emote-message-builder.ts';
+import { getAllSubstrings } from 'src/handlers/command-handlers/shortest-unique-substrings.ts';
+import { EmoteMessageBuilder } from 'src/modules/message-builders/emote-message-builder.ts';
 import type { AssetInfo } from 'src/types.ts';
-import { Platform } from 'src/enums.ts';
 
 const EMOTES_LENGTH = 4 as const; //at least 4
 
@@ -21,13 +20,22 @@ describe('EmoteMessageBuilder', () => {
     const emotes_: AssetInfo[] = [];
 
     for (let i = 0; i < EMOTES_LENGTH; i++) {
-      const emote = { name: getTestName(i), platform: Platform.sevenNotInSet, zeroWidth: false } as AssetInfo;
+      const emote = {
+        name: getTestName(i),
+        platform: 'sevenNotInSet',
+        zeroWidth: false
+      } as AssetInfo;
       emotes_.push(emote);
     }
 
     return emotes_;
   })();
-  const emoteMessageBuilder = new EmoteMessageBuilder(chatInputCommandInteraction, emotes, undefined, true);
+  const emoteMessageBuilder = new EmoteMessageBuilder(
+    chatInputCommandInteraction,
+    emotes,
+    undefined,
+    true
+  );
 
   test('general', () => {
     expect(emoteMessageBuilder.counter).toBe(0);

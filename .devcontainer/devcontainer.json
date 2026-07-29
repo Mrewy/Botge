@@ -6,42 +6,49 @@
   "image": "mcr.microsoft.com/devcontainers/typescript-node",
 
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+    "ghcr.io/devcontainers/features/docker-in-docker:": {
       "moby": false,
       "installDockerBuildx": true,
-      "azureDnsAutoDetection": false
+      "azureDnsAutoDetection": false,
+      "installDockerComposeSwitch": true
     },
-    "ghcr.io/devcontainers/features/node:1": { "version": "latest", "nodeGypDependencies": false },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:": {},
+    "ghcr.io/devcontainers/features/node:": { "version": "v26.5.0", "nodeGypDependencies": false }
   },
 
   "postCreateCommand": {
+    "global-npm-packages": "npm install -g npm && npm install -g npm-check-updates && npm install -g sort-package-json",
     "install-and-build": "npm install && npm run build",
-    "directories": "mkdir -p data tmp nginx/cache/tmp && sudo chmod -R a+rwx data && sudo chmod -R a+rwx tmp && sudo chmod -R a+rx nginx/cache"
+    "directories": "mkdir -p data/tmp nginx/cache/tmp && sudo chmod -R a+rwx data && sudo chmod -R a+rx nginx/cache"
   },
 
   "customizations": {
-    "codespaces": {
-      "openFiles": ["package.json", "tsconfig.json", "src/index.ts"]
-    },
+    "codespaces": { "openFiles": ["package.json", "tsconfig.json", "src/index.ts"] },
     "vscode": {
       "extensions": [
         // Project
-        "GitHub.copilot-chat",
-        "eamodio.gitlens",
-        "dbaeumer.vscode-eslint",
+        "TypeScriptTeam.native-preview",
+        "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
+        "GitHub.copilot-chat",
+        "actboy168.tasks",
+        "docker.docker",
 
         // Syntax
         "streetsidesoftware.code-spell-checker",
         "DavidAnson.vscode-markdownlint",
-        "redhat.vscode-yaml",
+        "github.vscode-github-actions",
         "ahmadalli.vscode-nginx-conf",
+        "dbaeumer.vscode-eslint",
+        "joshbolduc.commitlint",
+        "redhat.vscode-yaml",
 
         // Extras
+        "GitHub.vscode-pull-request-github",
         "vscode-icons-team.vscode-icons",
         "aaron-bond.better-comments",
-        "alefragnani.Bookmarks"
+        "xlaoyu.npmrc-helper",
+        "eamodio.gitlens"
       ]
     }
   }

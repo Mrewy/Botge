@@ -2,22 +2,29 @@
   "recommendations": [
     // Project
     "ms-vscode-remote.remote-containers",
-    "GitHub.copilot-chat",
-    "docker.docker",
-    "eamodio.gitlens",
-    "dbaeumer.vscode-eslint",
+
+    "TypeScriptTeam.native-preview",
+    "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
+    "GitHub.copilot-chat",
+    "actboy168.tasks",
+    "docker.docker",
 
     // Syntax
     "streetsidesoftware.code-spell-checker",
     "DavidAnson.vscode-markdownlint",
-    "redhat.vscode-yaml",
+    "github.vscode-github-actions",
     "ahmadalli.vscode-nginx-conf",
+    "dbaeumer.vscode-eslint",
+    "joshbolduc.commitlint",
+    "redhat.vscode-yaml",
 
     // Extras
+    "GitHub.vscode-pull-request-github",
     "vscode-icons-team.vscode-icons",
     "aaron-bond.better-comments",
-    "alefragnani.Bookmarks"
+    "xlaoyu.npmrc-helper",
+    "eamodio.gitlens"
   ],
   "unwantedRecommendations": ["christian-kohler.npm-intellisense"]
 }

@@ -19,11 +19,7 @@ export class TwitchClipsMeilisearch {
   public async getOrCreateIndex(guildId: string): Promise<Index | undefined> {
     const indexName = getIndexName(guildId);
 
-    await this.#meilisearch
-      .createIndex(indexName, {
-        primaryKey: 'id'
-      })
-      .waitTask();
+    await this.#meilisearch.createIndex(indexName, { primaryKey: 'id' }).waitTask();
 
     const index = await this.#meilisearch.getIndex(indexName);
     await index.updatePagination({ maxTotalHits: MAX_TOTAL_HITS }).waitTask();

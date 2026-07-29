@@ -2,14 +2,9 @@
 
 import { defineConfig, type ViteUserConfig } from 'vitest/config';
 
-const viteUserConfig: ViteUserConfig = defineConfig({
-  resolve: {
-    tsconfigPaths: true
-  },
-  test: {
-    name: { label: 'Testge', color: 'cyan' },
-    logHeapUsage: true
-  }
+const viteUserConfig: Readonly<ViteUserConfig> = defineConfig({
+  resolve: { tsconfigPaths: true },
+  test: { name: { label: 'Testge', color: 'cyan' }, logHeapUsage: true }
 });
 
 export default viteUserConfig;

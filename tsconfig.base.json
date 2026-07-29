@@ -1,31 +1,35 @@
 {
   "compilerOptions": {
+    // Projects
+    "composite": true,
+
     // Modules
     "module": "nodenext",
+    "types": ["node"],
 
     "resolveJsonModule": false,
     "allowUmdGlobalAccess": false,
+    "allowArbitraryExtensions": false,
     "noUncheckedSideEffectImports": true,
     "rewriteRelativeImportExtensions": true,
 
-    // Projects
-    "composite": true,
-    // Completeness
-    "skipLibCheck": true,
     // Language and Environment
     "target": "esnext",
     "lib": ["ESNext"],
     "libReplacement": false,
-
-    // Emit
-    "sourceMap": false,
-    "declarationMap": true,
-    "noEmitOnError": true,
+    "moduleDetection": "force",
 
     // JavaScript Support
     "allowJs": false,
 
+    // Emit
+    "newLine": "lf",
+    "sourceMap": false,
+    "noEmitOnError": true,
+    "declarationMap": true,
+
     // Interop Constraints
+    "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
     "isolatedDeclarations": true,
 
@@ -43,6 +47,9 @@
 
     "exactOptionalPropertyTypes": true,
     "noFallthroughCasesInSwitch": true,
-    "noPropertyAccessFromIndexSignature": true
+    "noPropertyAccessFromIndexSignature": true,
+
+    // Completeness
+    "skipLibCheck": true
   }
 }

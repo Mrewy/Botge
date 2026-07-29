@@ -53,5 +53,5 @@ export const config: Config = {
     // Messages to include before and after each semantic hit
     ragWindowSize: Number(optional('RAG_WINDOW_SIZE', '2'))
   },
-  activeChatChannels: ['251211223012474880']
+  activeChatChannels: ['251211223012474880', '981663968437358625']
 };

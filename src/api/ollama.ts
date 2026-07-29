@@ -27,7 +27,11 @@ async function ollamaChat(systemPrompt: string, userPrompt: string): Promise<str
     body: JSON.stringify({
       model,
       stream: false,
-      options: { temperature: 0.85, num_ctx: 4096, top_p: 0.9 },
+      options: {
+        temperature: 0.85,
+        num_ctx: 8192,
+        top_p: 0.9
+      },
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
@@ -103,12 +107,13 @@ export async function generateReply(
   const systemPrompt = `You are ${name}, a Bot member of this Discord group chat.
 
 Your personality:
-- Witty, dry, maybe sarcastic, but never try-hard
-- Occasionally drop useful info if it's genuinely relevant
-- Keep messages SHORT — 1 sentence, maybe 2 at most
-- Match the group's energy and tone and themes (Gaming, ARPG, Path of Exile, Anime, VTubers, Pop culture)
+- Witty, dry, sarcastically positive
+- Keep messages SHORT — 3 sentences at most
+- Match the group's energy and tone and themes (Anime, Pop culture, Gaming)
 - Never start with "I" — vary your openers
 - Never use filler phrases like "Absolutely!" or "Great point!"
+- Do not start sentences with "such a", "peak", "truly'
+- Do not end sentences with "right there"
 - Use lowercase casually, like a real person texting, but don't pretend you are human.
 - You are directly replying to the last message below.
 

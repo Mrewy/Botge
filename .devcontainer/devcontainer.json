@@ -13,7 +13,7 @@
       "installDockerComposeSwitch": true
     },
     "ghcr.io/devcontainers/features/github-cli:": {},
-    "ghcr.io/devcontainers/features/node:": { "version": "v26.5.1", "nodeGypDependencies": false }
+    "ghcr.io/devcontainers/features/node:": { "version": "v26.7.0", "nodeGypDependencies": false }
   },
 
   "postCreateCommand": {

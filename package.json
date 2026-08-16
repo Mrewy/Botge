@@ -44,7 +44,7 @@
     "@discordjs/voice": "^0.19.2",
     "@twemoji/api": "^17.0.3",
     "chromadb": "^3.5.0",
-    "deepl-node": "^1.27.0",
+    "deepl-node": "^1.28.0",
     "discord.js": "^14.27.0",
     "fs-extra": "^11.4.0",
     "helpful-decorators": "^2.1.0",
@@ -55,9 +55,9 @@
     "timezones-list": "^3.1.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.2.1",
-    "@commitlint/config-conventional": "^21.2.0",
-    "@commitlint/format": "^21.2.0",
+    "@commitlint/cli": "^21.2.2",
+    "@commitlint/config-conventional": "^21.2.2",
+    "@commitlint/format": "^21.2.2",
     "@commitlint/types": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@microsoft/tsdoc-config": "^0.18.1",

@@ -1,6 +1,7 @@
 /** @format */
 
 import type { Config } from 'prettier';
+import * as prettierPluginSh from 'prettier-plugin-sh';
 
 const config: Readonly<Config> = {
   endOfLine: 'lf',
@@ -8,7 +9,7 @@ const config: Readonly<Config> = {
   experimentalTernaries: true,
   insertPragma: true,
   objectWrap: 'collapse',
-  plugins: ['prettier-plugin-sh'],
+  plugins: [prettierPluginSh],
   printWidth: 100,
   quoteProps: 'consistent',
   semi: true,

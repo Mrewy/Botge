@@ -11,6 +11,7 @@ const config: Readonly<Config> = {
   objectWrap: 'collapse',
   plugins: [prettierPluginSh],
   printWidth: 100,
+  proseWrap: 'always',
   quoteProps: 'consistent',
   semi: true,
   singleQuote: true,

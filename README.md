@@ -6,9 +6,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/Mrewy/Botge)
 ![GitHub Created At](https://img.shields.io/github/created-at/Mrewy/Botge)
 ![GitHub License](https://img.shields.io/github/license/Mrewy/Botge)  
-![GitHub issue custom search in repo enhancement](https://img.shields.io/github/issues-search/Mrewy/Botge?query=label%3Aenhancement&label=enhancement%20issues)
 ![GitHub issue custom search in repo help wanted](https://img.shields.io/github/issues-search/Mrewy/Botge?query=label%3A%22help%20wanted%22&label=help%20wanted%20issues)
-![GitHub issue custom search in repo good first issue](https://img.shields.io/github/issues-search/Mrewy/Botge?query=label%3A%22good%20first%20issue%22&label=good%20first%20issues)
 
 ## Table of Contents
 
@@ -58,8 +56,7 @@ Configure the bot in the `/settings` command.
 
 ## Documentation
 
-![Docker docks](docs/Docker.png)
-![Git](docs/Git.png)
+![Docker docks](docs/Docker.png) ![Git](docs/Git.png)
 
 More documentation is available in the [docs](docs) folder.
 

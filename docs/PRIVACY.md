@@ -24,9 +24,8 @@ are not logged or saved.
 We do not share any personal data with third parties expect the below mentioned.
 
 By using the /chatgpt command you agree to OpenAI's Privacy Policy.
-[OpenAI Privacy Policy](https://openai.com/policies/privacy-policy)
-By using the /chatgpt command you also agree to sending your Discord user ID (not username) to
-OpenAI for detecting abuse.
+[OpenAI Privacy Policy](https://openai.com/policies/privacy-policy) By using the /chatgpt command
+you also agree to sending your Discord user ID (not username) to OpenAI for detecting abuse.
 
 ## Changes to This Policy
 

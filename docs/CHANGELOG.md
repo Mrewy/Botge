@@ -24,19 +24,16 @@
   [\#181](https://github.com/Mrewy/Botge/pull/181)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps\): bump docker/login-action from 3999a1f4362c53e6a6048cde50f69868af81da5c to
-  946f94de75ea52995b6aa1e54fd3e0aeed6cc573
-  [\#180](https://github.com/Mrewy/Botge/pull/180)
+  946f94de75ea52995b6aa1e54fd3e0aeed6cc573 [\#180](https://github.com/Mrewy/Botge/pull/180)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps\): bump github/codeql-action from 4.36.0 to 4.36.1
   [\#179](https://github.com/Mrewy/Botge/pull/179)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps\): bump docker/login-action from d74126fafb7d8baee06dfff4003b911af7cf0662 to
-  3999a1f4362c53e6a6048cde50f69868af81da5c
-  [\#178](https://github.com/Mrewy/Botge/pull/178)
+  3999a1f4362c53e6a6048cde50f69868af81da5c [\#178](https://github.com/Mrewy/Botge/pull/178)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps\): bump docker/login-action from 9f4a8ea54ed9055d5f86c993e1f2ffa674f98344 to
-  d74126fafb7d8baee06dfff4003b911af7cf0662
-  [\#177](https://github.com/Mrewy/Botge/pull/177)
+  d74126fafb7d8baee06dfff4003b911af7cf0662 [\#177](https://github.com/Mrewy/Botge/pull/177)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - chore\(deps\): bump docker/build-push-action from 7.1.0 to 7.2.0
   [\#176](https://github.com/Mrewy/Botge/pull/176)
@@ -53,40 +50,29 @@
 - Bump ghcr.io/devcontainers/features/docker-in-docker from 2.16.1 to 3.0.0
   [\#171](https://github.com/Mrewy/Botge/pull/171)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump github/codeql-action from 4.35.4 to 4.35.5
-  [\#170](https://github.com/Mrewy/Botge/pull/170)
+- Bump github/codeql-action from 4.35.4 to 4.35.5 [\#170](https://github.com/Mrewy/Botge/pull/170)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump nginx from 1.29.8-alpine to 1.31.0-alpine
-  [\#169](https://github.com/Mrewy/Botge/pull/169)
+- Bump nginx from 1.29.8-alpine to 1.31.0-alpine [\#169](https://github.com/Mrewy/Botge/pull/169)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump getmeili/meilisearch from v1.43 to v1.44
-  [\#168](https://github.com/Mrewy/Botge/pull/168)
+- Bump getmeili/meilisearch from v1.43 to v1.44 [\#168](https://github.com/Mrewy/Botge/pull/168)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump github/codeql-action from 4.35.3 to 4.35.4
-  [\#166](https://github.com/Mrewy/Botge/pull/166)
+- Bump github/codeql-action from 4.35.3 to 4.35.4 [\#166](https://github.com/Mrewy/Botge/pull/166)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump github/codeql-action from 4.35.2 to 4.35.3
-  [\#165](https://github.com/Mrewy/Botge/pull/165)
+- Bump github/codeql-action from 4.35.2 to 4.35.3 [\#165](https://github.com/Mrewy/Botge/pull/165)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump getmeili/meilisearch from v1.42 to v1.43
-  [\#164](https://github.com/Mrewy/Botge/pull/164)
+- Bump getmeili/meilisearch from v1.42 to v1.43 [\#164](https://github.com/Mrewy/Botge/pull/164)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from 4a8376e001c7725687f0624d1c3698a3f6ab337e to
-  9f4a8ea54ed9055d5f86c993e1f2ffa674f98344
-  [\#163](https://github.com/Mrewy/Botge/pull/163)
+  9f4a8ea54ed9055d5f86c993e1f2ffa674f98344 [\#163](https://github.com/Mrewy/Botge/pull/163)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump github/codeql-action from 4.35.1 to 4.35.2
-  [\#162](https://github.com/Mrewy/Botge/pull/162)
+- Bump github/codeql-action from 4.35.1 to 4.35.2 [\#162](https://github.com/Mrewy/Botge/pull/162)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from d43e1c853e1fb3780e2a1187b33970c59f58c314 to
-  4a8376e001c7725687f0624d1c3698a3f6ab337e
-  [\#161](https://github.com/Mrewy/Botge/pull/161)
+  4a8376e001c7725687f0624d1c3698a3f6ab337e [\#161](https://github.com/Mrewy/Botge/pull/161)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump nginx from 1.29.6-alpine to 1.29.8-alpine
-  [\#160](https://github.com/Mrewy/Botge/pull/160)
+- Bump nginx from 1.29.6-alpine to 1.29.8-alpine [\#160](https://github.com/Mrewy/Botge/pull/160)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump getmeili/meilisearch from v1.40 to v1.42
-  [\#159](https://github.com/Mrewy/Botge/pull/159)
+- Bump getmeili/meilisearch from v1.40 to v1.42 [\#159](https://github.com/Mrewy/Botge/pull/159)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v2.9.0](https://github.com/Mrewy/Botge/tree/v2.9.0) (2026-04-20)
@@ -95,12 +81,10 @@
 
 **Merged pull requests:**
 
-- Bump docker/build-push-action from 7.0.0 to 7.1.0
-  [\#158](https://github.com/Mrewy/Botge/pull/158)
+- Bump docker/build-push-action from 7.0.0 to 7.1.0 [\#158](https://github.com/Mrewy/Botge/pull/158)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from db14339dbc0a1f0b184157be94b23a2138122354 to
-  d43e1c853e1fb3780e2a1187b33970c59f58c314
-  [\#157](https://github.com/Mrewy/Botge/pull/157)
+  d43e1c853e1fb3780e2a1187b33970c59f58c314 [\#157](https://github.com/Mrewy/Botge/pull/157)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - tag support [\#156](https://github.com/Mrewy/Botge/pull/156)
   ([gentlebob](https://github.com/gentlebob))
@@ -132,8 +116,7 @@
   [\#140](https://github.com/Mrewy/Botge/pull/140)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from 3227f5311cb93ffd14d13e65d8cc400d30f4dd8a to
-  db14339dbc0a1f0b184157be94b23a2138122354
-  [\#139](https://github.com/Mrewy/Botge/pull/139)
+  db14339dbc0a1f0b184157be94b23a2138122354 [\#139](https://github.com/Mrewy/Botge/pull/139)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump getmeili/meilisearch from v1.37 to v1.38 [\#138](https://github.com/Mrewy/Botge/pull/138)
   ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -151,8 +134,7 @@
 - Bump getmeili/meilisearch from v1.35 to v1.36 [\#131](https://github.com/Mrewy/Botge/pull/131)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/build-push-action from 8c1e8f8e5bf845ba3773a14f3967965548a2341e to
-  10e90e3645eae34f1e60eeb005ba3a3d33f178e8
-  [\#130](https://github.com/Mrewy/Botge/pull/130)
+  10e90e3645eae34f1e60eeb005ba3a3d33f178e8 [\#130](https://github.com/Mrewy/Botge/pull/130)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump node from 25.6.0-alpine to 25.6.1-alpine [\#128](https://github.com/Mrewy/Botge/pull/128)
   ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -161,15 +143,13 @@
 - Bump nginx from 1.29.4-alpine to 1.29.5-alpine [\#126](https://github.com/Mrewy/Botge/pull/126)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/build-push-action from 64c9b141502b80dbbd71e008a0130ad330f480f8 to
-  8c1e8f8e5bf845ba3773a14f3967965548a2341e
-  [\#123](https://github.com/Mrewy/Botge/pull/123)
+  8c1e8f8e5bf845ba3773a14f3967965548a2341e [\#123](https://github.com/Mrewy/Botge/pull/123)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump actions/attest-build-provenance from 3.1.0 to 3.2.0
   [\#122](https://github.com/Mrewy/Botge/pull/122)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from 0567fa5ae8c9a197cb207537dc5cbb43ca3d803f to
-  3227f5311cb93ffd14d13e65d8cc400d30f4dd8a
-  [\#121](https://github.com/Mrewy/Botge/pull/121)
+  3227f5311cb93ffd14d13e65d8cc400d30f4dd8a [\#121](https://github.com/Mrewy/Botge/pull/121)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump github/codeql-action from 4.31.11 to 4.32.0 [\#120](https://github.com/Mrewy/Botge/pull/120)
   ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -187,8 +167,7 @@
   [\#113](https://github.com/Mrewy/Botge/pull/113)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from 916386b00027d425839f8da46d302dab33f5875b to
-  0567fa5ae8c9a197cb207537dc5cbb43ca3d803f
-  [\#110](https://github.com/Mrewy/Botge/pull/110)
+  0567fa5ae8c9a197cb207537dc5cbb43ca3d803f [\#110](https://github.com/Mrewy/Botge/pull/110)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump node from 25.2.1-alpine to 25.3.0-alpine [\#109](https://github.com/Mrewy/Botge/pull/109)
   ([dependabot[bot]](https://github.com/apps/dependabot))
@@ -382,8 +361,7 @@
   ([gentlebob](https://github.com/gentlebob))
 - set height to 64px [\#4](https://github.com/Mrewy/Botge/pull/4)
   ([gentlebob](https://github.com/gentlebob))
-- ack early [\#3](https://github.com/Mrewy/Botge/pull/3)
-  ([gentlebob](https://github.com/gentlebob))
+- ack early [\#3](https://github.com/Mrewy/Botge/pull/3) ([gentlebob](https://github.com/gentlebob))
 - add /combine [\#2](https://github.com/Mrewy/Botge/pull/2)
   ([gentlebob](https://github.com/gentlebob))
 - make finding emote logic a function [\#1](https://github.com/Mrewy/Botge/pull/1)

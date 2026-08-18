@@ -15,8 +15,8 @@ Any activity that violates Discord’s rules will also be considered a violation
 
 ## User Content
 
-You are responsible for any content, data, or media you upload or share using Botge
-(“User Content”).  
+You are responsible for any content, data, or media you upload or share using Botge (“User
+Content”).  
 The operators of Botge are not responsible for material shared by users through Discord or the
 Service.
 
@@ -33,8 +33,8 @@ Violation of this section may result in suspension or termination of access to t
 
 ## Media Handling and Consent
 
-By submitting media or other content to Botge, you grant the operators permission to
-**temporarily store, process, and transform** that content as needed to operate the Service.  
+By submitting media or other content to Botge, you grant the operators permission to **temporarily
+store, process, and transform** that content as needed to operate the Service.  
 This processing is conducted in accordance with our Privacy Policy.  
 Media may be reviewed, automatically or manually, to ensure compliance with these Terms.
 

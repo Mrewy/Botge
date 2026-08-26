@@ -1,16 +1,17 @@
-if [ "$#" -ne 1 ]; then
-  printf 'usage: %s <package-name>\n' "$0" >&2
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+  printf 'usage: %s <package-name> [command-name]\n' "$0" >&2
   exit 1
 fi
 
 PACKAGE_NAME="$1"
+COMMAND_NAME="${2:-$1}"
 
-if ! command -v "$PACKAGE_NAME" > /dev/null 2>&1; then
-  printf '\033[0;31m%s is not installed\033[0m\n' "$PACKAGE_NAME" >&2
+if ! command -v "$COMMAND_NAME" > /dev/null 2>&1; then
+  printf '\033[0;31m%s is not installed\033[0m\n' "$COMMAND_NAME" >&2
   exit 1
 fi
 
-LOCAL_VERSION="$("$PACKAGE_NAME" --version | awk '{print $NF}')"
+LOCAL_VERSION="$("$COMMAND_NAME" --version | awk '{print $NF}')"
 LATEST_VERSION="$(npm view "$PACKAGE_NAME" version)"
 
 if [ "$LOCAL_VERSION" = "$LATEST_VERSION" ]; then

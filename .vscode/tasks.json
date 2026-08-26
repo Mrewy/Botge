@@ -90,6 +90,30 @@
 
       "type": "shell",
       "command": "sort-package-json"
+    },
+
+    // 4-1
+    {
+      "label": "Check @devcontainers/cli version",
+      "detail": "Checks @devcontainers/cli version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "@devcontainers/cli", "devcontainer"],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 4-2
+    {
+      "label": "devcontainer upgrade",
+      "detail": "Runs devcontainer upgrade.",
+
+      "dependsOn": ["Check @devcontainers/cli version"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "devcontainer upgrade"
     }
   ]
 }

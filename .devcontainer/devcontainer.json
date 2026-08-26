@@ -17,7 +17,7 @@
   },
 
   "postCreateCommand": {
-    "global-npm-packages": "npm install -g npm && npm install -g npm-check-updates && npm install -g sort-package-json",
+    "global-npm-packages": "npm install -g npm && npm install -g npm-check-updates && npm install -g sort-package-json && npm install -g @devcontainers/cli",
     "install-and-build": "npm install && npm run build",
     "directories": "mkdir -p data/tmp nginx/cache/tmp && sudo chmod -R a+rwx data && sudo chmod -R a+rx nginx/cache"
   },

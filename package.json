@@ -51,7 +51,7 @@
     "meilisearch": "^0.60.0",
     "node-fetch": "^3.3.2",
     "node-schedule": "^2.1.1",
-    "openai": "^7.8.0",
+    "openai": "^7.10.0",
     "timezones-list": "^3.1.0"
   },
   "devDependencies": {
@@ -62,10 +62,10 @@
     "@eslint/js": "^10.0.1",
     "@microsoft/tsdoc-config": "^0.18.1",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^26.4.0",
+    "@types/node": "^26.4.1",
     "@types/node-schedule": "^2.1.8",
     "@typescript/native": "npm:typescript@^7.1.0-dev.20260901.1",
-    "cspell": "^10.2.0",
+    "cspell": "^10.2.1",
     "eslint": "^10.9.1",
     "eslint-plugin-tsdoc": "^0.5.2",
     "husky": "^9.1.7",
@@ -76,7 +76,7 @@
     "ts-essentials": "^10.2.1",
     "typescript": "npm:@typescript/typescript6@^6.0.3",
     "typescript-eslint": "^8.69.0",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.0"
   },
   "engines": {
     "node": "v26.8.1",

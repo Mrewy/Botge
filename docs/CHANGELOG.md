@@ -2,6 +2,102 @@
 
 # Changelog
 
+## [v3.1.0](https://github.com/Mrewy/Botge/tree/v3.1.0) (2026-09-13)
+
+[Full Changelog](https://github.com/Mrewy/Botge/compare/v3.0.1...v3.1.0)
+
+**Merged pull requests:**
+
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.8 to 4.37.9
+  [\#216](https://github.com/Mrewy/Botge/pull/216)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.8 to 4.37.9
+  [\#215](https://github.com/Mrewy/Botge/pull/215)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.7 to 4.37.8
+  [\#214](https://github.com/Mrewy/Botge/pull/214)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.7 to 4.37.8
+  [\#213](https://github.com/Mrewy/Botge/pull/213)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.6 to 4.37.7
+  [\#212](https://github.com/Mrewy/Botge/pull/212)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.6 to 4.37.7
+  [\#211](https://github.com/Mrewy/Botge/pull/211)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.5 to 4.37.6
+  [\#210](https://github.com/Mrewy/Botge/pull/210)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump actions/attest-build-provenance from 4.1.1 to 4.2.2
+  [\#209](https://github.com/Mrewy/Botge/pull/209)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.5 to 4.37.6
+  [\#208](https://github.com/Mrewy/Botge/pull/208)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.4 to 4.37.5
+  [\#206](https://github.com/Mrewy/Botge/pull/206)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.4 to 4.37.5
+  [\#205](https://github.com/Mrewy/Botge/pull/205)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from 4.4.0 to 4.6.0
+  [\#204](https://github.com/Mrewy/Botge/pull/204)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.3 to 4.37.4
+  [\#203](https://github.com/Mrewy/Botge/pull/203)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.3 to 4.37.4
+  [\#202](https://github.com/Mrewy/Botge/pull/202)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- update ollama prompt [\#200](https://github.com/Mrewy/Botge/pull/200)
+  ([gentlebob](https://github.com/gentlebob))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.0 to 4.37.3
+  [\#199](https://github.com/Mrewy/Botge/pull/199)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump actions/checkout from 7.0.0 to 7.0.1
+  [\#198](https://github.com/Mrewy/Botge/pull/198)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.0 to 4.37.3
+  [\#197](https://github.com/Mrewy/Botge/pull/197)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from 4.3.0 to 4.4.0
+  [\#194](https://github.com/Mrewy/Botge/pull/194)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.36.3 to 4.37.0
+  [\#193](https://github.com/Mrewy/Botge/pull/193)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.36.3 to 4.37.0
+  [\#192](https://github.com/Mrewy/Botge/pull/192)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/metadata-action from 6.1.0 to 6.2.0
+  [\#190](https://github.com/Mrewy/Botge/pull/190)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/build-push-action from 7.2.0 to 7.3.0
+  [\#189](https://github.com/Mrewy/Botge/pull/189)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.36.2 to 4.36.3
+  [\#188](https://github.com/Mrewy/Botge/pull/188)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.36.2 to 4.36.3
+  [\#187](https://github.com/Mrewy/Botge/pull/187)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump actions/attest-build-provenance from 4.1.0 to 4.1.1
+  [\#186](https://github.com/Mrewy/Botge/pull/186)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from 3864d6aed8ff134b2ed894ce00c87695c709c870 to
+  c99871dec2022cc055c062a10cc1a1310835ceb4 [\#185](https://github.com/Mrewy/Botge/pull/185)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump actions/checkout from 6.0.2 to 7.0.0
+  [\#184](https://github.com/Mrewy/Botge/pull/184)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump ghcr.io/devcontainers/features/node from 2.0.0 to 2.1.0
+  [\#183](https://github.com/Mrewy/Botge/pull/183)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/login-action from 946f94de75ea52995b6aa1e54fd3e0aeed6cc573 to
+  3864d6aed8ff134b2ed894ce00c87695c709c870 [\#182](https://github.com/Mrewy/Botge/pull/182)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v3.0.1](https://github.com/Mrewy/Botge/tree/v3.0.1) (2026-06-15)
 
 [Full Changelog](https://github.com/Mrewy/Botge/compare/v2.9.0...v3.0.1)
@@ -163,7 +259,7 @@
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump actions/checkout from 6.0.1 to 6.0.2 [\#114](https://github.com/Mrewy/Botge/pull/114)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump lodash from 4.17.21 to 4.17.23 in the npm_and_yarn group across 1 directory
+- Bump lodash from 4.17.21 to 4.17.23 in the npm\_and\_yarn group across 1 directory
   [\#113](https://github.com/Mrewy/Botge/pull/113)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump docker/login-action from 916386b00027d425839f8da46d302dab33f5875b to
@@ -225,7 +321,7 @@
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump getmeili/meilisearch from v1.25 to v1.28 [\#91](https://github.com/Mrewy/Botge/pull/91)
   ([dependabot[bot]](https://github.com/apps/dependabot))
-- Bump the npm_and_yarn group across 1 directory with 2 updates
+- Bump the npm\_and\_yarn group across 1 directory with 2 updates
   [\#90](https://github.com/Mrewy/Botge/pull/90)
   ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump github/codeql-action from 4.31.2 to 4.31.6 [\#89](https://github.com/Mrewy/Botge/pull/89)

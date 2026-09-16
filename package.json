@@ -60,14 +60,14 @@
     "@commitlint/format": "^21.2.2",
     "@commitlint/types": "^21.2.0",
     "@eslint/js": "^10.0.1",
-    "@microsoft/tsdoc-config": "^0.18.1",
+    "@microsoft/tsdoc-config": "^0.18.2",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^26.5.1",
     "@types/node-schedule": "^2.1.8",
-    "@typescript/native": "npm:typescript@^7.1.0-dev.20260909.1",
-    "cspell": "^10.3.1",
+    "@typescript/native": "npm:typescript@^7.1.0-dev.20260915.1",
+    "cspell": "^10.3.2",
     "eslint": "^10.10.0",
-    "eslint-plugin-tsdoc": "^0.5.2",
+    "eslint-plugin-tsdoc": "^0.5.3",
     "husky": "^9.1.7",
     "lint-staged": "^17.5.1",
     "markdownlint-cli2": "^0.23.2",
@@ -76,7 +76,7 @@
     "ts-essentials": "^10.2.1",
     "typescript": "npm:@typescript/typescript6@^6.0.3",
     "typescript-eslint": "^8.70.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.1"
   },
   "engines": {
     "node": ">=26.8.2",

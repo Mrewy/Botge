@@ -1,4 +1,4 @@
-FROM dhi.io/node:26.8.2-alpine3.24-sfw-dev AS base
+FROM dhi.io/node:26.10.0-alpine3.24-sfw-dev AS base
 
 FROM base AS ci-dependencies
 WORKDIR /app
@@ -30,7 +30,7 @@ RUN npm run build:production
 FROM base AS botge
 WORKDIR /app
 LABEL org.opencontainers.image.title="Botge" \
-  org.opencontainers.image.version="3.0.1" \
+  org.opencontainers.image.version="3.1.0" \
   org.opencontainers.image.description="Search emotes, clips, use zero-width emotes and other such commands." \
   org.opencontainers.image.source="https://github.com/Mrewy/Botge" \
   org.opencontainers.image.licenses="MIT" \

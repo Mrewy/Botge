@@ -1,6 +1,6 @@
 {
   "name": "botge",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "private": true,
   "description": "Search emotes, clips, use zero-width emotes and other such commands.",
   "keywords": [
@@ -79,8 +79,8 @@
     "vitest": "^5.0.1"
   },
   "engines": {
-    "node": ">=26.8.2",
-    "npm": ">=11.19.0"
+    "node": ">=26.10.0",
+    "npm": ">=11.19.1"
   },
   "os": [
     "linux",

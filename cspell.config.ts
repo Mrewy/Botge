@@ -17,7 +17,6 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
 
   dictionaries: [],
   ignorePaths: [
-    '.devcontainer/devcontainer-lock.json',
     '.git/gk',
     '.git/hooks',
     '.git/info',
@@ -30,8 +29,7 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     '.git/HEAD',
     '.git/index',
     '.git/ORIG_HEAD',
-    '.git/packed-refs',
-    'docs/CHANGELOG.md'
+    '.git/packed-refs'
   ],
 
   words: [
@@ -111,7 +109,10 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     // Other
     'pingme',
     'doesnt',
-    'nums'
+    'nums',
+
+    // Incorrect
+    'strartup'
   ]
 });
 

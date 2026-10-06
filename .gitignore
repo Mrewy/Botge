@@ -6,3 +6,4 @@
 
 /.env
 /botge.config.json
+/ollama.config.json

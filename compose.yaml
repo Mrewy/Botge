@@ -42,6 +42,7 @@ services:
     volumes:
       - ./data:/app/data
       - ./botge.config.json:/app/botge.config.json
+      - ./ollama.config.json:/app/ollama.config.json
     env_file:
       - .env
     environment:

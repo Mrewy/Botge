@@ -20,14 +20,14 @@ type ScoreReplyOpportunityResponse = {
  * Send a chat request to the local Ollama instance.
  */
 async function ollamaChat(systemPrompt: string, userPrompt: string): Promise<string> {
-  const { baseUrl, model } = config.ollama;
+  const { baseUrl, model, options } = config.ollama;
   const response = await fetch(`${baseUrl}/api/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model,
       stream: false,
-      options: { temperature: 0.85, num_ctx: 8192, top_p: 0.9 },
+      options,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt }
@@ -58,17 +58,7 @@ export async function scoreReplyOpportunity(
   chatHistory: string
 ): Promise<ScoreReplyOpportunityResult> {
   const { name } = config.bot;
-  const systemPrompt = `You are a silent observer of a group chat. Your job is to decide if ${name} — a witty, laid-back human — should chime in.
-
-Reply ONLY with a valid JSON object, no markdown, no explanation. Example:
-{"score": 7, "should_reply": true, "reason": "Good setup for a pun"}
-
-Score criteria (1-10):
-- 8-10: Clear joke opportunity, direct question to the group, fascinating claim worth a quip
-- 5-7: Mildly interesting, could add something small
-- 1-4: Mid-conversation, serious topic, nothing to add
-
-Be conservative. It's better to stay silent than to force a response.`;
+  const systemPrompt = config.ollama.systemPrompts.scoreReplyOpportunity;
   const userPrompt = `Recent chat:\n${chatHistory}\n\nShould ${name} reply? Respond with JSON only.`;
   const raw = await ollamaChat(systemPrompt, userPrompt);
 
@@ -100,20 +90,7 @@ export async function generateReply(
   retrievedContext: readonly string[] = []
 ): Promise<string> {
   const { name } = config.bot;
-  const systemPrompt = `You are ${name}, a Bot member of this Discord group chat.
-
-Your personality:
-- Witty, dry, sarcastically positive
-- Keep messages SHORT — 3 sentences at most
-- Match the group's energy and tone and themes (Anime, Pop culture, Gaming)
-- Never start with "I" — vary your openers
-- Never use filler phrases like "Absolutely!" or "Great point!"
-- Do not start sentences with "such a", "peak", "truly'
-- Do not end sentences with "right there"
-- Use lowercase casually, like a real person texting, but don't pretend you are human.
-- You are directly replying to the last message below.
-
-Your goal: contribute one natural, human message. Make it count.\n`;
+  const systemPrompt = config.ollama.systemPrompts.generateReply;
   // Each element of retrievedContext is a multi-line block of consecutive
   // messages. Separate blocks with a divider so the model understands they
   // are distinct conversation snippets, not one continuous thread.

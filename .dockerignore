@@ -26,6 +26,7 @@ tests
 .nvmrc
 .prettierignore
 botge.example.config.json
+ollama.example.config.json
 commitlint.config.ts
 compose.yaml
 cspell.config.ts

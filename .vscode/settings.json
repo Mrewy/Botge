@@ -142,7 +142,7 @@
     "https://json.schemastore.org/": true,
     "https://json-schema.org/": true,
     "https://developer.microsoft.com/json-schemas/": true,
-    "https://nodejs.org/docs/v26.10.0/node-config-schema.json": true,
+    "https://nodejs.org/docs/v26.11.1/node-config-schema.json": true,
     "botge.config.schema.json": true,
     "ollama.config.schema.json": true
   },

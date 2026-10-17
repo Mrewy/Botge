@@ -40,6 +40,9 @@
     "stop": "docker compose stop",
     "test": "vitest tests"
   },
+  "allowScripts": {
+    "fsevents": true
+  },
   "dependencies": {
     "@discordjs/voice": "^0.19.2",
     "@twemoji/api": "^17.0.3",
@@ -90,8 +93,5 @@
   "cpu": [
     "x64",
     "arm64"
-  ],
-  "allowScripts": {
-    "fsevents": true
-  }
+  ]
 }

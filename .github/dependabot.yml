@@ -9,7 +9,7 @@
 version: 2
 updates:
   - package-ecosystem: github-actions
-    open-pull-requests-limit: 8
+    open-pull-requests-limit: 9
     directory: '/'
     schedule:
       interval: weekly

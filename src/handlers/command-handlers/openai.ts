@@ -79,7 +79,7 @@ export function chatgptHandler(openai: ReadonlyOpenAI | undefined) {
         input: input,
         max_output_tokens: 400,
         instructions: instructions ?? null,
-        user: interaction.user.id
+        safety_identifier: interaction.user.id
       });
 
       const messageContent = response.output_text;

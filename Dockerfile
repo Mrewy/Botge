@@ -1,4 +1,4 @@
-FROM dhi.io/node:26.12.0-alpine3.24-sfw-dev AS base
+FROM dhi.io/node:26.12.1-alpine3.24-sfw-dev AS base
 
 FROM base AS ci-dependencies
 WORKDIR /app

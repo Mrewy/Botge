@@ -147,5 +147,7 @@
     "ollama.config.schema.json": true
   },
 
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  "chat.disableAIFeatures": true
 }

@@ -111,6 +111,10 @@
   // GitLens
   "gitlens.telemetry.enabled": false,
 
+  "gitlens.virtualRepositories.enabled": false,
+  "gitlens.plusFeatures.enabled": false,
+  "gitlens.ai.enabled": false,
+
   // vscode-icons
   "vsicons.customIconFolderPath": "assets",
   "vsicons.associations.files": [

@@ -6,45 +6,43 @@ workflows:
     '.github/workflows/codeql.yml':
         - 'actions/checkout@v7.0.1'
         - 'github/codeql-action@v4.39.0'
-    '.github/workflows/github-image.yml':
-        - 'actions/attest-build-provenance@v4.2.2'
-        - 'actions/checkout@v7.0.1'
-        - 'docker/build-push-action@v7.4.0'
-        - 'docker/login-action@v4.6.0'
-        - 'docker/metadata-action@v6.2.0'
+    '.github/workflows/publish-docker-hub-image.yml':
+        - 'actions/attest@v4.2.2'
+        - 'actions/checkout@v6.1.0'
+        - 'docker/build-push-action@v4.0.0'
+        - 'docker/login-action@v2.1.0'
+        - 'docker/metadata-action@master'
     '.github/workflows/verify-lockfile.yml':
         - 'actions/checkout@v7.0.1'
 dependencies:
-    'actions/attest-build-provenance@v4.2.2':
+    'actions/attest@v4.2.2':
         ref: 'v4.2.2'
-        commit: 'sha1-4d101475d8b20a2381f78447822ac1eab6504dd8'
-        owner_id: 44036562
-        repo_id: 760702757
-        uses:
-            - 'actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d'
-    'actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d':
-        ref: 'v4.2.1'
-        commit: 'sha1-508db95dd578ae2727ebd6217d5ba78e4fbda05d'
+        commit: 'sha1-1e69f48acb82d1966a394da916b4c1698aa569d6'
         owner_id: 44036562
         repo_id: 760701061
+    'actions/checkout@v6.1.0':
+        ref: 'v6.1.0'
+        commit: 'sha1-d23441a48e516b6c34aea4fa41551a30e30af803'
+        owner_id: 44036562
+        repo_id: 197814629
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
-    'docker/build-push-action@v7.4.0':
-        ref: 'v7.4.0'
-        commit: 'sha1-c3c9e263c25d99ce0380d002d59b67737d91b0dc'
+    'docker/build-push-action@v4.0.0':
+        ref: 'v4.0.0'
+        commit: 'sha1-3b5e8027fcad23fda98b2e3ac259d8d67585f671'
         owner_id: 5429470
         repo_id: 241092383
-    'docker/login-action@v4.6.0':
-        ref: 'v4.6.0'
-        commit: 'sha1-dbcb813823bdd20940b903addbd779551569679f'
+    'docker/login-action@v2.1.0':
+        ref: 'v2.1.0'
+        commit: 'sha1-f4ef78c080cd8ba55a85445d5b36e214a81df20a'
         owner_id: 5429470
         repo_id: 287743349
-    'docker/metadata-action@v6.2.0':
-        ref: 'v6.2.0'
-        commit: 'sha1-dc802804100637a589fabce1cb79ff13a1411302'
+    'docker/metadata-action@master':
+        ref: 'master'
+        commit: 'sha1-9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7'
         owner_id: 5429470
         repo_id: 306769011
     'github/codeql-action@v4.39.0':

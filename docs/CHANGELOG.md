@@ -2,6 +2,42 @@
 
 # Changelog
 
+## [v3.1.1](https://github.com/Mrewy/Botge/tree/v3.1.1) (2026-10-22)
+
+[Full Changelog](https://github.com/Mrewy/Botge/compare/v3.1.0...v3.1.1)
+
+**Merged pull requests:**
+
+- chore\(deps\): bump github/codeql-action/analyze from 4.38.2 to 4.38.3
+  [\#227](https://github.com/Mrewy/Botge/pull/227)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.38.2 to 4.38.3
+  [\#226](https://github.com/Mrewy/Botge/pull/226)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- Move ollama config to a json file that can be changed without rebuild
+  [\#224](https://github.com/Mrewy/Botge/pull/224) ([gentlebob](https://github.com/gentlebob))
+- chore\(deps\): bump github/codeql-action/analyze from 4.38.1 to 4.38.2
+  [\#223](https://github.com/Mrewy/Botge/pull/223)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.38.1 to 4.38.2
+  [\#222](https://github.com/Mrewy/Botge/pull/222)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump docker/build-push-action from 7.3.0 to 7.4.0
+  [\#221](https://github.com/Mrewy/Botge/pull/221)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.38.0 to 4.38.1
+  [\#220](https://github.com/Mrewy/Botge/pull/220)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.38.0 to 4.38.1
+  [\#219](https://github.com/Mrewy/Botge/pull/219)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.37.9 to 4.38.0
+  [\#218](https://github.com/Mrewy/Botge/pull/218)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.37.9 to 4.38.0
+  [\#217](https://github.com/Mrewy/Botge/pull/217)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v3.1.0](https://github.com/Mrewy/Botge/tree/v3.1.0) (2026-09-13)
 
 [Full Changelog](https://github.com/Mrewy/Botge/compare/v3.0.1...v3.1.0)

@@ -31,7 +31,7 @@ export const LAST_BUTTON_BASE_CUSTOM_ID = 'lastButton' as const;
 export const JUMP_TO_BUTTON_BASE_CUSTOM_ID = 'jumpToButton' as const;
 export const JUMP_TO_MODAL_BASE_CUSTOM_ID = 'jumpToModal' as const;
 export const JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID = 'jumpToTextInput' as const;
-export const JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID = 'jumpToIdentifierTextInput' as const;
+export const JUMP_TO_IDENTIFIER_TEXT_INPUT_BASE_CUSTOM_ID = 'jumpToIdentifierTextInput' as const;
 
 const BUTTON_CUSTOM_ID_SPLITTER = '-' as const;
 
@@ -105,10 +105,6 @@ export function getCustomId(
   counter: number
 ): string {
   return `${baseCustomId}${BUTTON_CUSTOM_ID_SPLITTER}${messageBuilderType}${BUTTON_CUSTOM_ID_SPLITTER}${counter}`;
-}
-
-function randomNumberInInterval(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 /**
@@ -206,7 +202,7 @@ export class BaseMessageBuilder<
             new TextInputBuilder()
               .setCustomId(
                 getCustomId(
-                  JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID,
+                  JUMP_TO_IDENTIFIER_TEXT_INPUT_BASE_CUSTOM_ID,
                   messageBuilderType,
                   this.#counter
                 )
@@ -273,15 +269,14 @@ export class BaseMessageBuilder<
   public random(): TransformFunctionReturnType | undefined {
     if (this.#array.length === 1) return undefined;
 
-    const randomNumberInInterval_ = ((): number => {
-      let randomNumber = randomNumberInInterval(0, this.#array.length - 1);
-      while (randomNumber === this.#currentIndex)
-        randomNumber = randomNumberInInterval(0, this.#array.length - 1);
+    const randomIndex = ((): number => {
+      let randomIndex_ = this.#randomIndex();
+      while (randomIndex_ === this.#currentIndex) randomIndex_ = this.#randomIndex();
 
-      return randomNumber;
+      return randomIndex_;
     })();
 
-    this.#currentIndex = randomNumberInInterval_;
+    this.#currentIndex = randomIndex;
     return this.current();
   }
 
@@ -342,5 +337,12 @@ export class BaseMessageBuilder<
    */
   protected current(): TransformFunctionReturnType {
     return this.#transformFunction(this.#array[this.#currentIndex]);
+  }
+
+  #randomIndex(): number {
+    const min = 0 as const;
+    const max = this.#array.length - 1;
+
+    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 }

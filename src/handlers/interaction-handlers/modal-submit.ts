@@ -13,7 +13,7 @@ import {
   getCustomId,
   JUMP_TO_MODAL_BASE_CUSTOM_ID,
   JUMP_TO_TEXT_INPUT_BASE_CUSTOM_ID,
-  JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID
+  JUMP_TO_IDENTIFIER_TEXT_INPUT_BASE_CUSTOM_ID
 } from '../../modules/message-builders/base.ts';
 
 import type { MessageBuilderManager } from '../../modules/bot/message-builder-manager.ts';
@@ -376,7 +376,7 @@ export function modalSubmitHandler(
         jumpToIdentifierTextInputValue = interaction.fields
           .getTextInputValue(
             getCustomId(
-              JUMP_TO_IDENTIFIER_INPUT_BASE_CUSTOM_ID,
+              JUMP_TO_IDENTIFIER_TEXT_INPUT_BASE_CUSTOM_ID,
               messageBuilderType,
               messageBuilder.counter
             )

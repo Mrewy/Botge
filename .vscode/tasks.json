@@ -116,7 +116,7 @@
       "command": "devcontainer upgrade"
     },
 
-    // 5-2
+    // 5-1
     {
       "label": "Check gh actions-lock version",
       "detail": "Checks gh actions-lock version.",
@@ -128,7 +128,7 @@
       "options": { "statusbar": { "hide": true } }
     },
 
-    // 5-3
+    // 5-2
     {
       "label": "gh actions-lock",
       "detail": "Runs gh actions-lock.",

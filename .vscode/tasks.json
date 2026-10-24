@@ -114,6 +114,31 @@
 
       "type": "shell",
       "command": "devcontainer upgrade"
+    },
+
+    // 5-2
+    {
+      "label": "Check gh actions-lock version",
+      "detail": "Checks gh actions-lock version.",
+
+      "type": "shell",
+      "command": "gh",
+      "args": ["extension", "upgrade", "github/gh-actions-lock", "--dry-run"],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 5-3
+    {
+      "label": "gh actions-lock",
+      "detail": "Runs gh actions-lock.",
+
+      "dependsOn": ["Check gh actions-lock version"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "gh",
+      "args": ["actions-lock"]
     }
   ]
 }

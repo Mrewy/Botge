@@ -120,14 +120,7 @@
   "vsicons.associations.files": [
     {
       "icon": "catSmile",
-      "extensions": [
-        "index.ts",
-        "botge.config.json",
-        "botge.example.config.json",
-        "ollama.config.json",
-        "ollama.example.config.json",
-        "README.md"
-      ],
+      "extensions": ["index.ts", "botge.config.json", "botge.example.config.json", "README.md"],
       "filename": true,
       "format": "png"
     }
@@ -147,8 +140,7 @@
     "https://json-schema.org/": true,
     "https://developer.microsoft.com/json-schemas/": true,
     "https://nodejs.org/docs/v26.12.1/node-config-schema.json": true,
-    "botge.config.schema.json": true,
-    "ollama.config.schema.json": true
+    "botge.config.schema.json": true
   },
 
   "diffEditor.ignoreTrimWhitespace": false,

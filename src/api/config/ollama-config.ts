@@ -31,7 +31,7 @@ export type Config = {
   readonly activeChatChannels: readonly string[];
 };
 
-// Shape of ollama.config.json: everything except secrets, with system prompts
+// Shape of botge.config.json: everything except secrets, with system prompts
 // stored as arrays of lines where "{name}" is replaced by the bot name.
 type OllamaConfigJson = Omit<Config, 'discord' | 'ollama'> & {
   readonly ollama: Omit<Config['ollama'], 'systemPrompts'> & {
@@ -42,8 +42,6 @@ type OllamaConfigJson = Omit<Config, 'discord' | 'ollama'> & {
   };
 };
 
-const OLLAMA_CONFIG_PATH = 'ollama.config.json';
-
 function required(key: string): string {
   const value = process.env[key];
 
@@ -52,30 +50,32 @@ function required(key: string): string {
 }
 
 function loadConfig(): Config {
-  if (!existsSync(OLLAMA_CONFIG_PATH)) throw new Error(`No ${OLLAMA_CONFIG_PATH} found.`);
+  const BOTGE_CONFIG_PATH = 'botge.config.json' as const;
+  if (!existsSync(BOTGE_CONFIG_PATH)) throw new Error(`No ${BOTGE_CONFIG_PATH} found.`);
 
-  const json = JSON.parse(readFileSync(OLLAMA_CONFIG_PATH, 'utf8')) as OllamaConfigJson;
-  const { name } = json.bot;
-  const prompt = (lines: readonly string[]): string => lines.join('\n').replaceAll('{name}', name);
+  const ollamaConfig = JSON.parse(readFileSync(BOTGE_CONFIG_PATH, 'utf8')) as OllamaConfigJson;
+
+  const prompt = (lines: readonly string[]): string =>
+    lines.join('\n').replaceAll('{name}', ollamaConfig.bot.name);
 
   return {
     discord: { token: required('DISCORD_TOKEN') },
-    bot: json.bot,
+    bot: ollamaConfig.bot,
     ollama: {
-      baseUrl: json.ollama.baseUrl,
-      model: json.ollama.model,
+      baseUrl: ollamaConfig.ollama.baseUrl,
+      model: ollamaConfig.ollama.model,
       // Embedding model is versioned separately from the chat model.
       // Changing this requires re-running: node backfill.js reset <channelId>
-      embeddingModel: json.ollama.embeddingModel,
-      options: json.ollama.options,
+      embeddingModel: ollamaConfig.ollama.embeddingModel,
+      options: ollamaConfig.ollama.options,
       systemPrompts: {
-        scoreReplyOpportunity: prompt(json.ollama.systemPrompts.scoreReplyOpportunity),
-        generateReply: prompt(json.ollama.systemPrompts.generateReply)
+        scoreReplyOpportunity: prompt(ollamaConfig.ollama.systemPrompts.scoreReplyOpportunity),
+        generateReply: prompt(ollamaConfig.ollama.systemPrompts.generateReply)
       }
     },
-    chroma: json.chroma,
-    behavior: json.behavior,
-    activeChatChannels: json.activeChatChannels
+    chroma: ollamaConfig.chroma,
+    behavior: ollamaConfig.behavior,
+    activeChatChannels: ollamaConfig.activeChatChannels
   };
 }
 

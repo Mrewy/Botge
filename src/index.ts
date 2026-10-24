@@ -64,9 +64,9 @@ import { DATABASE_DIR, TMP_DIR } from './directory-paths.ts';
   };
 
   const botgeConfig = ((): BotgeConfig => {
-    const BOTGE_CONFIG_PATH = 'botge.config.json';
+    const BOTGE_CONFIG_PATH = 'botge.config.json' as const;
 
-    if (!existsSync(BOTGE_CONFIG_PATH)) throw new Error('No botge.config.json found.');
+    if (!existsSync(BOTGE_CONFIG_PATH)) throw new Error(`No ${BOTGE_CONFIG_PATH} found.`);
 
     return JSON.parse(readFileSync(BOTGE_CONFIG_PATH, 'utf8')) as BotgeConfig;
   })();

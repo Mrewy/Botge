@@ -37,9 +37,8 @@ LABEL org.opencontainers.image.title="Botge" \
   org.opencontainers.image.authors="Mrewy" \
   org.opencontainers.image.documentation="https://github.com/Mrewy/Botge/tree/main/docs"
 
-RUN apk add --no-cache ffmpeg
-
-RUN apk upgrade --no-cache
+RUN apk upgrade --no-cache \
+  && apk add --no-cache ffmpeg
 
 COPY --from=node-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist

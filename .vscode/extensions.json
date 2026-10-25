@@ -23,6 +23,7 @@
     // Extras
     "GitHub.vscode-pull-request-github",
     "vscode-icons-team.vscode-icons",
+    "MS-SarifVSCode.sarif-viewer",
     "aaron-bond.better-comments",
     "xlaoyu.npmrc-helper",
     "eamodio.gitlens"

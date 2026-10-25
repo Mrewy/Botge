@@ -1,6 +1,6 @@
 # @format
 
-name: CodeQL Analysis
+name: CodeQL
 
 on:
   pull_request:
@@ -8,29 +8,29 @@ on:
       - '**/*.md'
       - '**/*.txt'
   push:
-    branches: ['main']
+    branches: [main]
     paths-ignore:
       - '**/*.md'
       - '**/*.txt'
+  schedule:
+    - cron: '49 12 * * 1'
 
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
 
     permissions:
       # required for all workflows
       security-events: write
       # required to fetch internal or private CodeQL packs
-      packages: read
+      # packages: read
 
     strategy:
       matrix:
         include:
           - language: actions
-            build-mode: none
           - language: typescript
-            build-mode: none
 
     steps:
       - name: Checkout repository
@@ -40,10 +40,13 @@ jobs:
         uses: github/codeql-action/init@v4.39.1
         with:
           languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
-          queries: security-and-quality
+          # analysis-kinds: code-scanning, code-quality
+          queries:
+            ${{ matrix.language == 'typescript' &&
+            './.github/codeql/queries/typescript-security-and-quality.qls' || 'security-and-quality'
+            }}
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4.39.1
         with:
-          category: '/language:${{matrix.language}}'
+          category: '/language:${{ matrix.language }}'

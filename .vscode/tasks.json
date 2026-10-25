@@ -23,29 +23,6 @@
 
     // 1-1
     {
-      "label": "Install",
-      "detail": "Runs npm install.",
-
-      "dependsOn": ["Check NPM Version"],
-      "dependsOrder": "sequence",
-
-      "type": "shell",
-      "command": "npm",
-      "args": ["install"]
-    },
-
-    // 1-2
-    {
-      "label": "Build",
-      "detail": "Runs npm run build.",
-
-      "type": "shell",
-      "command": "npm",
-      "args": ["run", "build"]
-    },
-
-    // 2-1
-    {
       "label": "Check npm-check-updates version",
       "detail": "Checks npm-check-updates version.",
 
@@ -56,7 +33,7 @@
       "options": { "statusbar": { "hide": true } }
     },
 
-    // 2-2
+    // 1-2
     {
       "label": "npm-check-updates",
       "detail": "Runs npm-check-updates.",
@@ -68,7 +45,7 @@
       "command": "npm-check-updates"
     },
 
-    // 3-1
+    // 2-1
     {
       "label": "Check sort-package-json version",
       "detail": "Checks sort-package-json version.",
@@ -80,7 +57,7 @@
       "options": { "statusbar": { "hide": true } }
     },
 
-    // 3-2
+    // 2-2
     {
       "label": "sort-package-json",
       "detail": "Runs sort-package-json.",
@@ -92,7 +69,7 @@
       "command": "sort-package-json"
     },
 
-    // 4-1
+    // 3-1
     {
       "label": "Check @devcontainers/cli version",
       "detail": "Checks @devcontainers/cli version.",
@@ -104,7 +81,7 @@
       "options": { "statusbar": { "hide": true } }
     },
 
-    // 4-2
+    // 3-2
     {
       "label": "devcontainer upgrade",
       "detail": "Runs devcontainer upgrade.",
@@ -116,7 +93,7 @@
       "command": "devcontainer upgrade"
     },
 
-    // 5-1
+    // 4-1
     {
       "label": "Check gh actions-lock version",
       "detail": "Checks gh actions-lock version.",
@@ -128,7 +105,7 @@
       "options": { "statusbar": { "hide": true } }
     },
 
-    // 5-2
+    // 4-2
     {
       "label": "gh actions-lock",
       "detail": "Runs gh actions-lock.",
@@ -139,6 +116,82 @@
       "type": "shell",
       "command": "gh",
       "args": ["actions-lock", "--relock"]
+    },
+
+    // 5-1-1
+    {
+      "label": "codeql database create actions",
+      "detail": "Creates the actions CodeQL database.",
+
+      "type": "shell",
+      "command": "codeql",
+      "args": [
+        "database",
+        "create",
+        ".github/codeql/database/actions",
+        "--language=actions",
+        "--overwrite"
+      ],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 5-2-1
+    {
+      "label": "codeql database create typescript",
+      "detail": "Creates the TypeScript CodeQL database.",
+
+      "type": "shell",
+      "command": "codeql",
+      "args": [
+        "database",
+        "create",
+        ".github/codeql/database/typescript",
+        "--language=typescript",
+        "--overwrite"
+      ],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 5-1-2
+    {
+      "label": "codeql actions",
+      "detail": "Creates and analyzes the actions CodeQL database.",
+
+      "dependsOn": ["codeql database create actions"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "codeql",
+      "args": [
+        "database",
+        "analyze",
+        ".github/codeql/database/actions",
+        "actions-security-and-quality.qls",
+        "--format=sarif-latest",
+        "--output=.github/codeql/output/codeql-actions-output.sarif"
+      ]
+    },
+
+    // 5-2-2
+    {
+      "label": "codeql typescript",
+      "detail": "Creates and analyzes the TypeScript CodeQL database.",
+
+      "dependsOn": ["codeql database create typescript"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "codeql",
+      "args": [
+        "database",
+        "analyze",
+        ".github/codeql/database/typescript",
+        ".github/codeql/queries/typescript-security-and-quality.qls",
+        "--format=sarif-latest",
+        "--output=.github/codeql/output/codeql-typescript-output.sarif"
+      ]
     }
   ]
 }

@@ -74,6 +74,7 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'ahmadalli',
     'joshbolduc',
     'vsicons',
+    'sarif',
     'xlaoyu',
     'kohler',
 

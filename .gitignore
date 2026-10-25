@@ -1,4 +1,8 @@
 .DS_Store
+/.github/codeql/database/*
+!/.github/codeql/database/.gitkeep
+/.github/codeql/output/*
+!/.github/codeql/output/.gitkeep
 /data
 /dist
 /nginx/cache

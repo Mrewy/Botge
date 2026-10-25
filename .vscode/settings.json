@@ -54,7 +54,18 @@
   "editor.smoothScrolling": true,
 
   // Files
-  "files.readonlyInclude": { "data/**/*": true, "dist/**/*": true, "node_modules/**/*": true },
+  "files.readonlyInclude": {
+    ".devcontainer/devcontainer-lock.json": true,
+    ".github/codeql/database/**/*": true,
+    ".github/codeql/output/*": true,
+    ".github/workflows/actions.lock": true,
+    ".husky/_/*": true,
+    "data/**/*": true,
+    "dist/**/*": true,
+    "nginx/cache/**/*": true,
+    "node_modules/**/*": true,
+    "package-lock.json": true
+  },
   "files.trimTrailingWhitespace": true,
   "files.autoSave": "onFocusChange",
   "files.insertFinalNewline": true,
@@ -110,6 +121,9 @@
 
   // CodeQL
   "codeQL.githubDatabase.download": "never",
+
+  // Sarif
+  "sarif-viewer.connectToGithubCodeScanning": "off",
 
   // GitLens
   "gitlens.telemetry.enabled": false,

@@ -123,7 +123,7 @@
 
       "type": "shell",
       "command": "gh",
-      "args": ["extension", "upgrade", "github/gh-actions-lock", "--dry-run"],
+      "args": ["extension", "upgrade", "github/gh-actions-lock"],
 
       "options": { "statusbar": { "hide": true } }
     },
@@ -138,7 +138,7 @@
 
       "type": "shell",
       "command": "gh",
-      "args": ["actions-lock"]
+      "args": ["actions-lock", "--relock"]
     }
   ]
 }

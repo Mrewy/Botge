@@ -108,6 +108,9 @@
   // Docker
   "docker.lsp.telemetry": "off",
 
+  // CodeQL
+  "codeQL.githubDatabase.download": "never",
+
   // GitLens
   "gitlens.telemetry.enabled": false,
 

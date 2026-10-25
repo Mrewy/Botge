@@ -17,6 +17,7 @@
     "ahmadalli.vscode-nginx-conf",
     "dbaeumer.vscode-eslint",
     "joshbolduc.commitlint",
+    "GitHub.vscode-codeql",
     "redhat.vscode-yaml",
 
     // Extras

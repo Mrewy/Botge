@@ -1,0 +1,49 @@
+# @format
+
+name: CodeQL Analysis
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+  push:
+    branches: ['main']
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: [ubuntu-latest]
+
+    permissions:
+      # required for all workflows
+      security-events: write
+      # required to fetch internal or private CodeQL packs
+      packages: read
+
+    strategy:
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+          - language: typescript
+            build-mode: none
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4.39.0
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          queries: security-and-quality
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4.39.0
+        with:
+          category: '/language:${{matrix.language}}'

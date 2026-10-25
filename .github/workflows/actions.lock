@@ -3,16 +3,16 @@
 # Docs: https://gh.io/actions-lockfile
 version: 'v0.0.3'
 workflows:
-    '.github/workflows/codeql.yml':
+    '.github/workflows/codeql-analysis.yml':
         - 'actions/checkout@v7.0.1'
         - 'github/codeql-action@v4.39.0'
-    '.github/workflows/publish-docker-hub-image.yml':
+    '.github/workflows/publish-docker-image.yml':
         - 'actions/attest@v4.2.2'
         - 'actions/checkout@v6.1.0'
         - 'docker/build-push-action@v4.0.0'
         - 'docker/login-action@v2.1.0'
         - 'docker/metadata-action@master'
-    '.github/workflows/verify-lockfile.yml':
+    '.github/workflows/verify-actions-lockfile.yml':
         - 'actions/checkout@v7.0.1'
 dependencies:
     'actions/attest@v4.2.2':
@@ -42,7 +42,7 @@ dependencies:
         repo_id: 287743349
     'docker/metadata-action@master':
         ref: 'master'
-        commit: 'sha1-9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7'
+        commit: 'sha1-8e671d84a3bd81afdfc4fdbb96a42b07c2a80934'
         owner_id: 5429470
         repo_id: 306769011
     'github/codeql-action@v4.39.0':

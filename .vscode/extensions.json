@@ -6,7 +6,6 @@
     "TypeScriptTeam.native-preview",
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
-    "GitHub.copilot-chat",
     "actboy168.tasks",
     "docker.docker",
 
@@ -25,7 +24,6 @@
     "vscode-icons-team.vscode-icons",
     "MS-SarifVSCode.sarif-viewer",
     "aaron-bond.better-comments",
-    "xlaoyu.npmrc-helper",
     "eamodio.gitlens"
   ],
   "unwantedRecommendations": ["christian-kohler.npm-intellisense"]

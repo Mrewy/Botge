@@ -36,3 +36,4 @@ updates:
           - '*'
     allow:
       - dependency-type: all
+    versioning-strategy: increase

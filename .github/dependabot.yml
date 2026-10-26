@@ -34,6 +34,3 @@ updates:
       npm-dependencies:
         patterns:
           - '*'
-    allow:
-      - dependency-type: all
-    versioning-strategy: increase

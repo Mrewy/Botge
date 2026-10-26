@@ -8,7 +8,6 @@ updates:
       interval: weekly
       day: monday
       time: '12:49'
-      timezone: Europe/Budapest
     groups:
       github-action-versions:
         patterns:
@@ -22,7 +21,6 @@ updates:
       interval: weekly
       day: monday
       time: '12:49'
-      timezone: Europe/Budapest
     groups:
       devcontainer-feature-versions:
         patterns:
@@ -36,10 +34,11 @@ updates:
       interval: weekly
       day: monday
       time: '12:49'
-      timezone: Europe/Budapest
     groups:
       npm-dependencies:
         patterns:
           - '*'
+    allow:
+      - dependency-type: all
     assignees:
       - 'Mrewy'

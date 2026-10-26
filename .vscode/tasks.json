@@ -23,30 +23,6 @@
 
     // 1-1
     {
-      "label": "Check npm-check-updates version",
-      "detail": "Checks npm-check-updates version.",
-
-      "type": "shell",
-      "command": "bash",
-      "args": ["scripts/check-package-version", "npm-check-updates"],
-
-      "options": { "statusbar": { "hide": true } }
-    },
-
-    // 1-2
-    {
-      "label": "npm-check-updates",
-      "detail": "Runs npm-check-updates.",
-
-      "dependsOn": ["Check npm-check-updates version"],
-      "dependsOrder": "sequence",
-
-      "type": "shell",
-      "command": "npm-check-updates"
-    },
-
-    // 2-1
-    {
       "label": "Check sort-package-json version",
       "detail": "Checks sort-package-json version.",
 
@@ -57,7 +33,7 @@
       "options": { "statusbar": { "hide": true } }
     },
 
-    // 2-2
+    // 1-2
     {
       "label": "sort-package-json",
       "detail": "Runs sort-package-json.",
@@ -67,6 +43,30 @@
 
       "type": "shell",
       "command": "sort-package-json"
+    },
+
+    // 2-1
+    {
+      "label": "Check npm-check-updates version",
+      "detail": "Checks npm-check-updates version.",
+
+      "type": "shell",
+      "command": "bash",
+      "args": ["scripts/check-package-version", "npm-check-updates"],
+
+      "options": { "statusbar": { "hide": true } }
+    },
+
+    // 2-2
+    {
+      "label": "npm-check-updates",
+      "detail": "Runs npm-check-updates.",
+
+      "dependsOn": ["Check npm-check-updates version"],
+      "dependsOrder": "sequence",
+
+      "type": "shell",
+      "command": "npm-check-updates"
     },
 
     // 3-1

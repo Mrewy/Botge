@@ -2,11 +2,11 @@
 
 # ![Botge Website Logo](assets/catSmile.png) Botge
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/Mrewy/Botge)
-![GitHub last commit](https://img.shields.io/github/last-commit/Mrewy/Botge)
-![GitHub Created At](https://img.shields.io/github/created-at/Mrewy/Botge)
-![GitHub License](https://img.shields.io/github/license/Mrewy/Botge)  
-![GitHub issue custom search in repo help wanted](https://img.shields.io/github/issues-search/Mrewy/Botge?query=label%3A%22help%20wanted%22&label=help%20wanted%20issues)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/MrewyOrg/Botge)
+![GitHub last commit](https://img.shields.io/github/last-commit/MrewyOrg/Botge)
+![GitHub Created At](https://img.shields.io/github/created-at/MrewyOrg/Botge)
+![GitHub License](https://img.shields.io/github/license/MrewyOrg/Botge)  
+![GitHub issue custom search in repo help wanted](https://img.shields.io/github/issues-search/MrewyOrg/Botge?query=label%3A%22help%20wanted%22&label=help%20wanted%20issues)
 
 ## Table of Contents
 

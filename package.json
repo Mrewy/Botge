@@ -10,11 +10,11 @@
     "emotes"
   ],
   "bugs": {
-    "url": "https://github.com/Mrewy/Botge/issues"
+    "url": "https://github.com/MrewyOrg/Botge/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mrewy/Botge.git"
+    "url": "git+https://github.com/MrewyOrg/Botge.git"
   },
   "funding": {
     "type": "github",

@@ -35,6 +35,6 @@ export function owner(member: GuildMember, guild: Guild): boolean {
 export function globalAdministrator(member: GuildMember): boolean {
   const { username } = member.user;
 
-  if (username === 'gentlebob' || username === 'mrewy') return true;
+  if (username === 'gentlebob' || username === 'mrewy2') return true;
   return false;
 }

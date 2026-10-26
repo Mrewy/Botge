@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Mrewy/Botge/blob/main/botge.config.schema.json",
+  "$id": "https://github.com/MrewyOrg/Botge/blob/main/botge.config.schema.json",
 
   "title": "Botge Configuration Schema",
   "description": "Botge JSON Schema",

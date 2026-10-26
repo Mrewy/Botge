@@ -13,7 +13,7 @@ Please verify that:
 * [ ] You've successfully run `npm test` locally
 
 Refer to CONTRIBUTING.MD for more details.
-  https://github.com/Mrewy/Botge/blob/main/.github/CONTRIBUTING.md
+  https://github.com/MrewyOrg/Botge/blob/main/.github/CONTRIBUTING.md
 
 If you're interested in sending a PR, the issue tracker has many issues marked `help wanted`.
 -->

@@ -3,6 +3,8 @@
 # Docs: https://gh.io/actions-lockfile
 version: 'v0.0.3'
 workflows:
+    '.github/workflows/auto-assign.yml':
+        - 'pozil/auto-assign-issue@v4.1.0'
     '.github/workflows/codeql.yml':
         - 'actions/checkout@v7.0.1'
         - 'github/codeql-action@v4.39.1'
@@ -45,3 +47,8 @@ dependencies:
         commit: 'sha1-9b3254085494b55a0f7c4c2b3d2d52cc712ce370'
         owner_id: 9919
         repo_id: 259445878
+    'pozil/auto-assign-issue@v4.1.0':
+        ref: 'v4.1.0'
+        commit: 'sha1-d6e511896e5f1d2408e74db74416647d8ff80c8c'
+        owner_id: 5071767
+        repo_id: 254036912

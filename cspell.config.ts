@@ -45,7 +45,7 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'gentlebob',
     'widepogcrazy',
     'TimotronPrime',
-    'ravenuy',
+    'pozil',
 
     'CuteDog',
     'zackrawrr',

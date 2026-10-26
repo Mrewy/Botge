@@ -1,0 +1,24 @@
+# @format
+
+name: Auto-assign
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    name: Auto-assign
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Auto-assign
+        uses: pozil/auto-assign-issue@v4.1.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: Mrewy

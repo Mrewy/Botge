@@ -12,8 +12,6 @@ updates:
       github-action-versions:
         patterns:
           - '*'
-    assignees:
-      - 'Mrewy'
 
   - package-ecosystem: devcontainers
     directory: '/'
@@ -25,8 +23,6 @@ updates:
       devcontainer-feature-versions:
         patterns:
           - '*'
-    assignees:
-      - 'Mrewy'
 
   - package-ecosystem: npm
     directory: '/'
@@ -40,5 +36,3 @@ updates:
           - '*'
     allow:
       - dependency-type: all
-    assignees:
-      - 'Mrewy'

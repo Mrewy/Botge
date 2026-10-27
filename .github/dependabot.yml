@@ -34,3 +34,5 @@ updates:
       npm-dependencies:
         patterns:
           - '*'
+    labels:
+      - dependencies

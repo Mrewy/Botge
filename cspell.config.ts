@@ -62,6 +62,8 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'mxbai',
     'hnsw',
 
+    'webp',
+
     // Extensions
     'moby',
     'eamodio',

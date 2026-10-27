@@ -1,9 +1,10 @@
 .devcontainer
 .github
-.vscode
 .husky
 !.husky/install.ts
+.vscode
 assets
+!assets/banner.webp
 data
 dist
 docs

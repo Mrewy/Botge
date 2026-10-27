@@ -4,14 +4,14 @@ name: CodeQL
 
 on:
   pull_request:
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
+    paths:
+      - '.github/workflows/*.yml'
+      - '**/*.ts'
   push:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
+    paths:
+      - '.github/workflows/*.yml'
+      - '**/*.ts'
   schedule:
     - cron: '49 12 * * 1'
 
@@ -29,24 +29,36 @@ jobs:
     strategy:
       matrix:
         include:
-          - language: actions
           - language: typescript
+          - language: actions
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7.0.1
 
+      - name: Paths filter
+        id: changes
+        if: github.event_name != 'schedule'
+        uses: dorny/paths-filter@v4.0.3
+        with:
+          filters: |
+            actions:
+              - '.github/workflows/*.yml'
+            typescript:
+              - '**/*.ts'
+
       - name: Initialize CodeQL
+        if: github.event_name == 'schedule' || steps.changes.outputs[matrix.language] == 'true'
         uses: github/codeql-action/init@v4.39.1
         with:
           languages: ${{ matrix.language }}
-          # analysis-kinds: code-scanning, code-quality
           queries:
             ${{ matrix.language == 'typescript' &&
             './.github/codeql/queries/typescript-security-and-quality.qls' || 'security-and-quality'
             }}
 
-      - name: Perform CodeQL Analysis
+      - name: CodeQL Analysis
+        if: github.event_name == 'schedule' || steps.changes.outputs[matrix.language] == 'true'
         uses: github/codeql-action/analyze@v4.39.1
         with:
           category: '/language:${{ matrix.language }}'

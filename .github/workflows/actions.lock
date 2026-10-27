@@ -7,6 +7,7 @@ workflows:
         - 'pozil/auto-assign-issue@v4.1.0'
     '.github/workflows/codeql.yml':
         - 'actions/checkout@v7.0.1'
+        - 'dorny/paths-filter@v4.0.3'
         - 'github/codeql-action@v4.39.1'
     '.github/workflows/publish-docker-image.yml':
         - 'actions/attest@v4.2.2'
@@ -42,6 +43,11 @@ dependencies:
         commit: 'sha1-8e671d84a3bd81afdfc4fdbb96a42b07c2a80934'
         owner_id: 5429470
         repo_id: 306769011
+    'dorny/paths-filter@v4.0.3':
+        ref: 'v4.0.3'
+        commit: 'sha1-ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d'
+        owner_id: 1588572
+        repo_id: 265601040
     'github/codeql-action@v4.39.1':
         ref: 'v4.39.1'
         commit: 'sha1-9b3254085494b55a0f7c4c2b3d2d52cc712ce370'

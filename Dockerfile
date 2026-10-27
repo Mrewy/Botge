@@ -42,7 +42,6 @@ RUN apk upgrade --no-cache \
 
 COPY --from=node-dependencies /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
-COPY assets ./assets
 COPY docs ./docs
 COPY LICENSE.txt botge*.config.json node.config.json README.md ./
 

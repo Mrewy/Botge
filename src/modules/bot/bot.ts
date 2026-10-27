@@ -1,7 +1,5 @@
 /** @format */
 
-import { readFileSync } from 'node:fs';
-
 import type { Job } from 'node-schedule';
 
 import { Events, type Client } from 'discord.js';
@@ -34,8 +32,6 @@ import type { User } from '../discord/user.ts';
 import { MessageBuilderManager } from './message-builder-manager.ts';
 import type { DatabaseManager } from './database-manager.ts';
 import type { ApiManager } from './api-manager.ts';
-
-const BANNER_PATH = 'assets/banner.webp' as const;
 
 /**
  * The central class.
@@ -130,7 +126,6 @@ export class Bot {
 
       user.setStatus('online');
       user.setPresence({ activities: [{ name: 'github.com/MrewyOrg/Botge', state: 'meow' }] });
-      void user.setBanner(readFileSync(BANNER_PATH));
 
       try {
         const { JOIN_VOICE_CHANNEL } = process.env;

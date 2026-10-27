@@ -20,7 +20,7 @@
   "permission": {
     "allow-addons": true,
     "allow-child-process": true,
-    "allow-fs-read": ["assets", "data", "dist", "node_modules", "botge.config.json"],
+    "allow-fs-read": ["data", "dist", "node_modules", "botge.config.json"],
     "allow-fs-write": ["data"],
     "allow-inspector": false,
     "allow-net": true,

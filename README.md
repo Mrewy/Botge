@@ -3,8 +3,6 @@
 # ![Botge Website Logo](assets/catSmile.png) Botge
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/MrewyOrg/Botge)
-![GitHub last commit](https://img.shields.io/github/last-commit/MrewyOrg/Botge)
-![GitHub Created At](https://img.shields.io/github/created-at/MrewyOrg/Botge)
 ![GitHub License](https://img.shields.io/github/license/MrewyOrg/Botge)  
 ![Auto Assign](https://github.com/MrewyOrg/Botge/actions/workflows/codeql.yml/badge.svg)
 

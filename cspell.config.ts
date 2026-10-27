@@ -45,10 +45,12 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'gentlebob',
     'widepogcrazy',
     'TimotronPrime',
-    'pozil',
 
     'CuteDog',
     'zackrawrr',
+
+    'pozil',
+    'dorny',
 
     // Lib
     'tpad',

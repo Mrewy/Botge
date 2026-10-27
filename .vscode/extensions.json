@@ -17,6 +17,7 @@
     "dbaeumer.vscode-eslint",
     "joshbolduc.commitlint",
     "GitHub.vscode-codeql",
+    "xlaoyu.npmrc-helper",
     "redhat.vscode-yaml",
 
     // Extras

@@ -30,7 +30,6 @@
         "TypeScriptTeam.native-preview",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
-        "GitHub.copilot-chat",
         "actboy168.tasks",
         "docker.docker",
 
@@ -41,13 +40,15 @@
         "ahmadalli.vscode-nginx-conf",
         "dbaeumer.vscode-eslint",
         "joshbolduc.commitlint",
+        "GitHub.vscode-codeql",
+        "xlaoyu.npmrc-helper",
         "redhat.vscode-yaml",
 
         // Extras
         "GitHub.vscode-pull-request-github",
         "vscode-icons-team.vscode-icons",
+        "MS-SarifVSCode.sarif-viewer",
         "aaron-bond.better-comments",
-        "xlaoyu.npmrc-helper",
         "eamodio.gitlens"
       ]
     }

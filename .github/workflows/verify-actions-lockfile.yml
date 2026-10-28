@@ -7,16 +7,22 @@ name: Verify Actions Lockfile
 
 on:
   pull_request:
+    paths:
+      - '.github/workflows/actions.lock'
+      - '.github/workflows/*.yml'
   push:
     branches: [main]
-
-permissions:
-  contents: read
+    paths:
+      - '.github/workflows/actions.lock'
+      - '.github/workflows/*.yml'
 
 jobs:
   verify:
     name: Verify lockfile
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     env:
       GH_TOKEN: ${{ github.token }}

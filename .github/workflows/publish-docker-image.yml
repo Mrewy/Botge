@@ -11,7 +11,10 @@ on:
   push:
     branches: [main]
     paths:
+      - '.github/workflows/publish-docker-image.yml'
       - 'src/**'
+      - '.dockerignore'
+      - 'Dockerfile'
   workflow_dispatch:
 
 jobs:
@@ -20,7 +23,6 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      packages: write
       contents: read
       attestations: write
       id-token: write
@@ -50,10 +52,11 @@ jobs:
         uses: docker/build-push-action@v7.4.0
         with:
           context: .
-          file: ./Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          provenance: mode=max
+          sbom: true
 
       - name: Generate artifact attestation
         uses: actions/attest@v4.2.2

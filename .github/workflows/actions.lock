@@ -16,6 +16,7 @@ workflows:
         - 'docker/login-action@v4.7.0'
         - 'docker/metadata-action@v6.2.0'
         - 'docker/setup-buildx-action@v4.4.1'
+        - 'docker/setup-qemu-action@v4.4.0'
     '.github/workflows/verify-actions-lockfile.yml':
         - 'actions/checkout@v7.0.1'
 dependencies:
@@ -49,6 +50,11 @@ dependencies:
         commit: 'sha1-f87e5991a6d7451dcb8d9637bfbc97413f497069'
         owner_id: 5429470
         repo_id: 288485773
+    'docker/setup-qemu-action@v4.4.0':
+        ref: 'v4.4.0'
+        commit: 'sha1-99012661954931238ded8c8b007157a8430204e1'
+        owner_id: 5429470
+        repo_id: 288487894
     'dorny/paths-filter@v4.0.3':
         ref: 'v4.0.3'
         commit: 'sha1-ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d'

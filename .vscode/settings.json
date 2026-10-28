@@ -162,5 +162,5 @@
 
   "diffEditor.ignoreTrimWhitespace": false,
 
-  "chat.disableAIFeatures": true
+  "chat.disableAIFeatures": false
 }

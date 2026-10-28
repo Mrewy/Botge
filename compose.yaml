@@ -35,7 +35,7 @@ services:
       - meilisearch
       - chromadb
     # Uncomment image, comment build and context for non-local compose.
-    # image: index.docker.io/mrewy/botge
+    # image: mrewy/botge
     build:
       context: .
     mem_limit: 512m

@@ -9,6 +9,9 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'dorny/paths-filter@v4.0.3'
         - 'github/codeql-action@v4.39.1'
+    '.github/workflows/docker-hub-cleanup.yml':
+        - 'actions/checkout@v7.0.1'
+        - 'lostlink/docker-cleanup@v1.0.1'
     '.github/workflows/publish-docker-image.yml':
         - 'actions/attest@v4.2.2'
         - 'actions/checkout@v7.0.1'
@@ -28,6 +31,11 @@ dependencies:
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
+    'actions/setup-python@v5':
+        ref: 'v5'
+        commit: 'sha1-a26af69be951a213d495a4c3e4e4022e16d87065'
+        owner_id: 44036562
+        repo_id: 192625525
     'docker/build-push-action@v7.4.0':
         ref: 'v7.4.0'
         commit: 'sha1-c3c9e263c25d99ce0380d002d59b67737d91b0dc'
@@ -53,6 +61,13 @@ dependencies:
         commit: 'sha1-9b3254085494b55a0f7c4c2b3d2d52cc712ce370'
         owner_id: 9919
         repo_id: 259445878
+    'lostlink/docker-cleanup@v1.0.1':
+        ref: 'v1.0.1'
+        commit: 'sha1-5e30a5d17353cf6ec0ad8871ccd1f7f17ec73cd9'
+        owner_id: 987008
+        repo_id: 1035421138
+        uses:
+            - 'actions/setup-python@v5'
     'pozil/auto-assign-issue@v4.1.0':
         ref: 'v4.1.0'
         commit: 'sha1-d6e511896e5f1d2408e74db74416647d8ff80c8c'

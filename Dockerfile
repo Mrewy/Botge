@@ -38,7 +38,7 @@ LABEL org.opencontainers.image.vendor="MrewyOrg" \
   org.opencontainers.image.title="Botge" \
   org.opencontainers.image.version="3.1.1" \
   org.opencontainers.image.base.name="dhi.io/node:26.12.1-alpine3.24-sfw-dev" \
-  org.opencontainers.image.base.name="sha256:b228ab773f21720bf849f294b9ccfc4dea65b90cfe7f22bd4d5e10c7f48c859e"
+  org.opencontainers.image.base.digest="sha256:b228ab773f21720bf849f294b9ccfc4dea65b90cfe7f22bd4d5e10c7f48c859e"
 
 RUN apk upgrade --no-cache \
   && apk add --no-cache ffmpeg

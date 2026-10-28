@@ -22,6 +22,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           organization: 'mrewy'
           repositories: 'botge'
-          pr-retention-days: 1
-          sha-retention-days: 1
           dry-run: false

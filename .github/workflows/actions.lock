@@ -17,7 +17,8 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'docker/build-push-action@v7.4.0'
         - 'docker/login-action@v4.7.0'
-        - 'docker/metadata-action@master'
+        - 'docker/metadata-action@v6.2.0'
+        - 'docker/setup-buildx-action@v4.4.1'
     '.github/workflows/verify-actions-lockfile.yml':
         - 'actions/checkout@v7.0.1'
 dependencies:
@@ -46,11 +47,16 @@ dependencies:
         commit: 'sha1-81c6f93d4bc991e510b342a00b419b3bb4efc5c6'
         owner_id: 5429470
         repo_id: 287743349
-    'docker/metadata-action@master':
-        ref: 'master'
-        commit: 'sha1-8e671d84a3bd81afdfc4fdbb96a42b07c2a80934'
+    'docker/metadata-action@v6.2.0':
+        ref: 'v6.2.0'
+        commit: 'sha1-dc802804100637a589fabce1cb79ff13a1411302'
         owner_id: 5429470
         repo_id: 306769011
+    'docker/setup-buildx-action@v4.4.1':
+        ref: 'v4.4.1'
+        commit: 'sha1-f87e5991a6d7451dcb8d9637bfbc97413f497069'
+        owner_id: 5429470
+        repo_id: 288485773
     'dorny/paths-filter@v4.0.3':
         ref: 'v4.0.3'
         commit: 'sha1-ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d'

@@ -4,7 +4,7 @@
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/MrewyOrg/Botge)
 ![GitHub License](https://img.shields.io/github/license/MrewyOrg/Botge)  
-![Auto Assign](https://github.com/MrewyOrg/Botge/actions/workflows/codeql.yml/badge.svg)
+![CodeQL](https://github.com/MrewyOrg/Botge/actions/workflows/codeql.yml/badge.svg)
 
 ## Table of Contents
 

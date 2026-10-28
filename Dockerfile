@@ -33,6 +33,7 @@ LABEL org.opencontainers.image.title="Botge" \
   org.opencontainers.image.version="3.1.1" \
   org.opencontainers.image.description="Search emotes, clips, use zero-width emotes and other such commands." \
   org.opencontainers.image.source="https://github.com/MrewyOrg/Botge" \
+  org.opencontainers.image.url="https://hub.docker.com/repository/docker/mrewy/botge" \
   org.opencontainers.image.licenses="MIT" \
   org.opencontainers.image.authors="MrewyOrg,Mrewy" \
   org.opencontainers.image.documentation="https://github.com/MrewyOrg/Botge/tree/main/docs"

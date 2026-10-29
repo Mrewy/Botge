@@ -44,6 +44,8 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4.4.0
+        with:
+          platforms: amd64,arm64
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4.4.1
@@ -64,7 +66,7 @@ jobs:
           tags: |
             type=raw,value=latest
         env:
-          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,manifest-descriptor
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,manifest-descriptor,index,index-descriptor
 
       - name: Build and push Docker image
         id: push

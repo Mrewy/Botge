@@ -65,8 +65,6 @@ jobs:
           images: mrewy/botge
           tags: |
             type=raw,value=latest
-        env:
-          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,manifest-descriptor
 
       - name: Build and push Docker image
         id: push

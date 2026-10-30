@@ -1,7 +1,7 @@
 package docker
 
 # METADATA
-# description: Allows trusted local and Git sources and the Docker Node Hardened Image base.
+# description: Allows local, Botge, Docker Node Hardened Image and Docker images.
 # scope: rule
 default allow := false
 
@@ -18,7 +18,10 @@ allow if {
 	input.image.isCanonical
 }
 
-allow if input.image.fullRepo == "docker.io/docker"
+allow if {
+	input.image.host == "docker.io"
+	input.image.repo == "docker"
+}
 
 # METADATA
 # description: Reports whether the Dockerfile source and its base image satisfy the policy.

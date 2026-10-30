@@ -2,6 +2,28 @@
 
 # Changelog
 
+## [v3.2.0](https://github.com/MrewyOrg/Botge/tree/v3.2.0) (2026-10-30)
+
+[Full Changelog](https://github.com/MrewyOrg/Botge/compare/v3.1.1...v3.2.0)
+
+**Merged pull requests:**
+
+- chore\(deps\): bump openai from 7.42.0 to 7.43.0 in the npm-dependencies group
+  [\#235](https://github.com/MrewyOrg/Botge/pull/235)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump the github-action-versions group with 2 updates
+  [\#232](https://github.com/MrewyOrg/Botge/pull/232)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action from 4.39.0 to 4.39.1
+  [\#230](https://github.com/MrewyOrg/Botge/pull/230)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/init from 4.38.3 to 4.39.0
+  [\#229](https://github.com/MrewyOrg/Botge/pull/229)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+- chore\(deps\): bump github/codeql-action/analyze from 4.38.3 to 4.39.0
+  [\#228](https://github.com/MrewyOrg/Botge/pull/228)
+  ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v3.1.1](https://github.com/MrewyOrg/Botge/tree/v3.1.1) (2026-10-22)
 
 [Full Changelog](https://github.com/MrewyOrg/Botge/compare/v3.1.0...v3.1.1)

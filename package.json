@@ -1,6 +1,6 @@
 {
   "name": "botge",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "private": true,
   "description": "Search emotes, clips, use zero-width emotes and other such commands.",
   "keywords": [

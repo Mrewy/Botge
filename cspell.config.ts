@@ -99,7 +99,8 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'RRGGBB',
     'tsdoc',
     'vitest',
-    'nvmrc'
+    'nvmrc',
+    'syft'
   ],
   ignoreWords: [
     // ? Ge - rename later

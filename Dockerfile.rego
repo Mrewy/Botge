@@ -18,10 +18,7 @@ allow if {
 	input.image.isCanonical
 }
 
-allow if {
-	input.image.host == "docker.io"
-	input.image.repo == "docker"
-}
+allow if input.image.fullRepo == "docker.io/docker/buildkit-syft-scanner"
 
 # METADATA
 # description: Reports whether the Dockerfile source and its base image satisfy the policy.

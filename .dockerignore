@@ -1,6 +1,8 @@
 .devcontainer
+.git
 .github
 .husky
+.regal
 !.husky/install.ts
 .vscode
 assets
@@ -17,6 +19,7 @@ src/tsdoc.json
 tests
 
 .dockerignore
+.DS_Store
 .editorconfig
 .env
 .env.example
@@ -30,6 +33,7 @@ commitlint.config.ts
 compose.yaml
 cspell.config.ts
 Dockerfile
+Dockerfile.rego
 eslint.config.ts
 lint-staged.config.ts
 prettier.config.ts

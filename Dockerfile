@@ -1,4 +1,6 @@
-FROM dhi.io/node:26.12.1-alpine3.24-sfw-dev AS base
+# check=error=true
+
+FROM dhi.io/node@sha256:457e77bf0857229659361c243dadfef8a67720ec7d0b8d195bb6940cdf4541a3 AS base
 
 FROM base AS ci-dependencies
 WORKDIR /app
@@ -30,8 +32,6 @@ RUN npm run build:production
 FROM base AS botge
 WORKDIR /app
 LABEL org.opencontainers.image.authors="Mrewy" \
-  org.opencontainers.image.base.digest="sha256:b228ab773f21720bf849f294b9ccfc4dea65b90cfe7f22bd4d5e10c7f48c859e" \
-  org.opencontainers.image.base.name="dhi.io/node:26.12.1-alpine3.24-sfw-dev" \
   org.opencontainers.image.description="Search emotes, clips, use zero-width emotes and other such commands." \
   org.opencontainers.image.documentation="https://github.com/MrewyOrg/Botge/tree/main/docs" \
   org.opencontainers.image.licenses="MIT" \

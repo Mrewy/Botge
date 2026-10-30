@@ -65,6 +65,7 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'hnsw',
 
     'webp',
+    'rego',
 
     // Extensions
     'moby',
@@ -81,6 +82,7 @@ const cSpellSettings: Readonly<CSpellSettings> = defineConfig({
     'sarif',
     'xlaoyu',
     'kohler',
+    'tsandall',
 
     // Other
     'FrankerFaceZ',

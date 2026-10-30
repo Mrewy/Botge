@@ -9,7 +9,7 @@ updates:
       day: monday
       time: '12:49'
     groups:
-      github-action-versions:
+      github-actions:
         patterns:
           - '*'
 
@@ -20,7 +20,18 @@ updates:
       day: monday
       time: '12:49'
     groups:
-      devcontainer-feature-versions:
+      devcontainer-features:
+        patterns:
+          - '*'
+
+  - package-ecosystem: docker
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+      time: '12:49'
+    groups:
+      docker-images:
         patterns:
           - '*'
 

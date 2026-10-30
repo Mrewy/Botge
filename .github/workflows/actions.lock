@@ -9,52 +9,18 @@ workflows:
         - 'actions/checkout@v7.0.1'
         - 'dorny/paths-filter@v4.0.3'
         - 'github/codeql-action@v4.39.1'
-    '.github/workflows/publish-docker-image.yml':
-        - 'actions/attest@v4.2.2'
+    '.github/workflows/publish-docker-image.yml': []
+    '.github/workflows/regal-lint.yml':
         - 'actions/checkout@v7.0.1'
-        - 'docker/build-push-action@v7.4.0'
-        - 'docker/login-action@v4.7.0'
-        - 'docker/metadata-action@v6.2.0'
-        - 'docker/setup-buildx-action@v4.4.1'
-        - 'docker/setup-qemu-action@v4.4.0'
+        - 'open-policy-agent/setup-regal@v2.0.0'
     '.github/workflows/verify-actions-lockfile.yml':
         - 'actions/checkout@v7.0.1'
 dependencies:
-    'actions/attest@v4.2.2':
-        ref: 'v4.2.2'
-        commit: 'sha1-1e69f48acb82d1966a394da916b4c1698aa569d6'
-        owner_id: 44036562
-        repo_id: 760701061
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
-    'docker/build-push-action@v7.4.0':
-        ref: 'v7.4.0'
-        commit: 'sha1-c3c9e263c25d99ce0380d002d59b67737d91b0dc'
-        owner_id: 5429470
-        repo_id: 241092383
-    'docker/login-action@v4.7.0':
-        ref: 'v4.7.0'
-        commit: 'sha1-81c6f93d4bc991e510b342a00b419b3bb4efc5c6'
-        owner_id: 5429470
-        repo_id: 287743349
-    'docker/metadata-action@v6.2.0':
-        ref: 'v6.2.0'
-        commit: 'sha1-dc802804100637a589fabce1cb79ff13a1411302'
-        owner_id: 5429470
-        repo_id: 306769011
-    'docker/setup-buildx-action@v4.4.1':
-        ref: 'v4.4.1'
-        commit: 'sha1-f87e5991a6d7451dcb8d9637bfbc97413f497069'
-        owner_id: 5429470
-        repo_id: 288485773
-    'docker/setup-qemu-action@v4.4.0':
-        ref: 'v4.4.0'
-        commit: 'sha1-99012661954931238ded8c8b007157a8430204e1'
-        owner_id: 5429470
-        repo_id: 288487894
     'dorny/paths-filter@v4.0.3':
         ref: 'v4.0.3'
         commit: 'sha1-ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d'
@@ -65,6 +31,11 @@ dependencies:
         commit: 'sha1-9b3254085494b55a0f7c4c2b3d2d52cc712ce370'
         owner_id: 9919
         repo_id: 259445878
+    'open-policy-agent/setup-regal@v2.0.0':
+        ref: 'v2.0.0'
+        commit: 'sha1-761188c3b435761fa254beca508a44875619648f'
+        owner_id: 16468693
+        repo_id: 668633487
     'pozil/auto-assign-issue@v4.1.0':
         ref: 'v4.1.0'
         commit: 'sha1-d6e511896e5f1d2408e74db74416647d8ff80c8c'

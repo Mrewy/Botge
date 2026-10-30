@@ -1,11 +1,17 @@
 package docker
 
 # METADATA
-# description: Allows local Dockerfile sources and the pinned Docker Hardened Image base.
+# description: Allows trusted local and Git sources and the Docker Node Hardened Image base.
 # scope: rule
 default allow := false
 
 allow if input.local
+
+allow if {
+	input.git.host == "github.com"
+	input.git.remote == "https://github.com/MrewyOrg/Botge.git"
+	input.git.branch == "main"
+}
 
 allow if {
 	input.image.fullRepo == "dhi.io/node"

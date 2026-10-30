@@ -18,6 +18,8 @@ allow if {
 	input.image.isCanonical
 }
 
+allow if input.image.fullRepo == "docker.io/docker"
+
 # METADATA
 # description: Reports whether the Dockerfile source and its base image satisfy the policy.
 # scope: rule

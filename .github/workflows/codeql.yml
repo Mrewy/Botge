@@ -3,12 +3,12 @@
 name: CodeQL
 
 on:
-  pull_request:
+  push:
+    branches: [main]
     paths:
       - '.github/workflows/*.yml'
       - '**/*.ts'
-  push:
-    branches: [main]
+  pull_request:
     paths:
       - '.github/workflows/*.yml'
       - '**/*.ts'

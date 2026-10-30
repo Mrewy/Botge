@@ -1,10 +1,15 @@
 # @format
 
-name: Run Regal Lint Check
+name: Regal Lint
 
 on:
   push:
     branches: [main]
+    paths:
+      - '.github/workflows/regal-lint.yml'
+      - '.regal/config.yaml'
+      - '**/*.rego'
+  pull_request:
     paths:
       - '.github/workflows/regal-lint.yml'
       - '.regal/config.yaml'

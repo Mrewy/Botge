@@ -49,6 +49,7 @@ jobs:
       sign: true
 
       platforms: linux/amd64,linux/arm64
+      setup-qemu: true
       distribute: false
 
     secrets:

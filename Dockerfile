@@ -31,6 +31,13 @@ RUN npm run build:production
 
 FROM base AS botge
 WORKDIR /app
+LABEL org.opencontainers.image.authors="Mrewy" \
+  org.opencontainers.image.description="Search emotes, clips, use zero-width emotes and other such commands." \
+  org.opencontainers.image.documentation="https://github.com/MrewyOrg/Botge/tree/main/docs" \
+  org.opencontainers.image.licenses="MIT" \
+  org.opencontainers.image.source="https://github.com/MrewyOrg/Botge" \
+  org.opencontainers.image.title="Botge" \
+  org.opencontainers.image.vendor="MrewyOrg"
 
 RUN apk upgrade --no-cache \
   && apk add --no-cache ffmpeg

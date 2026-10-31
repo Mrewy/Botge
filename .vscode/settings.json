@@ -141,7 +141,9 @@
       "extensions": ["index.ts", "botge.config.json", "botge.example.config.json", "README.md"],
       "filename": true,
       "format": "png"
-    }
+    },
+    { "icon": "docker2", "extensions": ["tests/compose.test.ts"], "filename": true },
+    { "icon": "docker2", "extends": "docker" }
   ],
 
   // Telemetry

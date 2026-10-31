@@ -29,23 +29,26 @@ jobs:
       artifact-metadata: write
 
     with:
-      output: image
       context: .
+      file: ./Dockerfile
+
+      output: image
       push: true
 
       meta-images: mrewy/botge
-      meta-tags: |
-        type=raw,value=latest
+      meta-flavor: |
+        latest=true
 
       set-meta-annotations: true
       set-meta-labels: true
-      sbom: true
-
-      platforms: linux/amd64,linux/arm64
-      setup-qemu: true
 
       cache: true
       cache-mode: max
+
+      sbom: true
+      sign: true
+
+      platforms: linux/amd64,linux/arm64
 
     secrets:
       registry-auths: |
